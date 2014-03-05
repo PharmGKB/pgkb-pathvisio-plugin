@@ -1,0 +1,132 @@
+Index: src/core/org/pathvisio/model/PathwayElementEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/core/org/pathvisio/model/PathwayElementEvent.java	(revision 3465)
++++ src/core/org/pathvisio/model/PathwayElementEvent.java	(revision )
+@@ -97,4 +97,13 @@
+ 	public boolean affectsProperty(String prop) {
+ 		return property == null || property.equals(prop);
+ 	}
++
++
++	public String getProperty() {
++		if (property instanceof String) {
++			return (String)property;
++		} else {
++			return null;
++		}
++	}
+ }
+Index: src/core/org/pathvisio/model/PathwayElement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/core/org/pathvisio/model/PathwayElement.java	(revision 3465)
++++ src/core/org/pathvisio/model/PathwayElement.java	(revision )
+@@ -546,7 +546,7 @@
+ 	private static final int M_INITIAL_FONTSIZE = 10;
+ 	private static final int M_INITIAL_LABEL_WIDTH = 80;
+ 	private static final int M_INITIAL_LABEL_HEIGHT = 20;
+-	private static final int M_INITIAL_LINE_LENGTH = 30; 
++	private static final int M_INITIAL_LINE_LENGTH = 30;
+ 	private static final int M_INITIAL_STATE_SIZE = 15;
+ 	private static final int M_INITIAL_SHAPE_SIZE = 30;
+ 	private static final int M_INITIAL_CELLCOMP_HEIGHT = 100;
+@@ -644,7 +644,7 @@
+ 		{
+ 			shapeType = ShapeType.RECTANGLE;
+ 		}
+-		
++
+ 		objectType = ot;
+ 		zOrder = getDefaultZOrder (ot);
+ 	}
+@@ -1250,7 +1250,7 @@
+ 			break;
+ 		case LINETHICKNESS:
+ 			result = getLineThickness();
+-			break;		
++			break;
+ 		}
+ 
+ 		return result;
+@@ -1685,7 +1685,11 @@
+ 	}
+ 
+ 	public void setDataNodeType(DataNodeType type) {
++		if (type != null) {
+-		setDataNodeType(type.getName());
++			setDataNodeType(type.getName());
++		} else {
++			dataNodeType = null;
++		}
+ 	}
+ 
+ 	public void setDataNodeType(String v)
+@@ -2027,7 +2031,7 @@
+ 		if (!Utils.stringEquals(href, input))
+ 		{
+ 			href = input;
+-			setColor(PreferenceManager.getCurrent().getColor(GlobalPreference.COLOR_LINK)); 
++			setColor(PreferenceManager.getCurrent().getColor(GlobalPreference.COLOR_LINK));
+ 			fireObjectModifiedEvent(PathwayElementEvent.createSinglePropertyEvent(this, StaticProperty.HREF));
+ 		}
+ 	}
+@@ -2125,7 +2129,7 @@
+ 			fireObjectModifiedEvent(PathwayElementEvent.createSinglePropertyEvent(this, StaticProperty.VALIGN));
+ 		}
+ 	}
+-	
++
+ 	public ValignType getValign()
+ 	{
+ 		return valign;
+@@ -2141,7 +2145,7 @@
+ 			fireObjectModifiedEvent(PathwayElementEvent.createSinglePropertyEvent(this, StaticProperty.ALIGN));
+ 		}
+ 	}
+-	
++
+ 	public AlignType getAlign()
+ 	{
+ 		return align;
+@@ -2589,7 +2593,7 @@
+ 	 * the drawing with a click.
+ 	 */
+ 	public void setInitialSize()
+-	{	
++	{
+ 		switch (objectType)
+ 		{
+ 		case SHAPE:
+@@ -2597,20 +2601,20 @@
+ 			{
+ 				setMWidth(M_INITIAL_BRACE_WIDTH);
+ 				setMHeight(M_INITIAL_BRACE_HEIGHT);
+-			} 
++			}
+ 			else if (shapeType == ShapeType.MITOCHONDRIA || lineStyle == LineStyle.DOUBLE)
+ 			{
+ 				setMWidth(M_INITIAL_CELLCOMP_WIDTH);
+-				setMHeight(M_INITIAL_CELLCOMP_HEIGHT);				
+-			} 
+-			else if (shapeType == ShapeType.SARCOPLASMICRETICULUM 
++				setMHeight(M_INITIAL_CELLCOMP_HEIGHT);
++			}
++			else if (shapeType == ShapeType.SARCOPLASMICRETICULUM
+ 					|| shapeType == ShapeType.ENDOPLASMICRETICULUM
+ 					|| shapeType == ShapeType.GOLGIAPPARATUS)
+ 			{
+ 				setMWidth(M_INITIAL_CELLCOMP_HEIGHT);
+-				setMHeight(M_INITIAL_CELLCOMP_WIDTH);				
+-			} 
+-			else 
++				setMHeight(M_INITIAL_CELLCOMP_WIDTH);
++			}
++			else
+ 			{
+ 				setMWidth(M_INITIAL_SHAPE_SIZE);
+ 				setMHeight(M_INITIAL_SHAPE_SIZE);
