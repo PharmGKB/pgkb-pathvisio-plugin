@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar pathvisio.jar -p pgkb-pv-plugin.jar $*
+java -jar pathvisio.jar -p lib/pgkb-pv-plugin.jar $*

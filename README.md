@@ -16,3 +16,8 @@ Note that we're rewriting the classpath in `pathvisio.jar`'s manifest file.  We 
 * changing the location it expects the libraries to be in
 * removing libraries PathVisio needs but we don't (i.e. unused functionality)
 * adding libraries we need
+
+
+### Mac
+
+We're using a forked version of [appbundler](https://bitbucket.org/infinitekind/appbundler) to build the Mac app.

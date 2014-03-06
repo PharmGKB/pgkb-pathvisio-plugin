@@ -15,6 +15,7 @@ jide-oss.jar              JIDE Common Layer 3.5.14
 
 resources.jar             PathVisio UI Resources [custom build, 3/4/2014]
                           from http://www.pathvisio.org/
+org.bridgedb.rdb.jar      From custom build
 
 
 swing-worker.jar          Swing Worker 1.1 (used by PathVisio)
