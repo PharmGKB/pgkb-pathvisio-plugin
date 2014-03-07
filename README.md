@@ -10,7 +10,7 @@ We are relying on a custom build of PathVisio 2.0.11 which adds `PathwayElementE
 
 Run: `ant pathvisio`
 
-This will generate `build/dist/pgkb-pathvisio.zip` which should be uploaded to [the wiki](http://wiki.pharmgkb.org/display/PUB/PharmGKB+Plugin+for+PathVisio).
+This will generate `build/dist/pgkb-pathvisio.zip`.  If you're building this on a Mac, you'll also get `build/dist/pgkb-pathvisio-osx.zip`.  Both files should be uploaded to [the wiki](http://wiki.pharmgkb.org/display/PUB/PharmGKB+Plugin+for+PathVisio).
 
 Note that we're rewriting the classpath in `pathvisio.jar`'s manifest file.  We are:
 * changing the location it expects the libraries to be in
@@ -20,4 +20,8 @@ Note that we're rewriting the classpath in `pathvisio.jar`'s manifest file.  We 
 
 ### Mac
 
-We're using a forked version of [appbundler](https://bitbucket.org/infinitekind/appbundler) to build the Mac app.
+We're using a forked version of [appbundler](https://bitbucket.org/infinitekind/appbundler) to build the Mac app.  It has better support for OS X but requires that the JRE be included in the app.
+
+Things to bear in mind:
+* the app's executable is stored in `/Contents/MacOS/` and must have execute permissions
+* PathVisio is registered as the editor for `.gpml` files and while double clicking on those files will open PathVisio, it will not load the file because it does not implement `com.apple.eawt.OpenFilesHandler`.
