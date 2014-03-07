@@ -2,7 +2,7 @@
 
 This contains everything needed to build the PGKB PathVisio plugin and create the PGKB PathVisio distribution.
 
-We are relying on a custom build of PathVisio 2.0.11 which adds `PathwayElementEvent.getProperty()`.  This is critical for us to support what we're doing with the `PropertyDisplayManager` (i.e. the right info panel).
+We are relying on a [fork of PathVisio 2.0.11](https://github.com/PharmGKB/pathvisio2).  The primary change is the addition of `PathwayElementEvent.getProperty()`.  This is critical for us to support what we're doing with the `PropertyDisplayManager` (i.e. the right info panel).
 
 
 
