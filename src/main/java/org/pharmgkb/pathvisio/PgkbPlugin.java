@@ -141,13 +141,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			System.out.println("Done initializing PgkbPlugin");
 		} catch (Exception ex) {
 			Logger.log.error("Error initializing plugin", ex);
-      JOptionPane.showMessageDialog(m_desktop.getFrame(),
-          "Uh-oh.  Something went hideously wrong.\n" +
-              ex.getClass().getSimpleName() + ":\n" +
-              ex.getMessage() +
-              "\n\nDO NOT CONTINUE USING PATHVISIO!\n\n" +
-              "Please go yell at Mark.\n\n",
-          "Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
+      showErrorMessage(ex);
 			throw ex;
 		}
 	}
@@ -406,17 +400,30 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 		} catch (Exception ex) {
 			Logger.log.error("Error initializing PharmGKB plugin", ex);
-			JOptionPane.showMessageDialog(m_desktop.getFrame(),
-					"Uh-oh.  Something went hideously wrong.\n" +
-							ex.getClass().getSimpleName() + ":\n" +
-							ex.getMessage() +
-							"\n\nDO NOT CONTINUE USING PATHVISIO!\n\n" +
-							"Please go yell at Mark.\n\n",
-					"Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
-			ex.printStackTrace();
+      showErrorMessage(ex);
 		}
 		System.out.println("  done initializing properties");
 	}
+
+  private void showErrorMessage(Throwable t) {
+
+    StringBuilder errBuilder = new StringBuilder();
+    while (t != null) {
+      if (errBuilder.length() != 0) {
+        errBuilder.append("\nCaused by ");
+      }
+      errBuilder.append(t.getClass().getSimpleName())
+          .append(":\n  ")
+          .append(t.getMessage());
+      t = t.getCause();
+    }
+    JOptionPane.showMessageDialog(m_desktop.getFrame(),
+        "Uh-oh.  Something went hideously wrong.\n\n" +
+            errBuilder.toString() +
+            "\n\nDO NOT CONTINUE USING PATHVISIO!\n\n" +
+            "Please go yell at Mark.\n\n",
+        "Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
+  }
 
 	/**
 	 * Creates a dictionary property type that's based on PharmGKB data file.
