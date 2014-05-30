@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.annotation.Nullable;
 import org.pathvisio.debug.Logger;
 import org.pathvisio.preferences.GlobalPreference;
 import org.pharmgkb.exception.PgkbException;
@@ -57,7 +58,7 @@ public class IoUtils {
 	 * Saves a URL as a local file.  If file already exists locally, it will only be downloaded again if it has been
 	 * modified on the server.
 	 */
-	public static File downloadFromUrl(String urlValue, String fileName) throws PgkbException {
+	public static @Nullable File downloadFromUrl(String urlValue, String fileName) throws PgkbException {
 
 		try {
 			URL url = new URL(urlValue);
