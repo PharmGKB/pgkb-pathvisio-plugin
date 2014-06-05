@@ -36,6 +36,8 @@
 package org.pharmgkb.pathvisio;
 
 import java.awt.event.MouseEvent;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JDialog;
 import org.pathvisio.gui.swing.PvDesktop;
 import org.pathvisio.model.ObjectType;
@@ -61,7 +63,7 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 	private NewDictionaryElementDialog m_newDictionaryElementDialog;
 	private PvDesktop m_desktop;
 
-	public NodeTemplate(PgkbType type, PvDesktop desktop, DictionaryPropertyType dictPropType) {
+	public NodeTemplate(@Nonnull PgkbType type, @Nonnull PvDesktop desktop, @Nullable DictionaryPropertyType dictPropType) {
 		super(type.getDataNodeType());
 		m_type = type;
 		m_name = m_type.getDisplayName();
