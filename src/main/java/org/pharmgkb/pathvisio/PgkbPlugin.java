@@ -421,7 +421,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 	private boolean downloadAndUnpackFile() throws PgkbException {
 
-		String url = "http://www.pharmgkb.org/download.do?objId=pathvisio.zip&ref=pgkb-pathvisio";
+		String url = "https://www.pharmgkb.org/download.do?objId=pathvisio.zip&ref=pgkb-pathvisio";
 		// download and unzip data file
 		System.out.println("Checking " + url);
 		File downloadedFile = IoUtils.downloadFromUrl(url, "pathvisio.zip");
