@@ -1,249 +1,248 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <pathvisio>
-    <properties>
-        <property id="pgkb.pgkbId" name="PharmGKB ID" description="PharmGKB ID" type="core.STRING"
-                  order="12" editable="false" />
+  <properties>
+    <property id="pgkb.pgkbId" name="PharmGKB ID" description="PharmGKB ID" type="core.STRING"
+        order="12" editable="false" />
 
-        <property id="pgkb.subId" name="Submission ID" description="Submission ID" type="core.STRING"
-                  order="13" editable="false" />
+    <property id="pgkb.subId" name="Submission ID" description="Submission ID" type="core.STRING"
+        order="13" editable="false" />
 
-        <property id="pgkb.classification" name="ATC Codes" type="DICTIONARY" typeId="pgkb.atcDictionary"
-                  description="Therapeutic classification"  multiSelect="true"
-                  order="15" />
+    <property id="pgkb.classification" name="ATC Codes" type="DICTIONARY" typeId="pgkb.atcDictionary"
+        description="Therapeutic classification"  multiSelect="true"
+        order="15" />
 
-        <property id="pgkb.memberGenes" name="Member Genes" type="DICTIONARY" typeId="pgkb.geneDictionary"
-                  description="Genes that are the members of this gene group or gene collection."
-                  multiSelect="true"
-                  order="16"/>
+    <property id="pgkb.memberGenes" name="Member Genes" type="DICTIONARY" typeId="pgkb.geneDictionary"
+        description="Genes that are the members of this gene group or gene collection."
+        multiSelect="true"
+        order="16"/>
 
-        <property id="pgkb.memberDrugs" name="Member Drugs" type="DICTIONARY" typeId="pgkb.drugDictionary"
-                  description="Genes that are the members of this drug collection."
-                  multiSelect="true"
-                  order="17"/>
+    <property id="pgkb.memberDrugs" name="Member Drugs" type="DICTIONARY" typeId="pgkb.drugDictionary"
+        description="Genes that are the members of this drug collection."
+        multiSelect="true"
+        order="17"/>
 
-        <property id="pgkb.geneComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.geneDictionary"
-                  description="Genes that are components of this complex."
-                  multiSelect="true"
-                  order="18"/>
+    <property id="pgkb.geneComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.geneDictionary"
+        description="Genes that are components of this complex."
+        multiSelect="true"
+        order="18"/>
 
-        <property id="pgkb.drugComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.drugOnlyDictionary"
-                  description="Genes that are components of this complex."
-                  multiSelect="true"
-                  order="18"/>
+    <property id="pgkb.drugComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.drugOnlyDictionary"
+        description="Genes that are components of this complex."
+        multiSelect="true"
+        order="18"/>
 
-        <property id="pgkb.reactionName" name="Reaction Name" type="core.STRING" description="Name of the interaction."
-                  order="19"/>
-        <property id="pgkb.externalXrefDb" name="Xref Database Name" type="core.STRING" description="Name of External Cross Reference Database."
-                  order="20"/>
-        <property id="pgkb.externalXrefId" name="Xref Database Id" type="core.STRING" description="External Cross Reference Id."
-                  order="21"/>
+    <property id="pgkb.reactionName" name="Reaction Name" type="core.STRING" description="Name of the interaction."
+        order="19"/>
+    <property id="pgkb.externalXrefDb" name="Xref Database Name" type="core.STRING" description="Name of External Cross Reference Database."
+        order="20"/>
+    <property id="pgkb.externalXrefId" name="Xref Database Id" type="core.STRING" description="External Cross Reference Id."
+        order="21"/>
 
-        <property id="pgkb.cellularLocation" name="Cellular Location" type="ENUM"
-                  description="Cellular Location" defaultValue="Unknown"
-                  order="29">
-            <option name="Unknown"/>
-            <option name="Extracellular"/>
-            <option name="Transmembrane"/>
-            <option name="Intracellular"/>
-            <!-- option name="Nucleaus + DNA"/ -->
-        </property>
+    <property id="pgkb.cellularLocation" name="Cellular Location" type="ENUM"
+        description="Cellular Location" defaultValue="Unknown"
+        order="29">
+      <option name="Unknown"/>
+      <option name="Extracellular"/>
+      <option name="Transmembrane"/>
+      <option name="Intracellular"/>
+      <!-- option name="Nucleaus + DNA"/ -->
+    </property>
 
-        <property id="pgkb.transmembraneTypes" name="Transmembrane Types" type="ENUM"
-                  description="Transmembrane Types" defaultValue="Plasma Membrane"
-                  order="30">
-            <option name="Plasma Membrane"/>
-            <option name="Apical Plasma Membrane"/>
-            <option name="Basolateral Plasma Membrane"/>
-            <option name="Vesicle Membrane"/>
-        </property>
+    <property id="pgkb.transmembraneTypes" name="Transmembrane Types" type="ENUM"
+        description="Transmembrane Types" defaultValue="Plasma Membrane"
+        order="30">
+      <option name="Plasma Membrane"/>
+      <option name="Apical Plasma Membrane"/>
+      <option name="Basolateral Plasma Membrane"/>
+      <option name="Vesicle Membrane"/>
+    </property>
 
-        <property id="pgkb.cell" name="Cell" type="DICTIONARY" typeId="pgkb.clDictionary"
-                  description="Cell Name." multiSelect="false"
-                  order="31" />
+    <property id="pgkb.cell" name="Cell" type="DICTIONARY" typeId="pgkb.clDictionary"
+        description="Cell Name." multiSelect="false"
+        order="31" />
 
-        <property id="pgkb.modification" name="Modification" type="ENUM"
-                  description="Modification" defaultValue="None"
-                  order="32">
-            <option name="None"/>
-            <option name="Phosphorylation"/>
-            <option name="Ubiquitination"/>
-            <option name="Hydroxylation"/>
-        </property>
+    <property id="pgkb.modification" name="Modification" type="ENUM"
+        description="Modification" defaultValue="None"
+        order="32">
+      <option name="None"/>
+      <option name="Phosphorylation"/>
+      <option name="Ubiquitination"/>
+      <option name="Hydroxylation"/>
+    </property>
 
-        <property id="pgkb.phosphateNumber" name="Phosphate Number" type="ENUM" description="Number of Phosphate."
-                  defaultValue="1" order="33">
-            <option name="1"/>
-            <option name="2"/>
-            <option name="3"/>
-            <option name="4"/>
-            <option name="5"/>
-        </property>
+    <property id="pgkb.phosphateNumber" name="Phosphate Number" type="ENUM" description="Number of Phosphate."
+        defaultValue="1" order="33">
+      <option name="1"/>
+      <option name="2"/>
+      <option name="3"/>
+      <option name="4"/>
+      <option name="5"/>
+    </property>
 
-        <property id="pgkb.phosphatePosition" name="Phosphate Position" type="core.STRING" description="Position of Phosphate."
-                order="34">
-        </property>
+    <property id="pgkb.phosphatePosition" name="Phosphate Position" type="core.STRING" description="Position of Phosphate."
+        order="34">
+    </property>
 
-        <property id="pgkb.prodrug" name="Is Prodrug" type="core.BOOLEAN"
-                  description="Is this drug a prodrug?"
-                  order="50" />
+    <property id="pgkb.prodrug" name="Is Prodrug" type="core.BOOLEAN"
+        description="Is this drug a prodrug?"
+        order="50" />
 
-        <property id="pgkb.role" name="Role" type="ENUM"
-                  description="Role" defaultValue="NA"
-                  order="60">
-            <option name="NA"/>
-            <option name="Primary Metabolizing Enzyme"/>
-            <option name="Secondary Metabolizing Enzyme"/>
-        </property>
+    <property id="pgkb.role" name="Role" type="ENUM"
+        description="Role" defaultValue="NA"
+        order="60">
+      <option name="NA"/>
+      <option name="Primary Metabolizing Enzyme"/>
+      <option name="Secondary Metabolizing Enzyme"/>
+    </property>
 
-        <property id="pgkb.state" name="State" type="ENUM"
-                  description="State" defaultValue="NA"
-                  order="70">
-            <option name="NA"/>
-            <option name="Active"/>
-            <option name="Inactive"/>
-        </property>
+    <property id="pgkb.state" name="State" type="ENUM"
+        description="State" defaultValue="NA"
+        order="70">
+      <option name="NA"/>
+      <option name="Active"/>
+      <option name="Inactive"/>
+    </property>
 
-        <property id="pgkb.uncharacterized" name="Uncharacterized" type="core.BOOLEAN"
-                  description="Uncharacterized" defaultValue="false"
-                  order="75" />
+    <property id="pgkb.uncharacterized" name="Uncharacterized" type="core.BOOLEAN"
+        description="Uncharacterized" defaultValue="false"
+        order="75" />
 
-        <property id="pgkb.coe" name="CoE" type="DICTIONARY"
-                  description="Categories of Evidence" multiSelect="true"
-                  order="80">
-            <option id="PD" name="PD"/>
-            <option id="PK" name="PK"/>
-        </property>
+    <property id="pgkb.coe" name="CoE" type="DICTIONARY"
+        description="Categories of Evidence" multiSelect="true"
+        order="80">
+      <option id="PD" name="PD"/>
+      <option id="PK" name="PK"/>
+    </property>
 
-        <property id="pgkb.lineStrength" name="Strength" type="ENUM" description="How strong the reaction is."
-                  defaultValue="Normal" order="150">
-            <option name="Normal" data="1.5"/>
-            <option name="Major" data="3"/>
-            <option name="Minor" data="0.5"/>
-        </property>
+    <property id="pgkb.lineStrength" name="Strength" type="ENUM" description="How strong the reaction is."
+        defaultValue="Normal" order="150">
+      <option name="Normal" data="1.5"/>
+      <option name="Major" data="3"/>
+      <option name="Minor" data="0.5"/>
+    </property>
 
-        <property id="pgkb.isReversible" name="Reversible" type="core.BOOLEAN" description="Is the reaction reversible?"
-                  defaultValue="false" order="151"/>
+    <property id="pgkb.isReversible" name="Reversible" type="core.BOOLEAN" description="Is the reaction reversible?"
+        defaultValue="false" order="151"/>
 
-        <property id="pgkb.isConnectingLine" name="Connecting Line" type="core.BOOLEAN"
-                  description="This line is for connecting to a main line."
-                  defaultValue="false" order="161" />
+    <property id="pgkb.isConnectingLine" name="Connecting Line" type="core.BOOLEAN"
+        description="This line is for connecting to a main line."
+        defaultValue="false" order="161" />
 
-        <property id="pgkb.drawingOnly" name="Drawing Only" type="core.BOOLEAN"
-                  description="This line is for drawing purpose only, not to be translated to BioPAX."
-                  order="170"/>
+    <property id="pgkb.drawingOnly" name="Drawing Only" type="core.BOOLEAN"
+        description="This line is for drawing purpose only, not to be translated to BioPAX."
+        order="170"/>
 
-    </properties>
+  </properties>
 
 
-    <objects>
+  <objects>
+    <object id="pgkb.pathway" name="Pathway" type="MAPPINFO">
+      <property id="pgkb.pgkbId"/>
+      <property id="pgkb.subId"/>
+      <property id="pgkb.classification"/>
+      <property id="pgkb.coe"/>
+    </object>
 
-        <object id="pgkb.pathway" name="Pathway" type="MAPPINFO">
-            <property id="pgkb.pgkbId"/>
-            <property id="pgkb.subId"/>
-            <property id="pgkb.classification"/>
-            <property id="pgkb.coe"/>
-        </object>
+    <object id="pgkb.dataNode" name="Data Node" type="DATANODE">
+      <controlProperty id="pgkb.type" condition="Gene">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Haplotype">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Drug">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Drug Class">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Disease">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Pathway">
+        <dependentProperty id = "pgkb.pgkbId"/>
+      </controlProperty>
+      <property id="pgkb.type"/>
+      <property id="pgkb.cellularLocation"/>
+      <property id="pgkb.modification"/>
+      <property id="pgkb.cell"/>
+      <controlProperty id="pgkb.type" condition="Gene">
+        <dependentProperty id="pgkb.role"/>
+        <dependentProperty id="pgkb.state"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Haplotype">
+        <dependentProperty id="pgkb.role"/>
+        <dependentProperty id="pgkb.state"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene Group">
+        <dependentProperty id="pgkb.memberGenes"/>
+        <dependentProperty id="pgkb.state"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene Collection">
+        <dependentProperty id="pgkb.memberGenes"/>
+        <dependentProperty id="pgkb.state"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Drug Collection">
+        <dependentProperty id="pgkb.memberDrugs"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Drug Complex">
+        <dependentProperty id="pgkb.drugComplexComponents"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene Complex">
+        <dependentProperty id="pgkb.geneComplexComponents"/>
+        <dependentProperty id="pgkb.externalXrefDb"/>
+        <dependentProperty id="pgkb.externalXrefId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.modification" condition="Phosphorylation">
+        <dependentProperty id="pgkb.phosphateNumber"/>
+      </controlProperty>
+      <controlProperty id="pgkb.modification" condition="Phosphorylation">
+        <dependentProperty id="pgkb.phosphatePosition"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Metabolite">
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.uncharacterized" />
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Drug">
+        <dependentProperty id="pgkb.prodrug"/>
+      </controlProperty>
+      <controlProperty id="pgkb.cellularLocation" condition="Transmembrane">
+        <dependentProperty id="pgkb.transmembraneTypes"/>
+      </controlProperty>
+      <property id="pgkb.drawingOnly"/>
+    </object>
 
-        <object id="pgkb.dataNode" name="Data Node" type="DATANODE">
-            <controlProperty id="pgkb.type" condition="Gene">
-                <dependentProperty id="pgkb.pgkbId"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Haplotype">
-                <dependentProperty id="pgkb.pgkbId"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Drug">
-                <dependentProperty id="pgkb.pgkbId"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Drug Class">
-                <dependentProperty id="pgkb.pgkbId"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Disease">
-                <dependentProperty id="pgkb.pgkbId"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Pathway">
-                <dependentProperty id = "pgkb.pgkbId"/>
-            </controlProperty>
-            <property id="pgkb.type"/>
-            <property id="pgkb.cellularLocation"/>
-            <property id="pgkb.modification"/>
-            <property id="pgkb.cell"/>
-            <controlProperty id="pgkb.type" condition="Gene">
-                <dependentProperty id="pgkb.role"/>
-                <dependentProperty id="pgkb.state"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Haplotype">
-                <dependentProperty id="pgkb.role"/>
-                <dependentProperty id="pgkb.state"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Gene Group">
-                <dependentProperty id="pgkb.memberGenes"/>
-                <dependentProperty id="pgkb.state"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Gene Collection">
-                <dependentProperty id="pgkb.memberGenes"/>
-                <dependentProperty id="pgkb.state"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Drug Collection">
-                <dependentProperty id="pgkb.memberDrugs"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Drug Complex">
-                <dependentProperty id="pgkb.drugComplexComponents"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Gene Complex">
-                <dependentProperty id="pgkb.geneComplexComponents"/>
-                <dependentProperty id="pgkb.externalXrefDb"/>
-                <dependentProperty id="pgkb.externalXrefId"/>
-            </controlProperty>
-            <controlProperty id="pgkb.modification" condition="Phosphorylation">
-                <dependentProperty id="pgkb.phosphateNumber"/>
-            </controlProperty>
-            <controlProperty id="pgkb.modification" condition="Phosphorylation">
-                <dependentProperty id="pgkb.phosphatePosition"/>
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Metabolite">
-                <dependentProperty id="pgkb.state"/>
-                <dependentProperty id="pgkb.uncharacterized" />
-            </controlProperty>
-            <controlProperty id="pgkb.type" condition="Drug">
-                <dependentProperty id="pgkb.prodrug"/>
-            </controlProperty>
-            <controlProperty id="pgkb.cellularLocation" condition="Transmembrane">
-                <dependentProperty id="pgkb.transmembraneTypes"/>
-            </controlProperty>
-            <property id="pgkb.drawingOnly"/>
-        </object>
+    <object id="pgkb.shape" name="Shape" type="SHAPE">
+      <property id="pgkb.drawingOnly"/>
+    </object>
 
-        <object id="pgkb.shape" name="Shape" type="SHAPE">
-            <property id="pgkb.drawingOnly"/>
-        </object>
-
-        <object id="pgkb.line" name="Line" type="LINE">
-            <property id="pgkb.biopaxInteractionType"/>
-            <property id="pgkb.reactionName"/>
-            <property id="pgkb.externalXrefDb"/>
-            <property id="pgkb.externalXrefId"/>
-            <property id="pgkb.lineStrength"/>
-            <controlProperty id="pgkb.biopaxInteractionType" condition="Conversion">
-                <dependentProperty id="pgkb.isReversible"/>
-            </controlProperty>
-            <controlProperty id="pgkb.biopaxInteractionType" condition="Biochemical Reaction">
-                <dependentProperty id="pgkb.isReversible"/>
-            </controlProperty>
-            <controlProperty id="pgkb.biopaxInteractionType" condition="Complex Assembly">
-                <dependentProperty id="pgkb.isReversible"/>
-            </controlProperty>
-            <controlProperty id="pgkb.biopaxInteractionType" condition="Template Reaction">
-                <dependentProperty id="pgkb.isReversible"/>
-            </controlProperty>
-            <controlProperty id="pgkb.biopaxInteractionType" condition="Transport">
-                <dependentProperty id="pgkb.isReversible"/>
-            </controlProperty>
-            <controlProperty id="pgkb.biopaxInteractionType" condition="Degradation">
-                <dependentProperty id="pgkb.isReversible"/>
-            </controlProperty>
-            <property id="pgkb.isConnectingLine"/>
-            <property id="pgkb.drawingOnly"/>
-        </object>
-    </objects>
+    <object id="pgkb.line" name="Line" type="LINE">
+      <property id="pgkb.biopaxInteractionType"/>
+      <property id="pgkb.reactionName"/>
+      <property id="pgkb.externalXrefDb"/>
+      <property id="pgkb.externalXrefId"/>
+      <property id="pgkb.lineStrength"/>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Conversion">
+        <dependentProperty id="pgkb.isReversible"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Biochemical Reaction">
+        <dependentProperty id="pgkb.isReversible"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Complex Assembly">
+        <dependentProperty id="pgkb.isReversible"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Template Reaction">
+        <dependentProperty id="pgkb.isReversible"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Transport">
+        <dependentProperty id="pgkb.isReversible"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Degradation">
+        <dependentProperty id="pgkb.isReversible"/>
+      </controlProperty>
+      <property id="pgkb.isConnectingLine"/>
+      <property id="pgkb.drawingOnly"/>
+    </object>
+  </objects>
 </pathvisio>
