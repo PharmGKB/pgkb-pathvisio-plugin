@@ -1,2 +1,0 @@
-appbundler.jar            AppBundler 28906ebf8f14 [local build]
-                          from https://bitbucket.org/infinitekind/appbundler
