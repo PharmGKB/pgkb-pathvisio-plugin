@@ -22,6 +22,8 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -46,12 +48,10 @@ import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.core.model.Property;
 import org.pathvisio.core.model.PropertyManager;
 import org.pathvisio.core.model.PropertyType;
-import org.pathvisio.core.model.ShapeType;
 import org.pathvisio.core.model.StaticProperty;
 import org.pathvisio.core.preferences.GlobalPreference;
 import org.pathvisio.core.util.Resources;
 import org.pathvisio.core.util.Utils;
-import org.pathvisio.core.view.DefaultTemplates;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.desktop.plugin.Plugin;
 import org.pathvisio.gui.CommonActions;
@@ -74,12 +74,17 @@ import org.w3c.dom.NodeList;
  * @author Rebecca Tang
  */
 public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.ApplicationEventListener {
-	public static String TYPE_DICTIONARY = "DICTIONARY";
-	public static String TYPE_ENUM = "ENUM";
+	public static final String TYPE_DICTIONARY = "DICTIONARY";
+	public static final String TYPE_ENUM = "ENUM";
+
+	private static final Component sf_spacer = Box.createRigidArea(new Dimension(4, 0));
+	private static final Component sf_borderSpacer = Box.createRigidArea(new Dimension(8, 0));
+	private static final Border sf_buttonBorder = new EmptyBorder(4, 4, 4, 4);
 
 	private PvDesktop m_desktop;
 	private ObjectPropertyManager m_objectPropertiesManager;
 	private Set<Action> m_actions = new HashSet<>();
+	
 
 
 	@Override
@@ -87,18 +92,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 		try {
 			System.out.println("Initializing PgkbPlugin");
-/*			LookAndFeelFactory.setDefaultStyle(LookAndFeelFactory.ECLIPSE_STYLE);
-			try {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} catch (Exception ex) {
-				throw new RuntimeException("Error setting look and feel", ex);
-			}
-			*/
 			// customize UI behavior
 			try {
 				// need to set class manager (see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4155617)
 				UIManager.put("ClassLoader", this.getClass().getClassLoader());
-			    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			} catch (Exception ex) {
 				Logger.log.error("Unable to load native look and feel", ex);
 			}
@@ -128,11 +126,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	}
 
 
-	private void addToToolbar(JToolBar toolbar, Action action, Border buttonBorder) {
+	private void addToToolbar(JToolBar toolbar, Action action) {
 		action.setEnabled(false);
 		m_actions.add(action);
 		JButton button = toolbar.add(action);
-		button.setBorder(buttonBorder);
+		button.setBorder(sf_buttonBorder);
 		button.setFocusable(false);
 		disableToolbarItem(button);
 	}
@@ -162,12 +160,9 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.LINE_AXIS));
 		toolbar.removeAll();
 		swingEngine.getApplicationPanel().getToolbarGroup(MainPanel.TB_GROUP_SHOW_IF_VPATHWAY).clear();
-		Dimension spacerSize = new Dimension(4, 0);
-		Dimension borderSpacerSize = new Dimension(8, 0);
-		Border buttonBorder = new EmptyBorder(4, 4, 4, 4);
 
 		// zoom
-		toolbar.add(Box.createRigidArea(spacerSize));
+		toolbar.add(sf_spacer);
 		JLabel label = new JLabel("Zoom:", JLabel.LEFT);
 		addToToolbar(toolbar, label);
 		label.setAlignmentY(JLabel.CENTER_ALIGNMENT);
@@ -176,51 +171,38 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		zoomCombo.setEditable(true);
 		zoomCombo.setSelectedIndex(5); // 100%
 		zoomCombo.addActionListener(new ZoomComboListener());
-		addToToolbar(toolbar,zoomCombo);
+		addToToolbar(toolbar, zoomCombo);
 
-		toolbar.add(Box.createRigidArea(borderSpacerSize));
+		toolbar.add(sf_borderSpacer);
 		toolbar.addSeparator();
-		toolbar.add(Box.createRigidArea(borderSpacerSize));
+		toolbar.add(sf_borderSpacer);
 
 		// interactions
+		label = new JLabel("Edges:", JLabel.LEFT);
+		addToToolbar(toolbar, label);
 		JComboBox<Action> interactionCombo = new JComboBox<>();
-		String longestValue = "";
-    Action longestAction = null;
 		for (BiopaxInteractionType interactionType : BiopaxInteractionType.values()) {
 			Action action = new CommonActions.NewElementAction(swingEngine.getEngine(), new LineTemplate(interactionType));
 			interactionCombo.addItem(action);
-      if (longestValue.length() < interactionType.getDisplayName().length()) {
-        longestValue = interactionType.getDisplayName();
-        longestAction = action;
-      }
 		}
-		interactionCombo.setPrototypeDisplayValue(longestAction);
-		interactionCombo.setMaximumSize(interactionCombo.getPreferredSize());
-		interactionCombo.setMaximumRowCount(interactionCombo.getItemCount());
-		addToToolbar(toolbar, interactionCombo);
-		toolbar.add(Box.createRigidArea(spacerSize));
-		JButton lineButton = new JButton(new ImageIcon(Resources.getResourceURL("newlineshapemenu.gif")));
-		lineButton.setBorder(buttonBorder);
-		lineButton.setToolTipText("Add interaction");
+		addToToolbar(toolbar, optimizeComboBox(interactionCombo));
+		toolbar.add(sf_spacer);
+		JButton lineButton = new JButton(new ImageIcon(Resources.getResourceURL("newarrow.gif")));
+		lineButton.setBorder(sf_buttonBorder);
+		lineButton.setToolTipText("Add edge");
 		lineButton.addActionListener(new ActionComboListener(interactionCombo));
 		addToToolbar(toolbar, lineButton);
 
-		toolbar.add(Box.createRigidArea(borderSpacerSize));
+		toolbar.add(sf_borderSpacer);
 		toolbar.addSeparator();
-		toolbar.add(Box.createRigidArea(borderSpacerSize));
+		toolbar.add(sf_borderSpacer);
 
-		// quick object buttons
-		addNewNodeAction(toolbar, spacerSize, PgkbType.GENE, DictionaryPropertyType.GENE_DICTIONARY_ID, KeyEvent.VK_1, buttonBorder);
-		addNewNodeAction(toolbar, spacerSize, PgkbType.GENE_COLLECTION, null, KeyEvent.VK_2, buttonBorder);
-		addNewNodeAction(toolbar, spacerSize, PgkbType.DRUG, DictionaryPropertyType.DRUG_ONLY_DICTIONARY_ID, KeyEvent.VK_3, buttonBorder);
-		addNewNodeAction(toolbar, spacerSize, PgkbType.BIOLOGICAL_INTERMEDIATE, null, KeyEvent.VK_4, buttonBorder);
-
-		// other objects
-		JComboBox<Action> objectCombo = new JComboBox<>();
-		longestValue = "";
-    longestAction = null;
+		// nodes
+		JComboBox<Action> nodeCombo = new JComboBox<>();
+		JComboBox<Action> shapeCombo = new JComboBox<>();
 		for (PgkbType type : PgkbType.values()) {
 			String dictPropTypeId = null;
+			boolean dictValueRequired = true;
 			switch (type) {
 				case GENE:
 				case GENE_COLLECTION:
@@ -230,86 +212,127 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				case HAPLOTYPE:
 					dictPropTypeId = DictionaryPropertyType.PGKB_HAPLOTYPE_DICTIONARY_ID;
 					break;
+				case METABOLITE:
+				case ION:
+					dictPropTypeId = DictionaryPropertyType.DRUG_DICTIONARY_ID;
+					dictValueRequired = false;
+					break;
 				case DRUG_CLASS:
 					dictPropTypeId = DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID;
 					break;
+				case PHENOTYPE:
+					dictValueRequired = false;
 				case DISEASE:
 					dictPropTypeId = DictionaryPropertyType.DISEASE_DICTIONARY_ID;
 					break;
 				case PATHWAY:
 					dictPropTypeId = DictionaryPropertyType.PGKB_PATHWAY_DICTIONARY_ID;
 					break;
-
 			}
-			if (type == PgkbType.GENE || type == PgkbType.GENE_COLLECTION || type == PgkbType.DRUG ||
-					type == PgkbType.BIOLOGICAL_INTERMEDIATE) {
-				continue;
+			Action action = newNodeAction(type, dictPropTypeId, dictValueRequired, -1);
+			if (type.isDrawingOnly()) {
+				shapeCombo.addItem(action);
+			} else {
+				nodeCombo.addItem(action);
 			}
-      Action action = addNewNodeAction(null, null, type, dictPropTypeId, -1, buttonBorder);
-			objectCombo.addItem(action);
-      if (longestValue.length() < type.getDisplayName().length()) {
-        longestValue = type.getDisplayName();
-        longestAction = action;
-      }
 		}
-		objectCombo.setPrototypeDisplayValue(longestAction);
-		objectCombo.setMaximumSize(objectCombo.getPreferredSize());
-		objectCombo.setMaximumRowCount(objectCombo.getItemCount());
-		addToToolbar(toolbar, objectCombo);
-		toolbar.add(Box.createRigidArea(spacerSize));
-		JButton elementButton = new JButton(new ImageIcon(Resources.getResourceURL("newrectangle.gif")));
-		elementButton.setBorder(buttonBorder);
-		elementButton.setToolTipText("Add element");
-		elementButton.addActionListener(new ActionComboListener(objectCombo));
-		addToToolbar(toolbar, elementButton);
 
-		toolbar.add(Box.createRigidArea(spacerSize));
+		label = new JLabel("Nodes:", JLabel.LEFT);
+		addToToolbar(toolbar, label);
+
+		// quick object buttons
+		addAction(toolbar, newNodeAction(PgkbType.GENE, DictionaryPropertyType.GENE_DICTIONARY_ID, true, KeyEvent.VK_1),
+				PgkbType.GENE);
+		addAction(toolbar, newNodeAction(PgkbType.GENE_COLLECTION, KeyEvent.VK_2),
+				PgkbType.GENE_COLLECTION);
+		addAction(toolbar, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_ONLY_DICTIONARY_ID, true, KeyEvent.VK_3),
+				PgkbType.DRUG);
+		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.DRUG_ONLY_DICTIONARY_ID, false, KeyEvent.VK_4),
+				PgkbType.BIOLOGICAL_INTERMEDIATE);
+		// node dropdown
+		addToToolbar(toolbar, optimizeComboBox(nodeCombo));
+		toolbar.add(sf_spacer);
+		JButton newNodeButton = new JButton(new ImageIcon(Resources.getResourceURL("newrectangle.gif")));
+		newNodeButton.setBorder(sf_buttonBorder);
+		newNodeButton.setToolTipText("Add node");
+		newNodeButton.addActionListener(new ActionComboListener(nodeCombo));
+		addToToolbar(toolbar, newNodeButton);
+
+		toolbar.add(sf_borderSpacer);
 		toolbar.addSeparator();
-		toolbar.add(Box.createRigidArea(borderSpacerSize));
+		toolbar.add(sf_borderSpacer);
 
-		addToToolbar(toolbar, new CommonActions.NewElementAction(swingEngine.getEngine(),
-				new DefaultTemplates.ShapeTemplate(ShapeType.ARC)), buttonBorder);
-		addToToolbar(toolbar, new CommonActions.NewElementAction(swingEngine.getEngine(),
-				new DefaultTemplates.ShapeTemplate(ShapeType.BRACE)), buttonBorder);
+		label = new JLabel("BG Locations:", JLabel.LEFT);
+		addToToolbar(toolbar, label);
 
-		toolbar.add(Box.createRigidArea(spacerSize));
+		addToToolbar(toolbar, optimizeComboBox(shapeCombo));
+		toolbar.add(sf_spacer);
+		JButton newShapeButton = new JButton(new ImageIcon(Resources.getResourceURL("newmitochondria.gif")));
+		newShapeButton.setBorder(sf_buttonBorder);
+		newShapeButton.setToolTipText("Add shape");
+		newShapeButton.addActionListener(new ActionComboListener(shapeCombo));
+		addToToolbar(toolbar, newShapeButton);
+
+		toolbar.add(sf_spacer);
 		toolbar.addSeparator();
-		toolbar.add(Box.createRigidArea(borderSpacerSize));
+		toolbar.add(sf_borderSpacer);
 
 		// add default layout actions to toolbar
 		for(Action layoutAction : swingEngine.getActions().layoutActions) {
-			addToToolbar(toolbar, layoutAction, buttonBorder);
+			addToToolbar(toolbar, layoutAction);
 		}
 
 		addToToolbar(toolbar, Box.createHorizontalGlue());
 		System.out.println("  done initializing actions");
 	}
 
-	private Action addNewNodeAction(JToolBar toolbar, Dimension spacerSize, PgkbType type, String dictPropTypeId,
-			int keyStroke, Border buttonBorder) {
+	private JComboBox optimizeComboBox(@Nonnull JComboBox<Action> comboBox) {
+
+		String longestValue = "";
+		Action longestAction = null;
+		for (int x = 0; x < comboBox.getItemCount(); x += 1) {
+			Action action = comboBox.getItemAt(x);
+			String name = ((String)action.getValue(Action.NAME));
+			if (longestValue.length() < name.length()) {
+				longestValue = name;
+				longestAction = action;
+			}
+		}
+		comboBox.setPrototypeDisplayValue(longestAction);
+		comboBox.setMaximumSize(comboBox.getPreferredSize());
+		comboBox.setMaximumRowCount(comboBox.getItemCount());
+		return comboBox;
+	}
+
+
+	private void addAction(@Nonnull JToolBar toolbar, @Nonnull Action action, @Nonnull PgkbType type) {
+
+		ImageIcon icon = IconsFactory.getImageIcon(PgkbPlugin.class, type.getShortName() + ".png");
+		if (icon != null) {
+			action.putValue(Action.SMALL_ICON, icon);
+			action.putValue(Action.LARGE_ICON_KEY, icon);
+		}
+		addToToolbar(toolbar, action);
+		toolbar.add(sf_spacer);
+	}
+
+	private Action newNodeAction(@Nonnull PgkbType type, int keyStroke) {
+		return newNodeAction(type, null, false, keyStroke);
+	}
+
+	private Action newNodeAction(@Nonnull PgkbType type, @Nullable String dictPropTypeId, boolean dictValueRequired,
+			int keyStroke) {
 
 		DictionaryPropertyType dictPropType = null;
 		if (dictPropTypeId != null) {
 			dictPropType = (DictionaryPropertyType)PropertyManager.getPropertyType(dictPropTypeId);
 		}
 		Action action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
-				new NodeTemplate(type, m_desktop, dictPropType));
-		ImageIcon icon = IconsFactory.getImageIcon(PgkbPlugin.class, type.getShortName() + ".png");
-		if (icon != null) {
-			action.putValue(Action.SMALL_ICON, icon);
-			action.putValue(Action.LARGE_ICON_KEY, icon);
-		}
+				new NodeTemplate(type, m_desktop, dictPropType, dictValueRequired));
 		if (keyStroke != -1) {
 			action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(keyStroke,
 					Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 			action.putValue(Action.MNEMONIC_KEY, keyStroke);
-		}
-
-		if (toolbar != null) {
-			addToToolbar(toolbar, action, buttonBorder);
-			if (spacerSize != null) {
-				toolbar.add(Box.createRigidArea(spacerSize));
-			}
 		}
 
 		return action;
@@ -412,7 +435,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	}
 
 
-	private DictionaryPropertyType createDictionaryType(String id, String baseFilename, String filterValue)
+	private DictionaryPropertyType createDictionaryType(String id, String baseFilename, @Nullable String filterValue)
       throws PgkbPluginException {
 
 		File dataFile = new File(GlobalPreference.getDataDir(), baseFilename + ".tsv");

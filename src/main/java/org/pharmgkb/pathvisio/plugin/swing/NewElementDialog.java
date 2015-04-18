@@ -20,9 +20,8 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.builder.FormBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 import org.pathvisio.core.util.Utils;
 import org.pathvisio.desktop.PvDesktop;
@@ -50,15 +49,17 @@ public class NewElementDialog extends JDialog implements ActionListener {
 
 		// define main panel's layout
 		FormLayout formLayout = new FormLayout("right:pref, 4dlu, pref", "p");
-		PanelBuilder builder = new PanelBuilder(formLayout);
-    builder.border(Borders.DIALOG);
+		FormBuilder builder = FormBuilder.create()
+				.layout(formLayout)
+				.padding(Paddings.DIALOG);
 
-    CellConstraints cc = new CellConstraints();
 		// build main panel
-		builder.addLabel(m_type.getDisplayName() + ":", cc.xy(1, 1));
+		builder.addLabel(m_type.getDisplayName() + ":")
+				.xy(1, 1);
 		m_textField = new JTextField(30);
 		m_textField.setFocusable(true);
-		builder.add(m_textField, cc.xy(3, 1));
+		builder.add(m_textField)
+				.xy(3, 1);
 		mainPanel.add(builder.getPanel(), BorderLayout.CENTER);
 
 		// build button pane

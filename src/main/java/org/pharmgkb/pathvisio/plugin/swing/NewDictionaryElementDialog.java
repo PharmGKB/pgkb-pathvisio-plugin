@@ -22,13 +22,12 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.builder.FormBuilder;
+import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jidesoft.swing.AutoCompletionComboBox;
+import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.debug.Logger;
-import org.pathvisio.core.util.Utils;
 import org.pathvisio.desktop.PvDesktop;
 import org.pharmgkb.pathvisio.PgkbType;
 import org.pharmgkb.pathvisio.plugin.DictionaryPropertyType;
@@ -43,13 +42,15 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 	private static final String sf_okButtonAction = "OK_BUTTON";
 	private AutoCompletionComboBox m_autocompleteField;
 	private JTextField m_pgkbIdField;
+	private JTextField m_freetextField;
 	private PgkbType m_type;
 	private DictionaryPropertyType m_dictPropertyType;
 	private PvDesktop m_desktop;
 	private String m_selectedName;
 
 
-	public NewDictionaryElementDialog(PvDesktop desktop, PgkbType type, DictionaryPropertyType dictPropType) {
+	public NewDictionaryElementDialog(PvDesktop desktop, PgkbType type, DictionaryPropertyType dictPropType,
+			boolean dictValueRequired) {
 		// initialize JDialog
 		super(desktop.getFrame(), "New " + type.getDisplayName(), true);
 
@@ -59,30 +60,54 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 		JPanel mainPanel = new JPanel(new BorderLayout());
 
 		// define main panel's layout
-		FormLayout formLayout = new FormLayout("right:pref, 4dlu, pref", "p, 3dlu, p");
-		PanelBuilder builder = new PanelBuilder(formLayout);
-		builder.border(Borders.DIALOG);
-		CellConstraints cc = new CellConstraints();
+		FormLayout formLayout;
+		if (dictValueRequired) {
+			formLayout = new FormLayout("right:pref, 4dlu, pref", "p, 3dlu, p");
+		} else {
+			formLayout = new FormLayout("right:pref, 4dlu, pref", "p, 3dlu, p, 3dlu, p, 3dlu, p");
+		}
+
+		FormBuilder builder = FormBuilder.create()
+				.layout(formLayout)
+				.padding(Paddings.DIALOG);
+
 		// build main panel
-		builder.addLabel(m_type.getDisplayName() + ":", cc.xy(1, 1));
+		builder.addLabel(m_type.getDisplayName() + ":")
+				.xy(1, 1);
 		m_autocompleteField = new AutoCompletionComboBox();
 		m_autocompleteField.setStrict(true);
 		m_autocompleteField.setStrictCompletion(true);
 		if (dictPropType.getEntries().isEmpty()) {
 			Logger.log.error("DictionaryProperty '" + dictPropType.getId() + "' has no entries");
 		} else {
+			//noinspection unchecked
 			m_autocompleteField.addItem(EMPTY_SELECTION);
 			for (String value : dictPropType.getReverseEnteries().keySet()) {
+				//noinspection unchecked
 				m_autocompleteField.addItem(value);
 			}
 		}
 		m_autocompleteField.addItemListener(this);
 		m_autocompleteField.setFocusable(true);
-		builder.add(m_autocompleteField, cc.xy(3, 1));
-		builder.addLabel("PharmGKB ID:", cc.xy(1, 3));
+		builder.add(m_autocompleteField)
+				.xy(3, 1);
+		builder.addLabel("PharmGKB ID:")
+				.xy(1, 3);
 		m_pgkbIdField = new JTextField();
 		m_pgkbIdField.setEditable(false);
-		builder.add(m_pgkbIdField, cc.xy(3, 3));
+		builder.add(m_pgkbIdField)
+				.xy(3, 3);
+
+		if (!dictValueRequired) {
+			builder.addLabel(" -- OR --")
+					.xy(1, 5);
+			builder.addLabel("Name:")
+					.xy(1, 7);
+			m_freetextField = new JTextField(30);
+			builder.add(m_freetextField)
+					.xy(3, 7);
+		}
+
 		mainPanel.add(builder.getPanel(), BorderLayout.CENTER);
 
 		// build button pane
@@ -121,6 +146,9 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 		m_autocompleteField.setSelectedItem(EMPTY_SELECTION);
 		m_autocompleteField.requestFocusInWindow();
 		m_pgkbIdField.setText("");
+		if (m_freetextField != null) {
+			m_freetextField.setText("");
+		}
 	}
 
 
@@ -137,18 +165,34 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 
 	public void actionPerformed(ActionEvent e) {
 		if (sf_okButtonAction.equals(e.getActionCommand())) {
-			if (!Utils.isEmpty(m_pgkbIdField.getText())) {
-				String check = " (" + m_pgkbIdField.getText() + ")";
+			String freetext = null;
+			if (m_freetextField != null) {
+				freetext = StringUtils.stripToNull(m_freetextField.getText());
+			}
+			String id = StringUtils.stripToNull(m_pgkbIdField.getText());
+
+			if (id == null && freetext == null) {
+				JOptionPane.showMessageDialog(m_desktop.getFrame(),
+						"Please select a " + m_type.getDisplayName().toLowerCase() + ".",
+						"Missing Selection", JOptionPane.PLAIN_MESSAGE);
+				return;
+			}
+			if (freetext != null) {
+				if (id != null) {
+					JOptionPane.showMessageDialog(m_desktop.getFrame(),
+							"Please pick an item OR provide a name.  Do not provide both.",
+							"Confusing Input", JOptionPane.PLAIN_MESSAGE);
+					return;
+				}
+				m_selectedName = freetext;
+			} else {
+				String check = " (" + id + ")";
 				m_selectedName = (String)m_autocompleteField.getSelectedItem();
 				if (m_selectedName.endsWith(check)) {
 					m_selectedName = m_selectedName.substring(0, m_selectedName.length() - check.length());
 				}
-				setVisible(false);
-			} else {
-				JOptionPane.showMessageDialog(m_desktop.getFrame(),
-						"Please select a " + m_type.getDisplayName().toLowerCase() + ".",
-						"Missing Selection", JOptionPane.PLAIN_MESSAGE);
 			}
+			setVisible(false);
 		}
 	}
 

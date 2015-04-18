@@ -35,18 +35,19 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 	private NewDictionaryElementDialog m_newDictionaryElementDialog;
 	private PvDesktop m_desktop;
 
-	public NodeTemplate(@Nonnull PgkbType type, @Nonnull PvDesktop desktop, @Nullable DictionaryPropertyType dictPropType) {
+	public NodeTemplate(@Nonnull PgkbType type, @Nonnull PvDesktop desktop,
+			@Nullable DictionaryPropertyType dictPropType, boolean dictValueRequired) {
 		super(type.getDataNodeType());
 		m_type = type;
 		m_name = m_type.getDisplayName();
-		if (m_type.isDrawingOnly()) {
-			m_name += " (drawing only)";
+		if (m_type.getNotes() != null) {
+			m_name = m_type.getDisplayName() + " " + m_type.getNotes();
 		}
 		m_desktop = desktop;
 		if (dictPropType == null) {
 			m_newElementDialog = new NewElementDialog(desktop, type);
 		} else {
-			m_newDictionaryElementDialog = new NewDictionaryElementDialog(desktop, type, dictPropType);
+			m_newDictionaryElementDialog = new NewDictionaryElementDialog(desktop, type, dictPropType, dictValueRequired);
 		}
 	}
 
@@ -57,7 +58,7 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 	}
 
 
-	public PathwayElement[] addElements(Pathway p, double mx, double my) {
+	public @Nullable PathwayElement[] addElements(Pathway p, double mx, double my) {
 
 		JDialog dialog;
 		if (m_newElementDialog != null) {

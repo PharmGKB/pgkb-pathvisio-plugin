@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.core.util.Utils;
@@ -128,7 +129,7 @@ public class DictionaryPropertyType implements PropertyType {
 	 * Expects 2 columns: ID and Name.
 	 * Assumes first line is header and skips it.
 	 */
-	public void readTsv(File dataFile, String filterValue) throws PgkbPluginException {
+	public void readTsv(File dataFile, @Nullable String filterValue) throws PgkbPluginException {
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(dataFile))) {
 			// skip header

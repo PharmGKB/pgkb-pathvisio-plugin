@@ -37,7 +37,7 @@ Import-Package:  \
 !org.pharmgkb.webapp.*,\
 !org.springframework.*,\
 !sun.*,\
-javax.annotation;version="1.2",\
+javax.annotation;version="1.2";resolution:=optional,\
 *
 Include-Resource: \
 org/pharmgkb/Global.class=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\
