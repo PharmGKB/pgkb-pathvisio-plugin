@@ -157,11 +157,29 @@
       <controlProperty id="pgkb.type" condition="Drug Class">
         <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
+      <controlProperty id="pgkb.type" condition="Metabolite">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Ion">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Biological Intermediate">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
       <controlProperty id="pgkb.type" condition="Disease">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Phenotype">
         <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Pathway">
         <dependentProperty id = "pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Process">
+        <dependentProperty id="pgkb.pgkbId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Physical Entity">
+        <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
       <property id="pgkb.type"/>
       <property id="pgkb.cellularLocation"/>

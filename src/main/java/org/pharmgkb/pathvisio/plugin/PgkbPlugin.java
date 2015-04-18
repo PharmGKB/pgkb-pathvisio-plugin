@@ -578,7 +578,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 					if (isCollection) {
 						throw new PgkbPluginException("Enum property '" + id + "' does not support multiselect, use dictionary instead");
 					}
-					EnumProperty enumProp = new EnumProperty(id, name, desc, order, defaultValue, isCollection, isEditable);
+					EnumProperty enumProp = new EnumProperty(id, name, desc, order, defaultValue, false, isEditable);
 					prop = enumProp;
 					NodeList optionNL = propElem.getElementsByTagName("option");
 					for (int m = 0; m < optionNL.getLength(); m++) {
