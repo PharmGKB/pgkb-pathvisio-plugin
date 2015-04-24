@@ -8,26 +8,26 @@
     <property id="pgkb.subId" name="Submission ID" description="Submission ID" type="core.STRING"
         order="13" editable="false" />
 
-    <property id="pgkb.classification" name="ATC Codes" type="DICTIONARY" typeId="pgkb.atcDictionary"
+    <property id="pgkb.classification" name="ATC Codes" type="DICTIONARY" typeId="pgkb.dict.atc"
         description="Therapeutic classification"  multiSelect="true"
         order="15" />
 
-    <property id="pgkb.memberGenes" name="Member Genes" type="DICTIONARY" typeId="pgkb.geneDictionary"
+    <property id="pgkb.memberGenes" name="Member Genes" type="DICTIONARY" typeId="pgkb.dict.gene"
         description="Genes that are the members of this gene group or gene collection."
         multiSelect="true"
         order="16"/>
 
-    <property id="pgkb.memberDrugs" name="Member Drugs" type="DICTIONARY" typeId="pgkb.drugDictionary"
+    <property id="pgkb.memberDrugs" name="Member Drugs" type="DICTIONARY" typeId="pgkb.dict.chemical"
         description="Genes that are the members of this drug collection."
         multiSelect="true"
         order="17"/>
 
-    <property id="pgkb.geneComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.geneDictionary"
+    <property id="pgkb.geneComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.dict.gene"
         description="Genes that are components of this complex."
         multiSelect="true"
         order="18"/>
 
-    <property id="pgkb.drugComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.drugOnlyDictionary"
+    <property id="pgkb.drugComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.dict.drug"
         description="Genes that are components of this complex."
         multiSelect="true"
         order="18"/>
@@ -58,7 +58,7 @@
       <option name="Vesicle Membrane"/>
     </property>
 
-    <property id="pgkb.cell" name="Cell" type="DICTIONARY" typeId="pgkb.clDictionary"
+    <property id="pgkb.cell" name="Cell" type="DICTIONARY" typeId="pgkb.dict.cl"
         description="Cell Name." multiSelect="false"
         order="31" />
 

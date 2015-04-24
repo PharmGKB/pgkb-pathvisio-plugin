@@ -38,6 +38,9 @@ Import-Package:  \
 !org.springframework.*,\
 !sun.*,\
 javax.annotation;version="1.2";resolution:=optional,\
+org.pathvisio.core.*,\
+org.pathvisio.desktop,\
+org.pathvisio.gui,\
 *
 Include-Resource: \
 org/pharmgkb/Global.class=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\

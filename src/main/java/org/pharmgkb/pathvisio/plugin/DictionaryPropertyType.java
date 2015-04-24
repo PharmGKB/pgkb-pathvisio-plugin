@@ -16,8 +16,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilderFactory;
+import com.google.common.base.Preconditions;
 import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.core.util.Utils;
 import org.w3c.dom.Document;
@@ -30,15 +32,20 @@ import org.w3c.dom.NodeList;
  * @author Mark Woon
  */
 public class DictionaryPropertyType implements PropertyType {
-	public static final String GENE_DICTIONARY_ID = "pgkb.geneDictionary";
-	public static final String DRUG_DICTIONARY_ID = "pgkb.drugDictionary";
-	public static final String DRUG_ONLY_DICTIONARY_ID = "pgkb.drugOnlyDictionary";
-	public static final String DRUG_CLASS_DICTIONARY_ID = "pgkb.drugClassDictionary";
-	public static final String DISEASE_DICTIONARY_ID = "pgkb.diseaseDictionary";
-	public static final String ATC_DICTIONARY_ID = "pgkb.atcDictionary";
-	public static final String CL_DICTIONARY_ID = "pgkb.clDictionary";
-	public static final String PGKB_PATHWAY_DICTIONARY_ID = "pgkb.pgkbPathwayDictionary";
-	public static final String PGKB_HAPLOTYPE_DICTIONARY_ID = "pgkb.pgkbHaplotypeDictionary";
+	public static final String ATC_DICTIONARY_ID = "pgkb.dict.atc";
+	public static final String BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID = "pgkb.dict.biologicalIntermediate";
+	public static final String CL_DICTIONARY_ID = "pgkb.dict.cl";
+	public static final String DISEASE_DICTIONARY_ID = "pgkb.dict.disease";
+	public static final String CHEMICAL_DICTIONARY_ID = "pgkb.dict.chemical";
+	public static final String DRUG_DICTIONARY_ID = "pgkb.dict.drug";
+	public static final String DRUG_CLASS_DICTIONARY_ID = "pgkb.dict.drugClass";
+	public static final String GENE_DICTIONARY_ID = "pgkb.dict.gene";
+	public static final String HAPLOTYPE_DICTIONARY_ID = "pgkb.dict.haplotype";
+	public static final String ION_DICTIONARY_ID = "pgkb.dict.ion";
+	public static final String METABOLITE_DICTIONARY_ID = "pgkb.dict.metabolite";
+	public static final String PATHWAY_DICTIONARY_ID = "pgkb.dict.pathway";
+	public static final String PHYSICAL_ENTITY_DICTIONARY_ID = "pgkb.dict.physicalEntity";
+	public static final String PROCESS_DICTIONARY_ID = "pgkb.dict.process";
 	private String m_id;
 	private SortedMap<String, String> m_idNameMap = new TreeMap<String, String>();
 	private SortedMap<String, String> m_nameIdMap = new TreeMap<String, String>();
@@ -62,24 +69,27 @@ public class DictionaryPropertyType implements PropertyType {
 		return m_nameIdMap;
 	}
 
-	public void addEntry(String id, String name) {
+	public void addEntry(@Nonnull String id, @Nonnull String name) {
 
-		if (id != null && name != null) {
-			if (m_duplicateNames.contains(name)) {
-				name = name + " (" + id + ")";
-			} else if (m_nameIdMap.containsKey(name)) {
-				m_duplicateNames.add(name);
-				// update previous entry
-				String oldId = m_nameIdMap.get(name);
-				String oldName = name + " (" + oldId + ")";
-				m_nameIdMap.remove(name);
-				m_nameIdMap.put(oldName, oldId);
-				m_idNameMap.put(oldId, oldName);
-				name = name + " (" + id + ")";
-			}
-			m_idNameMap.put(id, name);
-			m_nameIdMap.put(name, id);
-		}
+    Preconditions.checkNotNull(id);
+    Preconditions.checkNotNull(name);
+    if (m_idNameMap.containsKey(id)) {
+      return;
+    }
+    if (m_duplicateNames.contains(name)) {
+      name = name + " (" + id + ")";
+    } else if (m_nameIdMap.containsKey(name)) {
+      m_duplicateNames.add(name);
+      // update previous entry
+      String oldId = m_nameIdMap.get(name);
+      String oldName = name + " (" + oldId + ")";
+      m_nameIdMap.remove(name);
+      m_nameIdMap.put(oldName, oldId);
+      m_idNameMap.put(oldId, oldName);
+      name = name + " (" + id + ")";
+    }
+    m_idNameMap.put(id, name);
+    m_nameIdMap.put(name, id);
 	}
 
 

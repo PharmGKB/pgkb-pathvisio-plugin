@@ -210,11 +210,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				case BIOLOGICAL_INTERMEDIATE:
 					continue;
 				case HAPLOTYPE:
-					dictPropTypeId = DictionaryPropertyType.PGKB_HAPLOTYPE_DICTIONARY_ID;
+					dictPropTypeId = DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID;
 					break;
 				case METABOLITE:
 				case ION:
-					dictPropTypeId = DictionaryPropertyType.DRUG_DICTIONARY_ID;
+					dictPropTypeId = DictionaryPropertyType.CHEMICAL_DICTIONARY_ID;
 					dictValueRequired = false;
 					break;
 				case DRUG_CLASS:
@@ -226,8 +226,14 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 					dictPropTypeId = DictionaryPropertyType.DISEASE_DICTIONARY_ID;
 					break;
 				case PATHWAY:
-					dictPropTypeId = DictionaryPropertyType.PGKB_PATHWAY_DICTIONARY_ID;
+					dictPropTypeId = DictionaryPropertyType.PATHWAY_DICTIONARY_ID;
 					break;
+				case PHYSICAL_ENTITY:
+					dictPropTypeId = DictionaryPropertyType.PHYSICAL_ENTITY_DICTIONARY_ID;
+					break;
+        case PROCESS:
+          dictPropTypeId = DictionaryPropertyType.PROCESS_DICTIONARY_ID;
+          break;
 			}
 			Action action = newNodeAction(type, dictPropTypeId, dictValueRequired, -1);
 			if (type.isDrawingOnly()) {
@@ -245,9 +251,9 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				PgkbType.GENE);
 		addAction(toolbar, newNodeAction(PgkbType.GENE_COLLECTION, KeyEvent.VK_2),
 				PgkbType.GENE_COLLECTION);
-		addAction(toolbar, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_ONLY_DICTIONARY_ID, true, KeyEvent.VK_3),
+		addAction(toolbar, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_DICTIONARY_ID, true, KeyEvent.VK_3),
 				PgkbType.DRUG);
-		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.DRUG_ONLY_DICTIONARY_ID, false, KeyEvent.VK_4),
+		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.DRUG_DICTIONARY_ID, false, KeyEvent.VK_4),
 				PgkbType.BIOLOGICAL_INTERMEDIATE);
 		// node dropdown
 		addToToolbar(toolbar, optimizeComboBox(nodeCombo));
@@ -377,23 +383,34 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			// register dictionary types
 			downloadAndUnpackFile();
 			createDictionaryType(DictionaryPropertyType.GENE_DICTIONARY_ID, "genes");
-			DictionaryPropertyType drugOnly = createDictionaryType(DictionaryPropertyType.DRUG_ONLY_DICTIONARY_ID, "drugs", "drug");
-			DictionaryPropertyType drugClassOnly = createDictionaryType(DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID, "drugs", "drugClass");
 
-			DictionaryPropertyType dictType = new DictionaryPropertyType(DictionaryPropertyType.DRUG_DICTIONARY_ID);
+			DictionaryPropertyType drugOnly = createDictionaryType(DictionaryPropertyType.DRUG_DICTIONARY_ID, "drugs", "drug");
+			DictionaryPropertyType drugClassOnly = createDictionaryType(DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID, "drugs", "drugClass");
+      DictionaryPropertyType ionsOnly = createDictionaryType(DictionaryPropertyType.ION_DICTIONARY_ID, "drugs", "ion");
+      DictionaryPropertyType metabolitesOnly = createDictionaryType(DictionaryPropertyType.METABOLITE_DICTIONARY_ID, "drugs", "metabolyte");
+
+			DictionaryPropertyType dictType = new DictionaryPropertyType(DictionaryPropertyType.CHEMICAL_DICTIONARY_ID);
 			for (String key : drugOnly.getEntries().keySet()) {
 				dictType.addEntry(key, drugOnly.getEntries().get(key));
 			}
 			for (String key : drugClassOnly.getEntries().keySet()) {
 				dictType.addEntry(key, "<i>" + drugClassOnly.getEntries().get(key) + "</i>");
 			}
+      for (String key : metabolitesOnly.getEntries().keySet()) {
+        dictType.addEntry(key, drugOnly.getEntries().get(key));
+      }
+      for (String key : ionsOnly.getEntries().keySet()) {
+        dictType.addEntry(key, drugOnly.getEntries().get(key));
+      }
+
 			PropertyManager.registerPropertyType(dictType);
 
-			createDictionaryType(DictionaryPropertyType.DISEASE_DICTIONARY_ID, "diseases");
 			createDictionaryType(DictionaryPropertyType.ATC_DICTIONARY_ID, "atc");
+      createDictionaryType(DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, "drugs", "biologicalIntermediate");
 			createDictionaryType(DictionaryPropertyType.CL_DICTIONARY_ID, "cl");
-			createDictionaryType(DictionaryPropertyType.PGKB_PATHWAY_DICTIONARY_ID, "pathways");
-			createDictionaryType(DictionaryPropertyType.PGKB_HAPLOTYPE_DICTIONARY_ID, "haplotypes");
+      createDictionaryType(DictionaryPropertyType.DISEASE_DICTIONARY_ID, "diseases");
+      createDictionaryType(DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID, "haplotypes");
+			createDictionaryType(DictionaryPropertyType.PATHWAY_DICTIONARY_ID, "pathways");
 			// initialize properties from XML
 			initPropertyFile();
 
