@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -37,7 +39,7 @@ import org.pharmgkb.pathvisio.plugin.DictionaryPropertyType;
  *
  * @author Mark Woon
  */
-public class NewDictionaryElementDialog extends JDialog implements ActionListener, ItemListener {
+public class NewDictionaryElementDialog extends JDialog implements ActionListener, ItemListener, KeyListener {
 	private static final String EMPTY_SELECTION = "---";
 	private static final String sf_okButtonAction = "OK_BUTTON";
 	private AutoCompletionComboBox m_autocompleteField;
@@ -88,6 +90,7 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 			}
 		}
 		m_autocompleteField.addItemListener(this);
+		m_autocompleteField.getEditor().getEditorComponent().addKeyListener(this);
 		m_autocompleteField.setFocusable(true);
 		builder.add(m_autocompleteField)
 				.xy(3, 1);
@@ -104,6 +107,7 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 			builder.addLabel("Name:")
 					.xy(1, 7);
 			m_freetextField = new JTextField(30);
+			m_freetextField.addKeyListener(this);
 			builder.add(m_freetextField)
 					.xy(3, 7);
 		}
@@ -197,8 +201,7 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 	}
 
 
-	//-- ItemListener methods --//
-
+	//-- BEGIN ItemListener methods --//
 	public void itemStateChanged(ItemEvent e) {
 		if (m_pgkbIdField != null) {
 			String name = (String)m_autocompleteField.getSelectedItem();
@@ -209,4 +212,31 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 			}
 		}
 	}
+	//-- END ActionListener  methods --//
+
+	//-- BEGIN KeyListener  methods --//
+	int m_escCount = 0;
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			m_escCount += 1;
+			if (m_escCount == 2) {
+				setVisible(false);
+				m_escCount = 0;
+			}
+		} else {
+			m_escCount = 0;
+		}
+	}
+	//-- END KeyListener  methods --//
 }

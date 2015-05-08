@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -32,7 +34,7 @@ import org.pharmgkb.pathvisio.PgkbType;
  *
  * @author Mark Woon
  */
-public class NewElementDialog extends JDialog implements ActionListener {
+public class NewElementDialog extends JDialog implements ActionListener, KeyListener {
 	private static final String sf_okButtonAction = "OK_BUTTON";
 	private PgkbType m_type;
 	private JTextField m_textField;
@@ -58,6 +60,7 @@ public class NewElementDialog extends JDialog implements ActionListener {
 				.xy(1, 1);
 		m_textField = new JTextField(30);
 		m_textField.setFocusable(true);
+		m_textField.addKeyListener(this);
 		builder.add(m_textField)
 				.xy(3, 1);
 		mainPanel.add(builder.getPanel(), BorderLayout.CENTER);
@@ -103,8 +106,7 @@ public class NewElementDialog extends JDialog implements ActionListener {
 	}
 
 
-	//--  ActionListener  methods --//
-
+	//-- BEGIN ActionListener  methods --//
 	public void actionPerformed(ActionEvent e) {
 		if (sf_okButtonAction.equals(e.getActionCommand())) {
 			if (!Utils.isEmpty(m_textField.getText())) {
@@ -116,4 +118,31 @@ public class NewElementDialog extends JDialog implements ActionListener {
 			}
 		}
 	}
+	//-- END ActionListener  methods --//
+
+	//-- BEGIN KeyListener  methods --//
+	int m_escCount = 0;
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			m_escCount += 1;
+			if (m_escCount == 2) {
+				setVisible(false);
+				m_escCount = 0;
+			}
+		} else {
+			m_escCount = 0;
+		}
+	}
+	//-- END KeyListener  methods --//
 }
