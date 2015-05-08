@@ -23,8 +23,7 @@ import org.pharmgkb.pathvisio.plugin.swing.DictionaryDialog;
 import org.pharmgkb.pathvisio.plugin.swing.StyledTableCellRenderer;
 
 /**
- * This defines an dictionary Property which is also it's own PropertyType.
- * This should be paired with the DictionaryHandler.
+ * This is a {@link TypeHandler} for {@link DictionaryProperty}.
  *
  * @author Rebecca Tang
  */
@@ -114,7 +113,7 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 		String v = (String)value;
 		if (!m_property.isCollection() && !Utils.isEmpty(v)) {
 			// convert from enum, which only has a value and no id
-			String key = m_property.getType().getReverseEnteries().get(v);
+			String key = m_property.getDictionaryType().getReverseEnteries().get(v);
 			if (key == null) {
 				JOptionPane.showMessageDialog(this.m_button,
 						"Potentially obsolete data?  The '" + m_property.getName() + "' dictionary has no entry for '" + v + "'. Ignoring value!",
@@ -131,7 +130,7 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 
 	public void actionPerformed(ActionEvent e) {
 		if (sf_editAction.equals(e.getActionCommand())) {
-			if (m_property.getType().getEntries().isEmpty()) {
+			if (m_property.getDictionaryType().getEntries().isEmpty()) {
 				JOptionPane.showMessageDialog(this.m_button,
 						"The '" + m_property.getName() + "' dictionary has no entries", "Warning",
 						JOptionPane.WARNING_MESSAGE);
@@ -140,5 +139,10 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 				fireEditingStopped();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "DictionaryHandler:" + m_property.getId();
 	}
 }

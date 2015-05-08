@@ -40,6 +40,7 @@ import javax.swing.border.EmptyBorder;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import com.jidesoft.icons.IconsFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.debug.Logger;
@@ -51,7 +52,6 @@ import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.core.model.StaticProperty;
 import org.pathvisio.core.preferences.GlobalPreference;
 import org.pathvisio.core.util.Resources;
-import org.pathvisio.core.util.Utils;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.desktop.plugin.Plugin;
 import org.pathvisio.gui.CommonActions;
@@ -62,7 +62,9 @@ import org.pharmgkb.pathvisio.BiopaxInteractionType;
 import org.pharmgkb.pathvisio.EnumProperty;
 import org.pharmgkb.pathvisio.ExtendedProperty;
 import org.pharmgkb.pathvisio.PgkbType;
+import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
 import org.pharmgkb.pathvisio.SimpleProperty;
+import org.pharmgkb.pathvisio.SimplePropertyType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -84,7 +86,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	private PvDesktop m_desktop;
 	private ObjectPropertyManager m_objectPropertiesManager;
 	private Set<Action> m_actions = new HashSet<>();
-	
+	private Set<Component> m_toolbarComponents = new HashSet<>();
+
 
 
 	@Override
@@ -110,6 +113,9 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 			initProperties();
 			initActions();
+			if (desktop.getSwingEngine().getEngine().hasVPathway()) {
+				enableActions();
+			}
 
 			System.out.println("Done initializing PgkbPlugin");
 		} catch (Exception ex) {
@@ -136,6 +142,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	}
 
 	private void addToToolbar(JToolBar toolbar, Component component) {
+		m_toolbarComponents.add(component);
 		toolbar.add(component);
 		disableToolbarItem(component);
 	}
@@ -253,7 +260,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				PgkbType.GENE_COLLECTION);
 		addAction(toolbar, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_DICTIONARY_ID, true, KeyEvent.VK_3),
 				PgkbType.DRUG);
-		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.DRUG_DICTIONARY_ID, false, KeyEvent.VK_4),
+		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, false, KeyEvent.VK_4),
 				PgkbType.BIOLOGICAL_INTERMEDIATE);
 		// node dropdown
 		addToToolbar(toolbar, optimizeComboBox(nodeCombo));
@@ -351,6 +358,9 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		for (Action action : m_actions) {
 			action.setEnabled(true);
 		}
+		for (Component comp : m_toolbarComponents) {
+			comp.setEnabled(true);
+		}
 	}
 
 
@@ -380,37 +390,9 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			// register PharmGKB Type property
 			PvUtils.registerProperty(PgkbType.getProperty(), m_desktop.getFrame());
 			PvUtils.registerProperty(BiopaxInteractionType.getProperty(), m_desktop.getFrame());
+
 			// register dictionary types
 			downloadAndUnpackFile();
-			createDictionaryType(DictionaryPropertyType.GENE_DICTIONARY_ID, "genes");
-
-			DictionaryPropertyType drugOnly = createDictionaryType(DictionaryPropertyType.DRUG_DICTIONARY_ID, "drugs", "drug");
-			DictionaryPropertyType drugClassOnly = createDictionaryType(DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID, "drugs", "drugClass");
-      DictionaryPropertyType ionsOnly = createDictionaryType(DictionaryPropertyType.ION_DICTIONARY_ID, "drugs", "ion");
-      DictionaryPropertyType metabolitesOnly = createDictionaryType(DictionaryPropertyType.METABOLITE_DICTIONARY_ID, "drugs", "metabolyte");
-
-			DictionaryPropertyType dictType = new DictionaryPropertyType(DictionaryPropertyType.CHEMICAL_DICTIONARY_ID);
-			for (String key : drugOnly.getEntries().keySet()) {
-				dictType.addEntry(key, drugOnly.getEntries().get(key));
-			}
-			for (String key : drugClassOnly.getEntries().keySet()) {
-				dictType.addEntry(key, "<i>" + drugClassOnly.getEntries().get(key) + "</i>");
-			}
-      for (String key : metabolitesOnly.getEntries().keySet()) {
-        dictType.addEntry(key, drugOnly.getEntries().get(key));
-      }
-      for (String key : ionsOnly.getEntries().keySet()) {
-        dictType.addEntry(key, drugOnly.getEntries().get(key));
-      }
-
-			PropertyManager.registerPropertyType(dictType);
-
-			createDictionaryType(DictionaryPropertyType.ATC_DICTIONARY_ID, "atc");
-      createDictionaryType(DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, "drugs", "biologicalIntermediate");
-			createDictionaryType(DictionaryPropertyType.CL_DICTIONARY_ID, "cl");
-      createDictionaryType(DictionaryPropertyType.DISEASE_DICTIONARY_ID, "diseases");
-      createDictionaryType(DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID, "haplotypes");
-			createDictionaryType(DictionaryPropertyType.PATHWAY_DICTIONARY_ID, "pathways");
 			// initialize properties from XML
 			initPropertyFile();
 
@@ -434,35 +416,13 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
       t = t.getCause();
     }
     JOptionPane.showMessageDialog(m_desktop.getFrame(),
-        "Uh-oh.  Something went hideously wrong.\n\n" +
-            errBuilder.toString() +
-            "\n\nDO NOT CONTINUE USING PATHVISIO!\n\n" +
-            "Please go yell at Mark.\n\n",
-        "Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
+				"Uh-oh.  Something went hideously wrong.\n\n" +
+						errBuilder.toString() +
+						"\n\nDO NOT CONTINUE USING PATHVISIO!\n\n" +
+						"Please go yell at Mark.\n\n",
+				"Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
   }
 
-	/**
-	 * Creates a dictionary property type that's based on PharmGKB data file.
-	 *
-	 * @param id		   the ID of the DictionaryPropertyType
-	 * @param baseFilename the base filename of the PharmGKB data file
-	 */
-	private DictionaryPropertyType createDictionaryType(String id, String baseFilename) throws PgkbPluginException {
-		return createDictionaryType(id, baseFilename, null);
-	}
-
-
-	private DictionaryPropertyType createDictionaryType(String id, String baseFilename, @Nullable String filterValue)
-      throws PgkbPluginException {
-
-		File dataFile = new File(GlobalPreference.getDataDir(), baseFilename + ".tsv");
-		System.out.println("Parsing dictionary");
-		DictionaryPropertyType dictType = new DictionaryPropertyType(id);
-		dictType.readTsv(dataFile, filterValue);
-		System.out.println("  done parsing");
-		PropertyManager.registerPropertyType(dictType);
-		return dictType;
-	}
 
 	private boolean downloadAndUnpackFile() throws PgkbPluginException {
 
@@ -519,14 +479,15 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			NodeList roots = doc.getElementsByTagName("pathvisio");
 			for (int i = 0; i < roots.getLength(); i++) {
 				Element rootElement = (Element)roots.item(i);
+				processTypes(rootElement.getElementsByTagName("types"));
 				processProperties(rootElement.getElementsByTagName("properties"));
 				processObjectProperties(rootElement.getElementsByTagName("objects"));
 			}
 
+		} catch (PgkbPluginException ex) {
+			throw ex;
 		} catch (Exception ex) {
-			if (ex instanceof PgkbPluginException) {
-				throw (PgkbPluginException)ex;
-			}
+			ex.printStackTrace();
 			throw new PgkbPluginException("Error initializing properties", ex);
 		} finally {
 			if (in != null) {
@@ -535,6 +496,52 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				} catch (IOException ex) {
 					// ignore
 				}
+			}
+		}
+	}
+
+	/**
+	 * Parse types.
+	 */
+	private void processTypes(NodeList propsNL) throws PgkbPluginException {
+
+		for (int i = 0; i < propsNL.getLength(); i++) {
+			Element propsElem = (Element)propsNL.item(i);
+			NodeList defNL = propsElem.getElementsByTagName("dictionary");
+			for (int j = 0; j < defNL.getLength(); j++) {
+				Element propElem = (Element)defNL.item(j);
+				String id = propElem.getAttribute("id");
+				String file = StringUtils.stripToNull(propElem.getAttribute("file"));
+
+				DictionaryPropertyType dictType;
+				if (file == null) {
+					dictType = new DictionaryPropertyType(id);
+					NodeList optionNL = propElem.getElementsByTagName("option");
+					if (optionNL.getLength() == 0) {
+						throw new PgkbPluginException("No file or options specified for dictionary " + id);
+					}
+					for (int m = 0; m < optionNL.getLength(); m++) {
+						Element optionElem = (Element)optionNL.item(m);
+						String entryId = optionElem.getAttribute("id");
+						String optionName = optionElem.getAttribute("name");
+						dictType.addEntry(entryId, optionName);
+					}
+
+				} else {
+					String format = StringUtils.stripToNull(propElem.getAttribute("format"));
+					String filter = StringUtils.stripToNull(propElem.getAttribute("filter"));
+					String[] filters = null;
+					if (filter != null) {
+						filters = filter.split(",");
+					}
+
+					File dataFile = new File(GlobalPreference.getDataDir(), file + ".tsv");
+					System.out.println("Parsing " + file + " dictionary");
+					dictType = new DictionaryPropertyType(id);
+					dictType.readTsv(dataFile, format, filters);
+					System.out.println("  done parsing");
+				}
+				PropertyManager.registerPropertyType(dictType);
 			}
 		}
 	}
@@ -560,42 +567,28 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				if (propElem.hasAttribute("editable")) {
 					isEditable = Boolean.parseBoolean(propElem.getAttribute("editable"));
 				}
-				ExtendedProperty prop;
 
+				ExtendedProperty prop;
 				if (TYPE_DICTIONARY.equals(type)) {
-					DictionaryPropertyType dictType;
-					if (propElem.hasAttribute("typeId")) {
-						String typeId = propElem.getAttribute("typeId");
-						dictType = (DictionaryPropertyType)PropertyManager.getPropertyType(typeId);
-						if (dictType == null) {
-							throw new PgkbPluginException("Unknown property type '" + typeId + "' for property '" + id + "'");
-						}
-					} else {
-						dictType = new DictionaryPropertyType(id);
-						String fileName = propElem.getAttribute("file");
-						if (!Utils.isEmpty(fileName)) {
-							if (fileName.endsWith(".xml")) {
-								dictType.readXml(new File(fileName));
-							} else {
-								throw new PgkbPluginException("Unsupported dictionary format '" + fileName + "'");
-							}
-						} else {
-							NodeList optionNL = propElem.getElementsByTagName("option");
-							for (int m = 0; m < optionNL.getLength(); m++) {
-								Element optionElem = (Element)optionNL.item(m);
-								String entryId = optionElem.getAttribute("id");
-								String optionName = optionElem.getAttribute("name");
-								dictType.addEntry(entryId, optionName);
-							}
-						}
+					String typeId = propElem.getAttribute("typeId");
+					PropertyType dictType = PropertyManager.getPropertyType(typeId);
+					if (dictType == null) {
+						throw new PgkbPluginException("Unknown dictionary property type '" + typeId + "' for property '" + id + "'");
 					}
-					prop = new DictionaryProperty(id, name, desc, order, defaultValue, isCollection, dictType, isEditable);
+					if (!isEditable) {
+						dictType = getReadOnlyPropertyType(typeId, dictType);
+					}
+					prop = new DictionaryProperty(id, name, desc, order, defaultValue, isCollection, dictType);
 
 				} else if (TYPE_ENUM.equals(type)) {
 					if (isCollection) {
 						throw new PgkbPluginException("Enum property '" + id + "' does not support multiselect, use dictionary instead");
 					}
-					EnumProperty enumProp = new EnumProperty(id, name, desc, order, defaultValue, false, isEditable);
+					PropertyType propType = new SimplePropertyType(id);
+					if (!isEditable) {
+						propType = getReadOnlyPropertyType(id, propType);
+					}
+					EnumProperty enumProp = new EnumProperty(id, name, desc, order, defaultValue, propType, false);
 					prop = enumProp;
 					NodeList optionNL = propElem.getElementsByTagName("option");
 					for (int m = 0; m < optionNL.getLength(); m++) {
@@ -617,12 +610,23 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 					if (propType == null) {
 						throw new PgkbPluginException("Unknown property type '" + type + "' for property '" + id + "'");
 					}
-					prop = new SimpleProperty(id, name, desc, order, defaultValue, propType, isCollection, isEditable);
+					if (!isEditable) {
+						propType = getReadOnlyPropertyType(type, propType);
+					}
+					prop = new SimpleProperty(id, name, desc, order, defaultValue, propType, isCollection);
 				}
 
 				PvUtils.registerProperty(prop, m_desktop.getFrame());
 			}
 		}
+	}
+
+	private PropertyType getReadOnlyPropertyType(String typeId, PropertyType type) {
+
+		if (PropertyManager.getPropertyType(typeId + ".readOnly") == null) {
+			return new ReadOnlyPropertyType(type);
+		}
+		return type;
 	}
 
 	/**

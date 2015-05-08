@@ -8,10 +8,12 @@ package org.pharmgkb.pathvisio.plugin;
 
 import java.awt.Component;
 import java.util.EventObject;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import com.google.common.base.Preconditions;
 import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.gui.handler.TypeHandler;
 
@@ -21,18 +23,22 @@ import org.pathvisio.gui.handler.TypeHandler;
  * @author Mark Woon
  */
 public class ReadOnlyTypeHandler implements TypeHandler {
+	private PropertyType m_type;
 	private TypeHandler m_handler;
 	private NotEditableTableCellEditor m_cellEditor;
 
 
-	public ReadOnlyTypeHandler(TypeHandler typeHandler) {
+	public ReadOnlyTypeHandler(@Nonnull PropertyType type, @Nonnull TypeHandler typeHandler) {
+		Preconditions.checkNotNull(type);
+		Preconditions.checkNotNull(typeHandler);
+		m_type = type;
 		m_handler = typeHandler;
 		m_cellEditor = new NotEditableTableCellEditor(typeHandler);
 	}
 
 
 	public PropertyType getType() {
-		return m_handler.getType();
+		return m_type;
 	}
 
 	public TableCellRenderer getLabelRenderer() {
@@ -68,5 +74,10 @@ public class ReadOnlyTypeHandler implements TypeHandler {
 		public boolean isCellEditable(EventObject anEvent) {
 			return false;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "ReadOnlyTypeHandler:" + m_handler.getType();
 	}
 }

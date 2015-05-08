@@ -64,7 +64,7 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 
 		JPanel mainForm = new JPanel(new BorderLayout());
 
-		DictionaryValuesModel model = new DictionaryValuesModel(m_property.getType().getEntries());
+		DictionaryValuesModel model = new DictionaryValuesModel(m_property.getDictionaryType().getEntries());
 		JTable table = new JTable(model);
 		table.getColumnModel().getColumn(0).setMaxWidth(36);
 		table.getColumnModel().getColumn(1).setCellRenderer(new StyledTableCellRenderer());

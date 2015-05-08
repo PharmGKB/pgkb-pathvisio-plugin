@@ -8,23 +8,17 @@ package org.pharmgkb.pathvisio.plugin;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.parsers.DocumentBuilderFactory;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import org.pathvisio.core.model.PropertyType;
-import org.pathvisio.core.util.Utils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * This class implements PropertyType for a dictionary.
@@ -41,15 +35,13 @@ public class DictionaryPropertyType implements PropertyType {
 	public static final String DRUG_CLASS_DICTIONARY_ID = "pgkb.dict.drugClass";
 	public static final String GENE_DICTIONARY_ID = "pgkb.dict.gene";
 	public static final String HAPLOTYPE_DICTIONARY_ID = "pgkb.dict.haplotype";
-	public static final String ION_DICTIONARY_ID = "pgkb.dict.ion";
-	public static final String METABOLITE_DICTIONARY_ID = "pgkb.dict.metabolite";
 	public static final String PATHWAY_DICTIONARY_ID = "pgkb.dict.pathway";
 	public static final String PHYSICAL_ENTITY_DICTIONARY_ID = "pgkb.dict.physicalEntity";
 	public static final String PROCESS_DICTIONARY_ID = "pgkb.dict.process";
 	private String m_id;
-	private SortedMap<String, String> m_idNameMap = new TreeMap<String, String>();
-	private SortedMap<String, String> m_nameIdMap = new TreeMap<String, String>();
-	private Set<String> m_duplicateNames = new HashSet<String>();
+	private SortedMap<String, String> m_idNameMap = new TreeMap<>();
+	private SortedMap<String, String> m_nameIdMap = new TreeMap<>();
+	private Set<String> m_duplicateNames = new HashSet<>();
 
 
 	public DictionaryPropertyType(String id) {
@@ -94,72 +86,46 @@ public class DictionaryPropertyType implements PropertyType {
 
 
 	/**
-	 * Given an XML file, parse out the entries.
-	 */
-	public void readXml(File file) throws PgkbPluginException {
-
-		if (file != null && file.length() > 0) {
-			InputStream xmlStream = null;
-			try {
-				xmlStream = new FileInputStream(file);
-				Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlStream);
-
-				NodeList roots = doc.getElementsByTagName("dictionary");
-				if (roots.getLength() == 0) {
-					throw new PgkbPluginException("No dictionary root found");
-				}
-				if (roots.getLength() > 1) {
-					throw new PgkbPluginException("More than one dictionary roots found");
-				}
-				Element rootElement = (Element)roots.item(0);
-				NodeList entryNL = rootElement.getElementsByTagName("entry");
-				for (int j = 0; j < entryNL.getLength(); j++) {
-					Element entryElem = (Element)entryNL.item(j);
-					String id = entryElem.getAttribute("id");
-					String name = entryElem.getAttribute("name");
-					if (Utils.isEmpty(name)) {
-						name = id;
-					}
-					addEntry(id, name);
-				}
-			} catch (Exception ex) {
-				throw new PgkbPluginException("Error parsing XML file '" + file + "'");
-			} finally {
-				if (xmlStream != null) {
-					try {
-						xmlStream.close();
-					} catch (IOException ex) { /* ignore */ }
-				}
-			}
-		}
-	}
-
-	/**
 	 * Reads .tsv files.
 	 * Expects 2 columns: ID and Name.
 	 * Assumes first line is header and skips it.
 	 */
-	public void readTsv(File dataFile, @Nullable String filterValue) throws PgkbPluginException {
+	public void readTsv(File dataFile, @Nullable String format, @Nullable String... filterValue) throws PgkbPluginException {
 
+		Set<String> filters = null;
+		if (filterValue != null && filterValue.length > 0) {
+			filters = ImmutableSet.copyOf(filterValue);
+		}
 		try (BufferedReader reader = new BufferedReader(new FileReader(dataFile))) {
 			// skip header
 			reader.readLine();
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] data = line.split("\t");
-				if (filterValue != null) {
-          if (data.length != 3){
-            System.out.println("grr");
+				if (filters != null && filters.size() > 0) {
+          if (data.length != 3) {
+            throw new PgkbPluginException("Expecting 3 columns, got [" + line + "], in " + dataFile +
+								", filtering for " + filters);
           }
-					if (!data[2].equals(filterValue)) {
-            continue;
-          }
+					if (!filters.contains(data[2])) {
+						continue;
+					}
 				}
-				addEntry(data[0], data[1]);
+				String text = data[1];
+				if (format != null) {
+					text = "<" + format + ">" + text + "</" + format + ">";
+				}
+				addEntry(data[0], text);
 			}
 
 		} catch (IOException ex) {
 			throw new PgkbPluginException("Error parsing tsv file '" + dataFile + "'", ex);
 		}
+	}
+
+
+	@Override
+	public String toString() {
+		return "DictionaryType:" + m_id;
 	}
 }

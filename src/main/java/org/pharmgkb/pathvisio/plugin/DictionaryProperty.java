@@ -6,12 +6,16 @@
  */
 package org.pharmgkb.pathvisio.plugin;
 
+import javax.annotation.Nonnull;
+import com.google.common.base.Preconditions;
+import org.pathvisio.core.model.PropertyType;
 import org.pharmgkb.pathvisio.ExtendedProperty;
+import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
 
 
 /**
  * This defines an dictionary Property, which allows multiple selection on a specific vocabulary.
- * This should be paired with the DictionaryHandler.
+ * This should be paired with the {@link DictionaryHandler}.
  *
  * @author Rebecca Tang
  */
@@ -22,12 +26,14 @@ public class DictionaryProperty implements ExtendedProperty {
 	private int m_order;
 	private String m_defaultValue;
 	private boolean m_isCollection;
-	private DictionaryPropertyType m_type;
-	private boolean m_isEditable = true;
+	private PropertyType m_type;
 
 
 	public DictionaryProperty(String id, String name, String desc, int order, String defaultValue, boolean isCollection,
-			DictionaryPropertyType type, boolean isEditable) {
+			@Nonnull PropertyType type) {
+		Preconditions.checkNotNull(type);
+		Preconditions.checkArgument(type instanceof DictionaryPropertyType ||
+				(type instanceof ReadOnlyPropertyType && ((ReadOnlyPropertyType)type).getBaseType() instanceof DictionaryPropertyType));
 		m_id = id;
 		m_name = name;
 		m_description = desc;
@@ -35,7 +41,6 @@ public class DictionaryProperty implements ExtendedProperty {
 		m_defaultValue = defaultValue;
 		m_isCollection = isCollection;
 		m_type = type;
-		m_isEditable = isEditable;
 	}
 
 
@@ -51,8 +56,16 @@ public class DictionaryProperty implements ExtendedProperty {
 		return m_description;
 	}
 
-	public DictionaryPropertyType getType() {
+	public PropertyType getType() {
 		return m_type;
+	}
+
+	public DictionaryPropertyType getDictionaryType() {
+		if (m_type instanceof DictionaryPropertyType) {
+			return (DictionaryPropertyType)m_type;
+		} else {
+			return (DictionaryPropertyType)((ReadOnlyPropertyType)m_type).getBaseType();
+		}
 	}
 
 	public boolean isCollection() {
@@ -67,7 +80,9 @@ public class DictionaryProperty implements ExtendedProperty {
 		return m_defaultValue;
 	}
 
-	public boolean isEditable() {
-		return m_isEditable;
+
+	@Override
+	public String toString() {
+		return "DictionaryProperty:" + m_id;
 	}
 }

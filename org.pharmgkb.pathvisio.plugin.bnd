@@ -37,7 +37,7 @@ Import-Package:  \
 !org.pharmgkb.webapp.*,\
 !org.springframework.*,\
 !sun.*,\
-javax.annotation;version="1.2";resolution:=optional,\
+javax.annotation;resolution:=optional,\
 org.pathvisio.core.*,\
 org.pathvisio.desktop,\
 org.pathvisio.gui,\
@@ -57,7 +57,6 @@ org/pharmgkb/util=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
 @../pgkb-core/lib/httpcore.jar,\
 @../pgkb-core/lib/httpclient.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
-@../pgkb-core/lib/jsr305.jar,\
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\

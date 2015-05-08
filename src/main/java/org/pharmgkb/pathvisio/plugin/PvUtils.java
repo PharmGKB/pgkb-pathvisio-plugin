@@ -19,6 +19,7 @@ import org.pathvisio.gui.handler.TypeHandler;
 import org.pharmgkb.pathvisio.EnumProperty;
 import org.pharmgkb.pathvisio.ExtendedProperty;
 import org.pharmgkb.pathvisio.PgkbType;
+import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
 
 
 /**
@@ -45,26 +46,46 @@ public class PvUtils {
 				throw new PgkbPluginException("Property type ID '" + prop.getType().getId() + "'  is already taken");
 			}
 		} else {
-			PropertyManager.registerPropertyType(prop.getType());
+			type = prop.getType();
+			PropertyManager.registerPropertyType(type);
 		}
+
 		PropertyManager.registerProperty(prop);
 		PropertyDisplayManager.registerProperty(prop, false);
 		PropertyDisplayManager.setPropertyOrder(prop, prop.getOrder());
 		TypeHandler handler = null;
 		if (prop instanceof EnumProperty) {
-			handler = new ComboHandler(prop.getType(), ((EnumProperty)prop).getValues(), false);
-		} else if (prop instanceof DictionaryProperty) {
-			if (PropertyDisplayManager.getTypeHandler(prop.getType()) == null) {
-				handler = new DictionaryHandler(frame, (DictionaryProperty)prop);
+			handler = new ComboHandler(type, ((EnumProperty)prop).getValues(), false);
+			if (type instanceof ReadOnlyPropertyType) {
+				handler = new ReadOnlyTypeHandler(type, handler);
 			}
-		} else if (!(prop.getType() instanceof StaticPropertyType) &&
-				PropertyDisplayManager.getTypeHandler(prop.getType()) == null) {
+
+		} else if (prop instanceof DictionaryProperty) {
+			if (PropertyDisplayManager.getTypeHandler(type) == null) {
+				handler = new DictionaryHandler(frame, (DictionaryProperty)prop);
+				if (type instanceof ReadOnlyPropertyType) {
+					handler = new ReadOnlyTypeHandler(type, handler);
+				}
+			}
+
+		} else if (type instanceof ReadOnlyPropertyType) {
+			PropertyType baseType = ((ReadOnlyPropertyType)type).getBaseType();
+			handler = PropertyDisplayManager.getTypeHandler(baseType);
+			if (handler == null) {
+				if (baseType == StaticPropertyType.STRING) {
+					handler = new StringTypeHandler();
+				} else {
+					throw new PgkbPluginException("No handler defined for read-only property type " + baseType.getId());
+				}
+			}
+			handler = new ReadOnlyTypeHandler(type, handler);
+
+		} else if (!(type instanceof StaticPropertyType) &&
+				PropertyDisplayManager.getTypeHandler(type) == null) {
 			throw new PgkbPluginException("No handler defined for property " + prop.getId());
 		}
+
 		if (handler != null) {
-			if (!prop.isEditable()) {
-				handler = new ReadOnlyTypeHandler(handler);
-			}
 			PropertyDisplayManager.registerTypeHandler(handler);
 		}
 	}

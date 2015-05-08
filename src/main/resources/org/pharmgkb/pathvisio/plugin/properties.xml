@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 <pathvisio>
+  <types>
+    <dictionary id="pgkb.dict.atc" file="atc" />
+    <dictionary id="pgkb.dict.biologicalIntermediate" file="drugs" filter="biologicalIntermediate" />
+    <dictionary id="pgkb.dict.cl" file="cl" />
+    <dictionary id="pgkb.dict.disease" file="diseases" />
+    <dictionary id="pgkb.dict.chemical" file="drugs" filter="drug,ion,metabolite,drugClass" />
+    <dictionary id="pgkb.dict.drug" file="drugs" filter="drug,ion,metabolite" />
+    <dictionary id="pgkb.dict.drugClass" file="drugs" filter="drugClass" format="i" />
+    <dictionary id="pgkb.dict.gene" file="genes" />
+    <dictionary id="pgkb.dict.haplotype" file="haplotypes" />
+    <dictionary id="pgkb.dict.pathway" file="pathways" />
+    <dictionary id="pgkb.dict.physicalEntity" file="entities" />
+    <dictionary id="pgkb.dict.process" file="processes" />
+
+    <dictionary id="pgkb.dict.coe">
+      <option id="PD" name="PD"/>
+      <option id="PK" name="PK"/>
+    </dictionary>
+
+  </types>
+
+
   <properties>
     <property id="pgkb.pgkbId" name="PharmGKB ID" description="PharmGKB ID" type="core.STRING"
         order="12" editable="false" />
@@ -22,13 +44,13 @@
         multiSelect="true"
         order="17"/>
 
-    <property id="pgkb.geneComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.dict.gene"
+    <property id="pgkb.geneComplexComponents" name="Gene Components" type="DICTIONARY" typeId="pgkb.dict.gene"
         description="Genes that are components of this complex."
         multiSelect="true"
         order="18"/>
 
-    <property id="pgkb.drugComplexComponents" name="Components" type="DICTIONARY" typeId="pgkb.dict.drug"
-        description="Genes that are components of this complex."
+    <property id="pgkb.drugComplexComponents" name="Drug Components" type="DICTIONARY" typeId="pgkb.dict.drug"
+        description="Drugs that are components of this complex."
         multiSelect="true"
         order="18"/>
 
@@ -108,11 +130,9 @@
         description="Uncharacterized" defaultValue="false"
         order="75" />
 
-    <property id="pgkb.coe" name="CoE" type="DICTIONARY"
+    <property id="pgkb.coe" name="CoE" type="DICTIONARY" typeId="pgkb.dict.coe"
         description="Categories of Evidence" multiSelect="true"
         order="80">
-      <option id="PD" name="PD"/>
-      <option id="PK" name="PK"/>
     </property>
 
     <property id="pgkb.lineStrength" name="Strength" type="ENUM" description="How strong the reaction is."
@@ -208,6 +228,12 @@
         <dependentProperty id="pgkb.drugComplexComponents"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Gene Complex">
+        <dependentProperty id="pgkb.geneComplexComponents"/>
+        <dependentProperty id="pgkb.externalXrefDb"/>
+        <dependentProperty id="pgkb.externalXrefId"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene-Drug Complex">
+        <dependentProperty id="pgkb.drugComplexComponents"/>
         <dependentProperty id="pgkb.geneComplexComponents"/>
         <dependentProperty id="pgkb.externalXrefDb"/>
         <dependentProperty id="pgkb.externalXrefId"/>
