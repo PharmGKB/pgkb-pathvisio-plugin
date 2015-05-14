@@ -110,6 +110,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			m_desktop.getSwingEngine().getEngine().addApplicationEventListener(this);
 			m_objectPropertiesManager = new ObjectPropertyManager(desktop);
 			m_objectPropertiesManager.addListener(this);
+			desktop.getFrame().setTitle("PGKB PathVisio");
 
 			initProperties();
 			initActions();
@@ -275,7 +276,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		toolbar.addSeparator();
 		toolbar.add(sf_borderSpacer);
 
-		label = new JLabel("BG Locations:", JLabel.LEFT);
+		label = new JLabel("Drawing Only:", JLabel.LEFT);
 		addToToolbar(toolbar, label);
 
 		addToToolbar(toolbar, optimizeComboBox(shapeCombo));
