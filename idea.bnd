@@ -56,7 +56,7 @@ org/pharmgkb/jackson=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jac
 org/pharmgkb/jsonld=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jsonld,\
 org/pharmgkb/model=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/model,\
 org/pharmgkb/pathvisio=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/pathvisio,\
-org/pharmgkb/pathvisio/plugin=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/pathvisio/plugin,\
+org/pharmgkb/pathvisio/plugin=../build/tmp/pathvisio/classes/org/pharmgkb/pathvisio/plugin,\
 org/pharmgkb/util=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/ehcache-core.jar,\
