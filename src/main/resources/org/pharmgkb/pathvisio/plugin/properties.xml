@@ -5,6 +5,7 @@
     <dictionary id="pgkb.dict.atc" file="atc" />
     <dictionary id="pgkb.dict.biologicalIntermediate" file="drugs" filter="biologicalIntermediate" />
     <dictionary id="pgkb.dict.cl" file="cl" />
+    <dictionary id="pgkb.dict.cellularLocation" file="cellLoc" />
     <dictionary id="pgkb.dict.disease" file="diseases" />
     <dictionary id="pgkb.dict.chemical" file="drugs" filter="drug,ion,metabolite,drugClass" />
     <dictionary id="pgkb.dict.drug" file="drugs" filter="drug,ion,metabolite" />
@@ -61,14 +62,9 @@
     <property id="pgkb.externalXrefId" name="Xref Database Id" type="core.STRING" description="External Cross Reference Id."
         order="21"/>
 
-    <property id="pgkb.cellularLocation" name="Cellular Location" type="ENUM"
-        description="Cellular Location" defaultValue="Unknown"
+    <property id="pgkb.cellularLocation" name="Cellular Location" type="DICTIONARY" typeId="pgkb.dict.cellularLocation"
+        description="Cellular Location"
         order="29">
-      <option name="Unknown"/>
-      <option name="Extracellular"/>
-      <option name="Transmembrane"/>
-      <option name="Intracellular"/>
-      <!-- option name="Nucleaus + DNA"/ -->
     </property>
 
     <property id="pgkb.transmembraneTypes" name="Transmembrane Types" type="ENUM"
