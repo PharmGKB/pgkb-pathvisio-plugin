@@ -57,10 +57,6 @@
 
     <property id="pgkb.reactionName" name="Reaction Name" type="core.STRING" description="Name of the interaction."
         order="19"/>
-    <property id="pgkb.externalXrefDb" name="Xref Database Name" type="core.STRING" description="Name of External Cross Reference Database."
-        order="20"/>
-    <property id="pgkb.externalXrefId" name="Xref Database Id" type="core.STRING" description="External Cross Reference Id."
-        order="21"/>
 
     <property id="pgkb.cellularLocation" name="Cellular Location" type="DICTIONARY" typeId="pgkb.dict.cellularLocation"
         description="Cellular Location"
@@ -225,14 +221,10 @@
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Gene Complex">
         <dependentProperty id="pgkb.geneComplexComponents"/>
-        <dependentProperty id="pgkb.externalXrefDb"/>
-        <dependentProperty id="pgkb.externalXrefId"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Gene-Drug Complex">
         <dependentProperty id="pgkb.drugComplexComponents"/>
         <dependentProperty id="pgkb.geneComplexComponents"/>
-        <dependentProperty id="pgkb.externalXrefDb"/>
-        <dependentProperty id="pgkb.externalXrefId"/>
       </controlProperty>
       <controlProperty id="pgkb.modification" condition="Phosphorylation">
         <dependentProperty id="pgkb.phosphateNumber"/>
@@ -260,8 +252,6 @@
     <object id="pgkb.line" name="Line" type="LINE">
       <property id="pgkb.biopaxInteractionType"/>
       <property id="pgkb.reactionName"/>
-      <property id="pgkb.externalXrefDb"/>
-      <property id="pgkb.externalXrefId"/>
       <property id="pgkb.lineStrength"/>
       <controlProperty id="pgkb.biopaxInteractionType" condition="Conversion">
         <dependentProperty id="pgkb.isReversible"/>
