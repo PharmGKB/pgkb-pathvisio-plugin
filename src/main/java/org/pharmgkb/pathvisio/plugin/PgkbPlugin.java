@@ -208,7 +208,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		// nodes
 		JComboBox<Action> nodeCombo = new JComboBox<>();
 		JComboBox<Action> shapeCombo = new JComboBox<>();
-		for (PgkbType type : PgkbType.values()) {
+		for (PgkbType type : PgkbType.getAllSortedByName()) {
 			String dictPropTypeId = null;
 			boolean dictValueRequired = true;
 			switch (type) {
@@ -427,7 +427,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 	private boolean downloadAndUnpackFile() throws PgkbPluginException {
 
-		String url = "https://www.pharmgkb.org/download.do?objId=pathvisio.zip&ref=pgkb-pathvisio";
+		String url = "https://preview.pharmgkb.org/download.do?objId=pathvisio.zip&ref=pgkb-pathvisio";
 		// download and unzip data file
 		System.out.println("Checking " + url);
 		File downloadedFile = IoUtils.downloadFromUrl(url, "pathvisio.zip");

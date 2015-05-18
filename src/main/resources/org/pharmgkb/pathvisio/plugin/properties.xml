@@ -141,10 +141,6 @@
         description="This line is for connecting to a main line."
         defaultValue="false" order="161" />
 
-    <property id="pgkb.drawingOnly" name="Drawing Only" type="core.BOOLEAN"
-        description="This line is for drawing purpose only, not to be translated to BioPAX."
-        order="170"/>
-
   </properties>
 
 
@@ -242,11 +238,6 @@
       <controlProperty id="pgkb.cellularLocation" condition="Transmembrane">
         <dependentProperty id="pgkb.transmembraneTypes"/>
       </controlProperty>
-      <property id="pgkb.drawingOnly"/>
-    </object>
-
-    <object id="pgkb.shape" name="Shape" type="SHAPE">
-      <property id="pgkb.drawingOnly"/>
     </object>
 
     <object id="pgkb.line" name="Line" type="LINE">
@@ -272,7 +263,6 @@
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
       <property id="pgkb.isConnectingLine"/>
-      <property id="pgkb.drawingOnly"/>
     </object>
   </objects>
 </pathvisio>

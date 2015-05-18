@@ -19,6 +19,7 @@ import org.pathvisio.core.view.DefaultTemplates;
 import org.pathvisio.core.view.VPathway;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.gui.view.VPathwaySwing;
+import org.pharmgkb.pathvisio.DataConstants;
 import org.pharmgkb.pathvisio.PgkbType;
 import org.pharmgkb.pathvisio.plugin.swing.NewDictionaryElementDialog;
 import org.pharmgkb.pathvisio.plugin.swing.NewElementDialog;
@@ -87,10 +88,7 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 		PvUtils.customizePathwayElement(element, m_type);
 		element.setTextLabel(name);
 		if (!Utils.isEmpty(accId)) {
-			element.setDynamicProperty("pgkb.pgkbId", accId);
-		}
-		if (m_type.isDrawingOnly()) {
-			element.setDynamicProperty("pgkb.drawingOnly", "true");
+			element.setDynamicProperty(DataConstants.PGKB_PGKB_ID, accId);
 		}
 
 		element.setMCenterX(mx);
