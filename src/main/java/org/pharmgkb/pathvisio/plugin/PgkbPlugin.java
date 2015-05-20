@@ -79,8 +79,6 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	public static final String TYPE_DICTIONARY = "DICTIONARY";
 	public static final String TYPE_ENUM = "ENUM";
 
-	private static final Component sf_spacer = Box.createRigidArea(new Dimension(4, 0));
-	private static final Component sf_borderSpacer = Box.createRigidArea(new Dimension(8, 0));
 	private static final Border sf_buttonBorder = new EmptyBorder(4, 4, 4, 4);
 
 	private PvDesktop m_desktop;
@@ -89,6 +87,13 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	private Set<Component> m_toolbarComponents = new HashSet<>();
 
 
+	private Component getSpacer() {
+		return Box.createRigidArea(new Dimension(4, 0));
+	}
+
+	private Component getBorderSpacer() {
+		return Box.createRigidArea(new Dimension(8, 0));
+	}
 
 	@Override
 	public void init(PvDesktop desktop) {
@@ -170,8 +175,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		swingEngine.getApplicationPanel().getToolbarGroup(MainPanel.TB_GROUP_SHOW_IF_VPATHWAY).clear();
 
 		// zoom
-		toolbar.add(sf_spacer);
-		JLabel label = new JLabel("Zoom:", JLabel.LEFT);
+		toolbar.add(getSpacer());
+		JLabel label = new JLabel("Zoom: ", JLabel.LEFT);
 		addToToolbar(toolbar, label);
 		label.setAlignmentY(JLabel.CENTER_ALIGNMENT);
 		JComboBox<Action> zoomCombo = new JComboBox<>(swingEngine.getActions().zoomActions);
@@ -181,12 +186,12 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		zoomCombo.addActionListener(new ZoomComboListener());
 		addToToolbar(toolbar, zoomCombo);
 
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 		toolbar.addSeparator();
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 
 		// interactions
-		label = new JLabel("Edges:", JLabel.LEFT);
+		label = new JLabel("Edges: ", JLabel.LEFT);
 		addToToolbar(toolbar, label);
 		JComboBox<Action> interactionCombo = new JComboBox<>();
 		for (BiopaxInteractionType interactionType : BiopaxInteractionType.values()) {
@@ -194,16 +199,16 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			interactionCombo.addItem(action);
 		}
 		addToToolbar(toolbar, optimizeComboBox(interactionCombo));
-		toolbar.add(sf_spacer);
+		toolbar.add(getSpacer());
 		JButton lineButton = new JButton(new ImageIcon(Resources.getResourceURL("newarrow.gif")));
 		lineButton.setBorder(sf_buttonBorder);
 		lineButton.setToolTipText("Add edge");
 		lineButton.addActionListener(new ActionComboListener(interactionCombo));
 		addToToolbar(toolbar, lineButton);
 
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 		toolbar.addSeparator();
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 
 		// nodes
 		JComboBox<Action> nodeCombo = new JComboBox<>();
@@ -264,32 +269,31 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, false, KeyEvent.VK_4),
 				PgkbType.BIOLOGICAL_INTERMEDIATE);
 		// node dropdown
+    toolbar.add(getSpacer());
 		addToToolbar(toolbar, optimizeComboBox(nodeCombo));
-		toolbar.add(sf_spacer);
 		JButton newNodeButton = new JButton(new ImageIcon(Resources.getResourceURL("newrectangle.gif")));
 		newNodeButton.setBorder(sf_buttonBorder);
 		newNodeButton.setToolTipText("Add node");
 		newNodeButton.addActionListener(new ActionComboListener(nodeCombo));
 		addToToolbar(toolbar, newNodeButton);
 
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 		toolbar.addSeparator();
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 
-		label = new JLabel("Drawing Only:", JLabel.LEFT);
+		label = new JLabel("Drawing Only: ", JLabel.LEFT);
 		addToToolbar(toolbar, label);
 
 		addToToolbar(toolbar, optimizeComboBox(shapeCombo));
-		toolbar.add(sf_spacer);
 		JButton newShapeButton = new JButton(new ImageIcon(Resources.getResourceURL("newmitochondria.gif")));
 		newShapeButton.setBorder(sf_buttonBorder);
 		newShapeButton.setToolTipText("Add shape");
 		newShapeButton.addActionListener(new ActionComboListener(shapeCombo));
 		addToToolbar(toolbar, newShapeButton);
 
-		toolbar.add(sf_spacer);
+		toolbar.add(getBorderSpacer());
 		toolbar.addSeparator();
-		toolbar.add(sf_borderSpacer);
+		toolbar.add(getBorderSpacer());
 
 		// add default layout actions to toolbar
 		for(Action layoutAction : swingEngine.getActions().layoutActions) {
@@ -327,7 +331,6 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			action.putValue(Action.LARGE_ICON_KEY, icon);
 		}
 		addToToolbar(toolbar, action);
-		toolbar.add(sf_spacer);
 	}
 
 	private Action newNodeAction(@Nonnull PgkbType type, int keyStroke) {
