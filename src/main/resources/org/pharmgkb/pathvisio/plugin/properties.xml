@@ -15,6 +15,7 @@
     <dictionary id="pgkb.dict.pathway" file="pathways" />
     <dictionary id="pgkb.dict.physicalEntity" file="entities" />
     <dictionary id="pgkb.dict.process" file="processes" />
+    <dictionary id="pgkb.dict.transmembraneTypes" file="transmembraneTypes" />
 
     <dictionary id="pgkb.dict.coe">
       <option id="PD" name="PD"/>
@@ -63,13 +64,9 @@
         order="29">
     </property>
 
-    <property id="pgkb.transmembraneTypes" name="Transmembrane Types" type="ENUM"
+    <property id="pgkb.transmembraneTypes" name="Transmembrane Types" type="DICTIONARY" typeId="pgkb.dict.transmembraneTypes"
         description="Transmembrane Types" defaultValue="Plasma Membrane"
         order="30">
-      <option name="Plasma Membrane"/>
-      <option name="Apical Plasma Membrane"/>
-      <option name="Basolateral Plasma Membrane"/>
-      <option name="Vesicle Membrane"/>
     </property>
 
     <property id="pgkb.cell" name="Cell" type="DICTIONARY" typeId="pgkb.dict.cl"
