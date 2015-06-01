@@ -194,7 +194,10 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		label = new JLabel("Edges: ", JLabel.LEFT);
 		addToToolbar(toolbar, label);
 		JComboBox<Action> interactionCombo = new JComboBox<>();
-		for (BiopaxInteractionType interactionType : BiopaxInteractionType.values()) {
+		for (BiopaxInteractionType interactionType : BiopaxInteractionType.getAllSortedByName()) {
+			if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE) {
+				continue;
+			}
 			Action action = new CommonActions.NewElementAction(swingEngine.getEngine(), new LineTemplate(interactionType));
 			interactionCombo.addItem(action);
 		}
