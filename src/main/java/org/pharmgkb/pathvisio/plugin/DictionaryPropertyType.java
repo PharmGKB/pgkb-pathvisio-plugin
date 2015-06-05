@@ -10,13 +10,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import org.pathvisio.core.model.PropertyType;
 
@@ -39,6 +42,7 @@ public class DictionaryPropertyType implements PropertyType {
 	public static final String PATHWAY_DICTIONARY_ID = "pgkb.dict.pathway";
 	public static final String PHYSICAL_ENTITY_DICTIONARY_ID = "pgkb.dict.physicalEntity";
 	public static final String PROCESS_DICTIONARY_ID = "pgkb.dict.process";
+	private static final Splitter sf_commaSplitter = Splitter.on(",").trimResults().omitEmptyStrings();
 	private String m_id;
 	private SortedMap<String, String> m_idNameMap = new TreeMap<>();
 	private SortedMap<String, String> m_nameIdMap = new TreeMap<>();
@@ -108,7 +112,8 @@ public class DictionaryPropertyType implements PropertyType {
             throw new PgkbPluginException("Expecting 3 columns, got [" + line + "], in " + dataFile +
 								", filtering for " + filters);
           }
-					if (!filters.contains(data[2])) {
+					List<String> types = sf_commaSplitter.splitToList(data[2]);
+          if (Collections.disjoint(types, filters)) {
 						continue;
 					}
 				}
