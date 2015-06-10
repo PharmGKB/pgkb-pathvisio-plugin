@@ -13,12 +13,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.xml.parsers.DocumentBuilderFactory;
-import com.google.common.base.Splitter;
 import org.pathvisio.model.PropertyType;
 import org.pharmgkb.exception.PgkbException;
 import org.w3c.dom.Document;
@@ -40,7 +38,6 @@ public class DictionaryPropertyType implements PropertyType {
 	public static final String CL_DICTIONARY_ID = "pgkb.clDictionary";
 	public static final String PGKB_PATHWAY_DICTIONARY_ID = "pgkb.pgkbPathwayDictionary";
 	public static final String PGKB_HAPLOTYPE_DICTIONARY_ID = "pgkb.pgkbHaplotypeDictionary";
-  private static final Splitter sf_commaSplitter = Splitter.on(",");
 	private String m_id;
 	private SortedMap<String, String> m_idNameMap = new TreeMap<String, String>();
 	private SortedMap<String, String> m_nameIdMap = new TreeMap<String, String>();
@@ -143,8 +140,7 @@ public class DictionaryPropertyType implements PropertyType {
           if (data.length != 3){
             System.out.println("grr");
           }
-          List<String> types = sf_commaSplitter.splitToList(data[2]);
-          if (!types.contains(filterValue)) {
+					if (!data[2].equals(filterValue)) {
             continue;
           }
 				}
