@@ -2,7 +2,6 @@
 
 <pathvisio>
   <types>
-    <dictionary id="pgkb.dict.atc" file="atc" />
     <dictionary id="pgkb.dict.biologicalIntermediate" file="drugs" filter="biologicalIntermediate" />
     <dictionary id="pgkb.dict.cl" file="cl" />
     <dictionary id="pgkb.dict.cellularLocation" file="cellLoc" />
@@ -31,10 +30,6 @@
 
     <property id="pgkb.subId" name="Submission ID" description="Submission ID" type="core.STRING"
         order="13" editable="false" />
-
-    <property id="pgkb.classification" name="ATC Codes" type="DICTIONARY" typeId="pgkb.dict.atc"
-        description="Therapeutic classification"  multiSelect="true"
-        order="15" />
 
     <property id="pgkb.memberGenes" name="Member Genes" type="DICTIONARY" typeId="pgkb.dict.gene"
         description="Genes that are the members of this gene group or gene collection."
@@ -145,7 +140,6 @@
     <object id="pgkb.pathway" name="Pathway" type="MAPPINFO">
       <property id="pgkb.pgkbId"/>
       <property id="pgkb.subId"/>
-      <property id="pgkb.classification"/>
       <property id="pgkb.coe"/>
     </object>
 

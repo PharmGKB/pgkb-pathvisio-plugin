@@ -29,7 +29,6 @@ import org.pathvisio.core.model.PropertyType;
  * @author Mark Woon
  */
 public class DictionaryPropertyType implements PropertyType {
-	public static final String ATC_DICTIONARY_ID = "pgkb.dict.atc";
 	public static final String BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID = "pgkb.dict.biologicalIntermediate";
 	public static final String CL_DICTIONARY_ID = "pgkb.dict.cl";
 	public static final String CELLULAR_LOCATION_DICTIONARY_ID = "pgkb.dict.cellularLocation";
