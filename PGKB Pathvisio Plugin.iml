@@ -21,20 +21,12 @@
     <orderEntry type="module" module-name="PGKB Pathvisio Core" exported="" />
     <orderEntry type="library" exported="" name="JGoodies" level="project" />
     <orderEntry type="library" exported="" name="JIDE Common Layer" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Felix" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="PathVisio UI" level="project" />
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/felix.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../pathvisio/pathvisio.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/build/pathvisio.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
