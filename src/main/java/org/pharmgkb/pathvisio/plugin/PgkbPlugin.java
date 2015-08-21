@@ -715,8 +715,6 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
             }
           }
 
-          msgBuilder.append("\n");
-
           if (!validator.getErrors().isEmpty()) {
             msgBuilder.append("\nThe following errors were found:\n");
             for (String err : validator.getErrors()) {
