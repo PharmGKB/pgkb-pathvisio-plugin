@@ -45,6 +45,7 @@ import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.model.ObjectType;
+import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.core.model.Property;
 import org.pathvisio.core.model.PropertyManager;
@@ -61,6 +62,7 @@ import org.pathvisio.gui.handler.PropertyDisplayManager;
 import org.pharmgkb.pathvisio.BiopaxInteractionType;
 import org.pharmgkb.pathvisio.EnumProperty;
 import org.pharmgkb.pathvisio.ExtendedProperty;
+import org.pharmgkb.pathvisio.GpmlValidator;
 import org.pharmgkb.pathvisio.PgkbType;
 import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
 import org.pharmgkb.pathvisio.SimpleProperty;
@@ -476,9 +478,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	 */
 	private void initPropertyFile() throws PgkbPluginException {
 
-		InputStream in = null;
-		try {
-			in = PgkbPlugin.class.getResourceAsStream("properties.xml");
+		try (InputStream in = PgkbPlugin.class.getResourceAsStream("properties.xml")) {
 			DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 
@@ -496,14 +496,6 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new PgkbPluginException("Error initializing properties", ex);
-		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException ex) {
-					// ignore
-				}
-			}
 		}
 	}
 
@@ -704,9 +696,42 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 	public void applicationEvent(ApplicationEvent e) {
 
-		if (e.getType() == ApplicationEvent.Type.PATHWAY_NEW || e.getType() == ApplicationEvent.Type.PATHWAY_OPENED) {
-			enableActions();
-		}
+    switch (e.getType()) {
+      case PATHWAY_NEW:
+      case PATHWAY_OPENED:
+        enableActions();
+        break;
+      case PATHWAY_SAVE:
+        GpmlValidator validator = new GpmlValidator((Pathway)e.getSource());
+        if (!validator.validate()) {
+          StringBuilder msgBuilder = new StringBuilder("The file was saved.\n");
+
+          if (!validator.getWarnings().isEmpty()) {
+            msgBuilder.append("\nBut there are a few things you might want to fix:\n");
+            for (String warn : validator.getWarnings()) {
+              msgBuilder.append("* ")
+                  .append(warn)
+                  .append("\n");
+            }
+          }
+
+          msgBuilder.append("\n");
+
+          if (!validator.getErrors().isEmpty()) {
+            msgBuilder.append("\nThe following errors were found:\n");
+            for (String err : validator.getErrors()) {
+              msgBuilder.append("* ")
+                  .append(err)
+                  .append("\n");
+            }
+          }
+          JOptionPane.showMessageDialog(m_desktop.getFrame(),
+              msgBuilder.toString(),
+              "Data Warning", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+        break;
+    }
 	}
 
 
