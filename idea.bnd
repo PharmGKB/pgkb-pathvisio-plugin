@@ -10,6 +10,7 @@ Import-Package:  \
 !com.apple.laf,\
 !com.stormpath.*,\
 !com.sun.java.swing.plaf.windows,\
+!com.sun.org.apache.*,\
 !de.intarsys.*,\
 !de.schlichtherle.*,\
 !groovy.lang,\
