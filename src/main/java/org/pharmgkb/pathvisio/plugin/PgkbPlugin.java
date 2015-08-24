@@ -13,15 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.Action;
@@ -307,6 +301,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 		addToToolbar(toolbar, Box.createHorizontalGlue());
 		System.out.println("  done initializing actions");
+    checkForNewVersion();
 	}
 
 	private JComboBox optimizeComboBox(@Nonnull JComboBox<Action> comboBox) {
@@ -400,8 +395,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			PvUtils.registerProperty(PgkbType.getProperty(), m_desktop.getFrame());
 			PvUtils.registerProperty(BiopaxInteractionType.getProperty(), m_desktop.getFrame());
 
-			// register dictionary types
-			downloadAndUnpackFile();
+			DownloadUtils.downloadAndUnpackDataFile();
 			// initialize properties from XML
 			initPropertyFile();
 
@@ -432,46 +426,6 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				"Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
   }
 
-
-	private boolean downloadAndUnpackFile() throws PgkbPluginException {
-
-		String url = "https://preview.pharmgkb.org/download.do?objId=pathvisio.zip&ref=pgkb-pathvisio";
-		// download and unzip data file
-		System.out.println("Checking " + url);
-		File downloadedFile = IoUtils.downloadFromUrl(url, "pathvisio.zip");
-		if (downloadedFile == null) {
-			return false;
-		}
-		System.out.println("  done.");
-		File dataFile = null;
-		try {
-			ZipFile zipFile = new ZipFile(downloadedFile);
-			Enumeration entries = zipFile.entries();
-			int fileCount = 0;
-			while (entries.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry)entries.nextElement();
-				if (entry.isDirectory() || entry.getName().startsWith("CREATED_")) {
-					continue;
-				}
-				// unpack file
-				dataFile = new File(GlobalPreference.getDataDir(), entry.getName());
-				IoUtils.copyInputStream(zipFile.getInputStream(entry), new FileOutputStream(dataFile));
-				fileCount += 1;
-			}
-			if (fileCount == 0) {
-				throw new PgkbPluginException("Empty zip file '" + url + "'");
-			}
-			return true;
-
-		} catch (ZipException ex) {
-			if (dataFile != null && !dataFile.delete()) {
-				Logger.log.warn("Error deleting " + dataFile.getAbsolutePath());
-			}
-			throw new PgkbPluginException("Error opening zip file", ex);
-		} catch (IOException ex) {
-			throw new PgkbPluginException("Error unzipping data", ex);
-		}
-	}
 
 	/**
 	 * Initialize properties based on properties.xml.
@@ -734,8 +688,23 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
 
 
+  private void checkForNewVersion() {
 
-	//-- handler for zoom combo box in toolbar
+    try {
+      if (DownloadUtils.hasNewVersion()) {
+        JOptionPane.showMessageDialog(m_desktop.getFrame(),
+            "There is a new version of PathVisio available.\n\nPlease update as soon as possible.",
+            "New Version Available", JOptionPane.INFORMATION_MESSAGE);
+      }
+    } catch (Exception ex) {
+      JOptionPane.showMessageDialog(m_desktop.getFrame(), ex.getMessage(),
+          "Version Check Error", JOptionPane.ERROR_MESSAGE);
+    }
+  }
+
+
+
+  //-- handler for zoom combo box in toolbar
 	private class ZoomComboListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e){
