@@ -12,12 +12,12 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nullable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,8 +34,8 @@ import org.pharmgkb.pathvisio.plugin.DictionaryProperty;
 
 /**
  * This dialog presents the user with values available for selection from a dictionary.
- *
- * <b>Warning:  THIS CLASS REQUIRES JDK 1.6</b>
+ * <p>
+ * <b>Warning:  THIS CLASS REQUIRES JDK 1.8</b>
  *
  * @author Rebecca Tang
  */
@@ -46,8 +46,8 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 	private TableRowSorter<DictionaryValuesModel> m_sorter;
 
 
-	public DictionaryValuesDialog(SelectedDictionaryTableModel curDictTableModel, Frame frame, Component locationComp,
-			DictionaryProperty property) {
+	public DictionaryValuesDialog(SelectedDictionaryTableModel curDictTableModel, @Nullable Frame frame,
+      Component locationComp, DictionaryProperty property) {
 		super(frame, "Dictionary Entries", locationComp, true, false);
 		m_property = property;
 		m_dictTableModel = curDictTableModel;
@@ -62,7 +62,7 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 	 */
 	private JPanel createDialogTablePane() {
 
-		JPanel mainForm = new JPanel(new BorderLayout());
+		JPanel mainForm = new JPanel(new BorderLayout(5, 5));
 
 		DictionaryValuesModel model = new DictionaryValuesModel(m_property.getDictionaryType().getEntries());
 		JTable table = new JTable(model);
@@ -74,32 +74,30 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 
 		table.setTableHeader(null);
 		JScrollPane scrollPane = new JScrollPane(table);
-		mainForm.add(scrollPane, BorderLayout.CENTER);
-		//Create a separate form for filterText
-		JPanel filterPane = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		JLabel filterTextLabel = new JLabel("Filter Text:", SwingConstants.TRAILING);
-		filterPane.add(filterTextLabel);
-		m_filterText = new JTextField(30);
-		//Whenever filterText changes, invoke newFilter.
-		m_filterText.getDocument().addDocumentListener(
-				new DocumentListener() {
-					public void changedUpdate(DocumentEvent e) {
-						newFilter();
-					}
-
-					public void insertUpdate(DocumentEvent e) {
-						newFilter();
-					}
-
-					public void removeUpdate(DocumentEvent e) {
-						newFilter();
-					}
-				});
-		filterTextLabel.setLabelFor(m_filterText);
-		filterPane.add(m_filterText);
-		mainForm.add(filterPane, BorderLayout.SOUTH);
-		return mainForm;
-	}
+    mainForm.add(scrollPane, BorderLayout.CENTER);
+    // create a separate form for filterText
+    JPanel filterPane = new JPanel(new FlowLayout(FlowLayout.LEADING));
+    JLabel filterTextLabel = new JLabel("Filter Text:", SwingConstants.LEFT);
+    filterPane.add(filterTextLabel);
+    m_filterText = new JTextField(30);
+    // whenever filterText changes, invoke newFilter.
+    m_filterText.getDocument().addDocumentListener(
+        new DocumentListener() {
+          public void changedUpdate(DocumentEvent e) {
+            newFilter();
+          }
+          public void insertUpdate(DocumentEvent e) {
+            newFilter();
+          }
+          public void removeUpdate(DocumentEvent e) {
+            newFilter();
+          }
+        });
+    filterTextLabel.setLabelFor(m_filterText);
+    filterPane.add(m_filterText);
+    mainForm.add(filterPane, BorderLayout.SOUTH);
+    return mainForm;
+  }
 
 
 	/**
@@ -150,11 +148,9 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 			}
 			m_dictValues = dictValues;
 			m_data = new ArrayList<>(data.entrySet());
-			Collections.sort(m_data, new Comparator<Map.Entry<String, Boolean>>() {
-				public int compare(Map.Entry<String, Boolean> o1, Map.Entry<String, Boolean> o2) {
-					return StyledTextComparator.getInstance().compare(m_dictValues.get(o1.getKey()), m_dictValues.get(o2.getKey()));
-				}
-			});
+      Collections.sort(m_data, (o1, o2) ->
+              StyledTextComparator.getInstance().compare(m_dictValues.get(o1.getKey()), m_dictValues.get(o2.getKey()))
+      );
 			if (selectedKey != null) {
 				for (Map.Entry<String, Boolean> entry : m_data) {
 					if (entry.getValue()) {

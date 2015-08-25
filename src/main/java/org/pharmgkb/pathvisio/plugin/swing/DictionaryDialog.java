@@ -22,6 +22,9 @@ import org.pathvisio.gui.dialogs.OkCancelDialog;
 import org.pharmgkb.pathvisio.plugin.DictionaryProperty;
 
 /**
+ * <p>
+ * <b>Warning:  THIS CLASS REQUIRES JDK 1.8</b>
+ *
  * @author Rebecca Tang
  */
 public class DictionaryDialog extends OkCancelDialog {
@@ -85,11 +88,7 @@ public class DictionaryDialog extends OkCancelDialog {
 			final DictionaryValuesDialog d = new DictionaryValuesDialog(m_dictTableModel, null, this, m_property);
 			if (!SwingUtilities.isEventDispatchThread()) {
 				try {
-					SwingUtilities.invokeAndWait(new Runnable() {
-						public void run() {
-							d.setVisible(true);
-						}
-					});
+					SwingUtilities.invokeAndWait(() -> d.setVisible(true));
 				} catch (Exception ex) {
 					Logger.log.error("Unable to open dialog", ex);
 				}
