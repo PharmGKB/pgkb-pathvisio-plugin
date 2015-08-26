@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -27,6 +26,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.annotation.Nullable;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
 import org.pharmgkb.util.StreamUtils;
@@ -46,7 +47,7 @@ public class DownloadUtils {
     String url = "https://preview.pharmgkb.org/download.do?objId=pathvisio.zip&ref=pgkb-pathvisio";
     // download and unzip data file
     System.out.println("Checking " + url);
-    Path downloadedFile = DownloadUtils.downloadFromUrl(url, "pathvisio.zip");
+    Path downloadedFile = downloadFromUrl(url, "pathvisio.zip");
     if (downloadedFile == null) {
       return;
     }
@@ -100,32 +101,20 @@ public class DownloadUtils {
 				if (conn.getLastModified() == 0 || Files.getLastModifiedTime(dataFile).toMillis() < conn.getLastModified()) {
 					// update file
 					System.out.println("  downloading update");
-					doDownload(conn, dataFile);
+					FileUtils.copyURLToFile(url, dataFile.toFile());
 					return dataFile;
 				} else {
 					return null;
 				}
 			} else {
 				System.out.println("  downloading ");
-				doDownload(conn, dataFile);
+        FileUtils.copyURLToFile(url, dataFile.toFile());
 				return dataFile;
 			}
 
 		} catch (Exception ex) {
 			throw new PgkbPluginException("Error processing '" + urlValue + "'", ex);
 		}
-	}
-
-	private static void doDownload(URLConnection conn, Path file) throws IOException {
-
-		if (Files.exists(file)) {
-      Files.delete(file);
-		}
-		System.out.println("  saving to " + file);
-    try (Reader reader = new InputStreamReader(conn.getInputStream());
-         Writer writer = Files.newBufferedWriter(file)) {
-      StreamUtils.copy(reader, writer);
-    }
 	}
 
 
@@ -148,14 +137,11 @@ public class DownloadUtils {
 
     // download timestamp
     URL url = new URL("https://stanford.box.com/s/l98dyxkmwciukz2c76rmoml8qai5rubw");
-    URLConnection conn = url.openConnection();
     Path versionFile = GlobalPreference.getDataDir().toPath().resolve("pgkb-pathvisio.timestamp.txt");
-    doDownload(conn, versionFile);
+    FileUtils.copyURLToFile(url, versionFile.toFile());
     // read and parse
-    try (Reader tsReader = new InputStreamReader(PgkbPlugin.class.getResourceAsStream("timestamp.txt"));
-         Writer tsWriter = new StringWriter()) {
-      StreamUtils.copy(tsReader, tsWriter);
-      return ZonedDateTime.parse(tsWriter.toString(), sf_timestampFormatter).toInstant();
+    try (InputStream in = PgkbPlugin.class.getResourceAsStream("timestamp.txt")) {
+      return ZonedDateTime.parse(IOUtils.toString(in), sf_timestampFormatter).toInstant();
     }
   }
 }
