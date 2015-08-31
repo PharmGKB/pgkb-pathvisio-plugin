@@ -6,7 +6,6 @@
  */
 package org.pharmgkb.pathvisio.plugin.swing;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -29,6 +28,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+import com.jgoodies.forms.builder.FormBuilder;
+import com.jgoodies.forms.factories.Paddings;
+import com.jgoodies.forms.layout.FormLayout;
 import org.pathvisio.gui.dialogs.OkCancelDialog;
 import org.pharmgkb.pathvisio.plugin.DictionaryProperty;
 
@@ -52,8 +54,9 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 		m_property = property;
 		m_dictTableModel = curDictTableModel;
 
-		setDialogComponent(createDialogTablePane());
-		setSize(400, 300);
+    JPanel p = createDialogTablePane();
+		setDialogComponent(p);
+    setSize(p.getPreferredSize());
 	}
 
 
@@ -62,8 +65,6 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 	 */
 	private JPanel createDialogTablePane() {
 
-		JPanel mainForm = new JPanel(new BorderLayout(5, 5));
-
 		DictionaryValuesModel model = new DictionaryValuesModel(m_property.getDictionaryType().getEntries());
 		JTable table = new JTable(model);
 		table.getColumnModel().getColumn(0).setMaxWidth(36);
@@ -71,10 +72,9 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 		m_sorter = new TableRowSorter<>(model);
 		table.setRowSorter(m_sorter);
 		table.setFillsViewportHeight(true);
-
 		table.setTableHeader(null);
 		JScrollPane scrollPane = new JScrollPane(table);
-    mainForm.add(scrollPane, BorderLayout.CENTER);
+
     // create a separate form for filterText
     JPanel filterPane = new JPanel(new FlowLayout(FlowLayout.LEADING));
     JLabel filterTextLabel = new JLabel("Filter Text:", SwingConstants.LEFT);
@@ -86,17 +86,24 @@ public class DictionaryValuesDialog extends OkCancelDialog {
           public void changedUpdate(DocumentEvent e) {
             newFilter();
           }
+
           public void insertUpdate(DocumentEvent e) {
             newFilter();
           }
+
           public void removeUpdate(DocumentEvent e) {
             newFilter();
           }
         });
     filterTextLabel.setLabelFor(m_filterText);
     filterPane.add(m_filterText);
-    mainForm.add(filterPane, BorderLayout.SOUTH);
-    return mainForm;
+
+    FormBuilder builder = FormBuilder.create()
+        .layout(new FormLayout("fill:pref:grow", "fill:default:grow, $rgap, default"))
+        .padding(Paddings.DIALOG)
+        .add(scrollPane).xy(1, 1)
+        .add(filterPane).xy(1, 3);
+    return builder.getPanel();
   }
 
 
