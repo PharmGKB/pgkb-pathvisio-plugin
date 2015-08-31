@@ -9,6 +9,7 @@ package org.pharmgkb.pathvisio.plugin;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.annotation.Nullable;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,20 +53,24 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 		m_button.addActionListener(this);
 	}
 
+  @Override
 	public PropertyType getType() {
 		return m_property.getType();
 	}
 
 
-	public TableCellRenderer getLabelRenderer() {
+  @Override
+	public @Nullable TableCellRenderer getLabelRenderer() {
 		return null;
 	}
 
-	public TableCellRenderer getValueRenderer() {
+  @Override
+  public @Nullable TableCellRenderer getValueRenderer() {
 		return this;
 	}
 
-	public TableCellEditor getValueEditor() {
+  @Override
+  public @Nullable TableCellEditor getValueEditor() {
 		return this;
 	}
 
