@@ -51,9 +51,11 @@ org.pathvisio.gui,\
 Include-Resource: \
 org/pharmgkb/Global.class=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\
 org/pharmgkb/aws=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/aws,\
+org/pharmgkb/biopax=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
 org/pharmgkb/exception=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/exception,\
 org/pharmgkb/hibernate=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/hibernate,\
 org/pharmgkb/jackson=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jackson,\
+org/pharmgkb/jersey=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jersey,\
 org/pharmgkb/jsonld=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jsonld,\
 org/pharmgkb/model=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/model,\
 org/pharmgkb/pathvisio=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/pathvisio,\
@@ -73,8 +75,6 @@ org/pharmgkb/util=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\
 @../pgkb-pathvisio/lib/commons-lang.jar,\
 @../pgkb-pathvisio/lib/paxtools-core.jar,\
-@../pgkb-pathvisio/lib/paxtools-jena-io.jar,\
-@../pgkb-pathvisio/lib/paxtools-simple-io.jar,\
 @../pgkb-pathvisio-plugin/lib/jide-oss.jar,\
 @../pgkb-pathvisio-plugin/lib/jgoodies-common.jar,\
 @../pgkb-pathvisio-plugin/lib/jgoodies-forms.jar

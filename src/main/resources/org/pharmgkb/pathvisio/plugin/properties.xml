@@ -5,7 +5,7 @@
     <dictionary id="pgkb.dict.biologicalIntermediate" file="drugs" filter="biologicalIntermediate" />
     <dictionary id="pgkb.dict.cl" file="cl" />
     <dictionary id="pgkb.dict.cellularLocation" file="cellLoc" />
-    <dictionary id="pgkb.dict.disease" file="diseases" />
+    <dictionary id="pgkb.dict.phenotype" file="diseases" />
     <dictionary id="pgkb.dict.chemical" file="drugs" filter="drug,ion,metabolite,drugClass" />
     <dictionary id="pgkb.dict.drug" file="drugs" filter="drug,ion,metabolite" />
     <dictionary id="pgkb.dict.drugClass" file="drugs" filter="drugClass" format="i" />
@@ -15,6 +15,7 @@
     <dictionary id="pgkb.dict.physicalEntity" file="entities" />
     <dictionary id="pgkb.dict.process" file="processes" />
     <dictionary id="pgkb.dict.transmembraneTypes" file="transmembraneTypes" />
+    <dictionary id="pgkb.dict.modifications" file="modifications" />
 
     <dictionary id="pgkb.dict.coe">
       <option id="PD" name="PD"/>
@@ -68,26 +69,13 @@
         description="Cell Name." multiSelect="false"
         order="31" />
 
-    <property id="pgkb.modification" name="Modification" type="ENUM"
-        description="Modification" defaultValue="None"
+    <property id="pgkb.modification" name="Modification" type="DICTIONARY" typeId="pgkb.dict.modifications"
+        description="Modification"
         order="32">
-      <option name="None"/>
-      <option name="Phosphorylation"/>
-      <option name="Ubiquitination"/>
-      <option name="Hydroxylation"/>
     </property>
 
-    <property id="pgkb.phosphateNumber" name="Phosphate Number" type="ENUM" description="Number of Phosphate."
-        defaultValue="1" order="33">
-      <option name="1"/>
-      <option name="2"/>
-      <option name="3"/>
-      <option name="4"/>
-      <option name="5"/>
-    </property>
-
-    <property id="pgkb.phosphatePosition" name="Phosphate Position" type="core.STRING" description="Position of Phosphate."
-        order="34">
+    <property id="pgkb.modification.position" name="Modification Position" type="core.STRING" description="Position of modification(s)."
+        order="33">
     </property>
 
     <property id="pgkb.prodrug" name="Is Prodrug" type="core.BOOLEAN"
@@ -110,10 +98,6 @@
       <option name="Inactive"/>
     </property>
 
-    <property id="pgkb.uncharacterized" name="Uncharacterized" type="core.BOOLEAN"
-        description="Uncharacterized" defaultValue="false"
-        order="75" />
-
     <property id="pgkb.coe" name="CoE" type="DICTIONARY" typeId="pgkb.dict.coe"
         description="Categories of Evidence" multiSelect="true"
         order="80">
@@ -129,10 +113,6 @@
     <property id="pgkb.isReversible" name="Reversible" type="core.BOOLEAN" description="Is the reaction reversible?"
         defaultValue="false" order="151"/>
 
-    <property id="pgkb.isConnectingLine" name="Connecting Line" type="core.BOOLEAN"
-        description="This line is for connecting to a main line."
-        defaultValue="false" order="161" />
-
   </properties>
 
 
@@ -144,90 +124,101 @@
     </object>
 
     <object id="pgkb.dataNode" name="Data Node" type="DATANODE">
+      <property id="pgkb.type"/>
+      <property id="pgkb.cellularLocation"/>
+      <property id="pgkb.cell"/>
+
+      <controlProperty id="pgkb.cellularLocation" condition="Transmembrane">
+        <dependentProperty id="pgkb.transmembraneTypes"/>
+      </controlProperty>
+
       <controlProperty id="pgkb.type" condition="Gene">
         <dependentProperty id="pgkb.pgkbId"/>
+        <dependentProperty id="pgkb.role"/>
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene Collection">
+        <dependentProperty id="pgkb.memberGenes"/>
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene Complex">
+        <dependentProperty id="pgkb.geneComplexComponents"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene-Drug Complex">
+        <dependentProperty id="pgkb.drugComplexComponents"/>
+        <dependentProperty id="pgkb.geneComplexComponents"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="Gene Group">
+        <dependentProperty id="pgkb.memberGenes"/>
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Haplotype">
         <dependentProperty id="pgkb.pgkbId"/>
+        <dependentProperty id="pgkb.role"/>
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
+
       <controlProperty id="pgkb.type" condition="Drug">
         <dependentProperty id="pgkb.pgkbId"/>
+        <dependentProperty id="pgkb.prodrug"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Drug Class">
         <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
-      <controlProperty id="pgkb.type" condition="Metabolite">
-        <dependentProperty id="pgkb.pgkbId"/>
+      <controlProperty id="pgkb.type" condition="Drug Collection">
+        <dependentProperty id="pgkb.memberDrugs"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
-      <controlProperty id="pgkb.type" condition="Ion">
-        <dependentProperty id="pgkb.pgkbId"/>
+      <controlProperty id="pgkb.type" condition="Drug Complex">
+        <dependentProperty id="pgkb.drugComplexComponents"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Biological Intermediate">
         <dependentProperty id="pgkb.pgkbId"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
-      <controlProperty id="pgkb.type" condition="Disease">
+      <controlProperty id="pgkb.type" condition="Ion">
         <dependentProperty id="pgkb.pgkbId"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
+      <controlProperty id="pgkb.type" condition="Metabolite">
+        <dependentProperty id="pgkb.pgkbId"/>
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
+      </controlProperty>
+
       <controlProperty id="pgkb.type" condition="Phenotype">
         <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
+
       <controlProperty id="pgkb.type" condition="Pathway">
         <dependentProperty id = "pgkb.pgkbId"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Process">
         <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
+
       <controlProperty id="pgkb.type" condition="Physical Entity">
         <dependentProperty id="pgkb.pgkbId"/>
-      </controlProperty>
-      <property id="pgkb.type"/>
-      <property id="pgkb.cellularLocation"/>
-      <property id="pgkb.modification"/>
-      <property id="pgkb.cell"/>
-      <controlProperty id="pgkb.type" condition="Gene">
-        <dependentProperty id="pgkb.role"/>
-        <dependentProperty id="pgkb.state"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Haplotype">
-        <dependentProperty id="pgkb.role"/>
-        <dependentProperty id="pgkb.state"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Gene Group">
-        <dependentProperty id="pgkb.memberGenes"/>
-        <dependentProperty id="pgkb.state"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Gene Collection">
-        <dependentProperty id="pgkb.memberGenes"/>
-        <dependentProperty id="pgkb.state"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Drug Collection">
-        <dependentProperty id="pgkb.memberDrugs"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Drug Complex">
-        <dependentProperty id="pgkb.drugComplexComponents"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Gene Complex">
-        <dependentProperty id="pgkb.geneComplexComponents"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Gene-Drug Complex">
-        <dependentProperty id="pgkb.drugComplexComponents"/>
-        <dependentProperty id="pgkb.geneComplexComponents"/>
-      </controlProperty>
-      <controlProperty id="pgkb.modification" condition="Phosphorylation">
-        <dependentProperty id="pgkb.phosphateNumber"/>
-      </controlProperty>
-      <controlProperty id="pgkb.modification" condition="Phosphorylation">
-        <dependentProperty id="pgkb.phosphatePosition"/>
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Metabolite">
-        <dependentProperty id="pgkb.state"/>
-        <dependentProperty id="pgkb.uncharacterized" />
-      </controlProperty>
-      <controlProperty id="pgkb.type" condition="Drug">
-        <dependentProperty id="pgkb.prodrug"/>
-      </controlProperty>
-      <controlProperty id="pgkb.cellularLocation" condition="Transmembrane">
-        <dependentProperty id="pgkb.transmembraneTypes"/>
       </controlProperty>
     </object>
 
@@ -253,7 +244,6 @@
       <controlProperty id="pgkb.biopaxInteractionType" condition="Degradation">
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
-      <property id="pgkb.isConnectingLine"/>
     </object>
   </objects>
 </pathvisio>

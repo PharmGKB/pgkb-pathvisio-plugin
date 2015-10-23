@@ -27,11 +27,11 @@ import org.pathvisio.core.model.PathwayEvent;
 import org.pathvisio.core.model.PathwayListener;
 import org.pathvisio.core.model.Property;
 import org.pathvisio.core.model.PropertyManager;
-import org.pathvisio.core.model.StaticProperty;
 import org.pathvisio.core.util.Utils;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.gui.handler.PathwayTableModel;
 import org.pharmgkb.pathvisio.BiopaxInteractionType;
+import org.pharmgkb.pathvisio.DataConstants;
 import org.pharmgkb.pathvisio.EnumProperty;
 import org.pharmgkb.pathvisio.ExtendedProperty;
 import org.pharmgkb.pathvisio.PgkbType;
@@ -86,15 +86,13 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
 	/**
 	 * Associates a dependent property with an object type.
 	 */
-	public void registerDependentProperty(ObjectType type, Property propControl, String condition, Property dependentProp) {
+	public void registerDependentProperty(@Nonnull ObjectType pvType, @Nonnull Property propControl,
+      @Nonnull String condition, @Nonnull Property dependentProp) {
 
-		ObjectProperties objProps = m_objectProperties.get(type);
+		ObjectProperties objProps = m_objectProperties.get(pvType);
 		if (objProps == null) {
 			objProps = new ObjectProperties();
-			m_objectProperties.put(type, objProps);
-		}
-		if (!(propControl instanceof StaticProperty) && !objProps.containsProperty(propControl)) {
-			throw new IllegalStateException("Control property must be registered with object before dependent property can be declared");
+			m_objectProperties.put(pvType, objProps);
 		}
 		objProps.addDependentProperty(propControl, condition, dependentProp);
 	}
@@ -197,26 +195,14 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
 				}
 			}
 			if (elem.getObjectType() == ObjectType.LINE) {
-				if (e.affectsProperty("pgkb.lineStrength")) {
-					EnumProperty prop = (EnumProperty)PropertyManager.getProperty("pgkb.lineStrength");
+				if (e.affectsProperty(DataConstants.PGKB_LINE_STRENGTH)) {
+					EnumProperty prop = (EnumProperty)PropertyManager.getProperty(DataConstants.PGKB_LINE_STRENGTH);
 					elem.setLineThickness(prop.getDataDouble(elem.getDynamicProperty(prop.getId())));
-				} else if (e.affectsProperty("pgkb.isReversible")) {
-					if (Boolean.parseBoolean(elem.getDynamicProperty("pgkb.isReversible"))) {
+				} else if (e.affectsProperty(DataConstants.PGKB_IS_REVERSIBLE)) {
+					if (Boolean.parseBoolean(elem.getDynamicProperty(DataConstants.PGKB_IS_REVERSIBLE))) {
 						elem.setStartLineType(LineType.ARROW);
 					} else {
 						elem.setStartLineType(LineType.LINE);
-					}
-				} else if (e.affectsProperty("pgkb.isConnectingLine")) {
-					String typeValue = elem.getDynamicProperty(BiopaxInteractionType.getProperty().getId());
-					if (!Utils.isEmpty(typeValue)) {
-						BiopaxInteractionType interactionType = BiopaxInteractionType.lookupByName(typeValue);
-						if (Boolean.parseBoolean(elem.getDynamicProperty("pgkb.isConnectingLine"))) {
-							elem.setStartLineType(LineType.LINE);
-							elem.setEndLineType(LineType.LINE);
-						} else {
-							elem.setStartLineType(interactionType.getStartLineType());
-							elem.setEndLineType(interactionType.getEndLineType());
-						}
 					}
 				} else if (e.affectsProperty(BiopaxInteractionType.getProperty().getId())) {
 					String value = elem.getDynamicProperty(BiopaxInteractionType.getProperty().getId());

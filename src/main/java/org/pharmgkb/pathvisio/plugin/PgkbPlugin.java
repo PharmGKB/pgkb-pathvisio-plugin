@@ -234,8 +234,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 					break;
 				case PHENOTYPE:
 					dictValueRequired = false;
-				case DISEASE:
-					dictPropTypeId = DictionaryPropertyType.DISEASE_DICTIONARY_ID;
+					dictPropTypeId = DictionaryPropertyType.PHENOTYPE_DICTIONARY_ID;
 					break;
 				case PATHWAY:
 					dictPropTypeId = DictionaryPropertyType.PATHWAY_DICTIONARY_ID;
@@ -593,7 +592,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			NodeList objNL = rootElement.getElementsByTagName("object");
 			for (int j = 0; j < objNL.getLength(); j++) {
 				Element objElem = (Element)objNL.item(j);
-				ObjectType objType = ObjectType.valueOf(objElem.getAttribute("type"));
+				ObjectType pvType = ObjectType.valueOf(objElem.getAttribute("type"));
 				// properties, add each property to objProperties
 				NodeList propNL = objElem.getElementsByTagName("property");
 				for (int m = 0; m < propNL.getLength(); m++) {
@@ -603,28 +602,26 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 					if (prop == null) {
 						throw new PgkbPluginException("Unknown property: '" + propId + "'");
 					}
-					m_objectPropertiesManager.registerProperty(objType, prop);
+					m_objectPropertiesManager.registerProperty(pvType, prop);
 				}
 				// control properties
 				NodeList controlPropertyNL = objElem.getElementsByTagName("controlProperty");
 				for (int n = 0; n < controlPropertyNL.getLength(); n++) {
 					Element controlPropElem = (Element)controlPropertyNL.item(n);
-					String controlPropId = controlPropElem.getAttribute("id");
-					Property controlProp = PropertyManager.getProperty(controlPropId);
+					Property controlProp = PropertyManager.getProperty(controlPropElem.getAttribute("id"));
 					if (controlProp == null) {
-						throw new PgkbPluginException("Unknown control property: '" + controlPropId + "'");
+						throw new PgkbPluginException("Unknown control property: '" + controlPropElem.getAttribute("id") + "'");
 					}
 					String condition = controlPropElem.getAttribute("condition");
 					// dependent properties
 					NodeList dependentPropertyNL = controlPropElem.getElementsByTagName("dependentProperty");
 					for (int p = 0; p < dependentPropertyNL.getLength(); p++) {
 						Element dependentPropElem = (Element)dependentPropertyNL.item(p);
-						String dependentPropId = dependentPropElem.getAttribute("id");
-						Property dependentProp = PropertyManager.getProperty(dependentPropId);
+						Property dependentProp = PropertyManager.getProperty(dependentPropElem.getAttribute("id"));
 						if (dependentProp == null) {
-							throw new PgkbPluginException("Unknown dependent property: '" + dependentPropId + "'");
+							throw new PgkbPluginException("Unknown dependent property: '" + dependentPropElem.getAttribute("id") + "'");
 						}
-						m_objectPropertiesManager.registerDependentProperty(objType, controlProp, condition, dependentProp);
+						m_objectPropertiesManager.registerDependentProperty(pvType, controlProp, condition, dependentProp);
 					}
 				}
 			}

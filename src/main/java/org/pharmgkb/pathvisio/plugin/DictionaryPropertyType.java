@@ -32,7 +32,7 @@ public class DictionaryPropertyType implements PropertyType {
 	public static final String BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID = "pgkb.dict.biologicalIntermediate";
 	public static final String CL_DICTIONARY_ID = "pgkb.dict.cl";
 	public static final String CELLULAR_LOCATION_DICTIONARY_ID = "pgkb.dict.cellularLocation";
-	public static final String DISEASE_DICTIONARY_ID = "pgkb.dict.disease";
+	public static final String PHENOTYPE_DICTIONARY_ID = "pgkb.dict.phenotype";
 	public static final String CHEMICAL_DICTIONARY_ID = "pgkb.dict.chemical";
 	public static final String DRUG_DICTIONARY_ID = "pgkb.dict.drug";
 	public static final String DRUG_CLASS_DICTIONARY_ID = "pgkb.dict.drugClass";
