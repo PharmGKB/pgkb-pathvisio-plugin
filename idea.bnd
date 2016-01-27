@@ -8,6 +8,8 @@ Bundle-ManifestVersion: 2
 Import-Package:  \
 !apple.laf,\
 !com.apple.laf,\
+!com.google.api.*,\
+!com.google.gdata.*,\
 !com.stormpath.*,\
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
