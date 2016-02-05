@@ -44,6 +44,7 @@ public class DictionaryPropertyType implements PropertyType {
 	private static final Splitter sf_commaSplitter = Splitter.on(",").trimResults().omitEmptyStrings();
 	private String m_id;
 	private SortedMap<String, String> m_idNameMap = new TreeMap<>();
+  /** Maps lower-cased name to ID */
 	private SortedMap<String, String> m_nameIdMap = new TreeMap<>();
 	private Set<String> m_duplicateNames = new HashSet<>();
 
@@ -57,10 +58,16 @@ public class DictionaryPropertyType implements PropertyType {
 	}
 
 
+  /**
+   * Gets the map of ID's to names.
+   */
 	public SortedMap<String, String> getEntries() {
 		return m_idNameMap;
 	}
 
+  /**
+   * Gets the map of lower-cased names to IDs.
+   */
 	public SortedMap<String, String> getReverseEnteries() {
 		return m_nameIdMap;
 	}
@@ -72,20 +79,26 @@ public class DictionaryPropertyType implements PropertyType {
     if (m_idNameMap.containsKey(id)) {
       return;
     }
-    if (m_duplicateNames.contains(name)) {
+    String lcName = name.toLowerCase();
+    if (m_duplicateNames.contains(lcName)) {
       name = name + " (" + id + ")";
-    } else if (m_nameIdMap.containsKey(name)) {
-      m_duplicateNames.add(name);
+      lcName = lcName  + " (" + id + ")";
+
+    } else if (m_nameIdMap.containsKey(lcName)) {
+      m_duplicateNames.add(lcName);
       // update previous entry
-      String oldId = m_nameIdMap.get(name);
-      String oldName = name + " (" + oldId + ")";
-      m_nameIdMap.remove(name);
-      m_nameIdMap.put(oldName, oldId);
-      m_idNameMap.put(oldId, oldName);
+      String oldId = m_nameIdMap.get(lcName);
+      String oldName = m_idNameMap.get(oldId);
+
+      m_nameIdMap.remove(lcName);
+      m_nameIdMap.put(lcName + " (" + oldId + ")", oldId);
+      m_idNameMap.put(oldId, oldName  + " (" + oldId + ")");
+
       name = name + " (" + id + ")";
+      lcName = lcName  + " (" + id + ")";
     }
     m_idNameMap.put(id, name);
-    m_nameIdMap.put(name, id);
+    m_nameIdMap.put(lcName, id);
 	}
 
 

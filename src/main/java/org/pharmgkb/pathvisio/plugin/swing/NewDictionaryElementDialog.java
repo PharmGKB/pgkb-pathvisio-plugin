@@ -191,7 +191,7 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
 				m_selectedName = freetext;
 			} else {
 				String check = " (" + id + ")";
-				m_selectedName = (String)m_autocompleteField.getSelectedItem();
+        m_selectedName = m_dictPropertyType.getEntries().get(id);
 				if (m_selectedName.endsWith(check)) {
 					m_selectedName = m_selectedName.substring(0, m_selectedName.length() - check.length());
 				}
