@@ -27,7 +27,6 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.annotation.Nullable;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
 import org.pharmgkb.util.StreamUtils;
@@ -136,12 +135,17 @@ public class DownloadUtils {
   private static Instant getLatestVersion() throws IOException {
 
     // download timestamp
-    URL url = new URL("https://stanford.box.com/s/l98dyxkmwciukz2c76rmoml8qai5rubw");
+    URL url = new URL("https://stanford.box.com/shared/static/l98dyxkmwciukz2c76rmoml8qai5rubw.txt");
     Path versionFile = GlobalPreference.getDataDir().toPath().resolve("pgkb-pathvisio.timestamp.txt");
     FileUtils.copyURLToFile(url, versionFile.toFile());
     // read and parse
-    try (InputStream in = PgkbPlugin.class.getResourceAsStream("timestamp.txt")) {
-      return ZonedDateTime.parse(IOUtils.toString(in), sf_timestampFormatter).toInstant();
+    try (Reader reader = Files.newBufferedReader(versionFile);
+         StringWriter curVersionWriter = new StringWriter()) {
+      StreamUtils.copy(reader, curVersionWriter);
+      return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      throw ex;
     }
   }
 }
