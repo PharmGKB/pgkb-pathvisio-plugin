@@ -26,6 +26,8 @@
 
 
   <properties>
+    <!-- node properties -->
+
     <property id="pgkb.pgkbId" name="PharmGKB ID" description="PharmGKB ID" type="core.STRING"
         order="12" editable="false" />
 
@@ -51,9 +53,6 @@
         description="Drugs that are components of this complex."
         multiSelect="true"
         order="18"/>
-
-    <property id="pgkb.reactionName" name="Reaction Name" type="core.STRING" description="Name of the interaction."
-        order="19"/>
 
     <property id="pgkb.cellularLocation" name="Cellular Location" type="DICTIONARY" typeId="pgkb.dict.cellularLocation"
         description="Cellular Location"
@@ -102,6 +101,17 @@
         description="Categories of Evidence" multiSelect="true"
         order="80">
     </property>
+
+
+    <!-- line properties -->
+
+    <property id="pgkb.reactionName" name="Reaction Name" type="core.STRING" description="Name of the interaction."
+        order="19"/>
+
+    <property id="pgkb.externalXrefDb" name="Xref Database Name" type="core.STRING" description="Name of External Cross Reference Database."
+        order="20"/>
+    <property id="pgkb.externalXrefId" name="Xref Database Id" type="core.STRING" description="External Cross Reference Id."
+        order="21"/>
 
     <property id="pgkb.lineStrength" name="Strength" type="ENUM" description="How strong the reaction is."
         defaultValue="Normal" order="150">

@@ -220,6 +220,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				case GENE_COLLECTION:
 				case DRUG:
 				case BIOLOGICAL_INTERMEDIATE:
+        // TODO(markwoon): hide BLACK_BOX until we can eliminate it
+        case BLACK_BOX:
 					continue;
 				case HAPLOTYPE:
 					dictPropTypeId = DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID;
