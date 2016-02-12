@@ -35,6 +35,7 @@ public class LineTemplate extends DefaultTemplates.LineTemplate {
 		PathwayElement[] elems = super.addElements(p, mx, my);
 		for (PathwayElement elem : elems) {
 			elem.setDynamicProperty(BiopaxInteractionType.getProperty().getId(), m_interactionType.getDisplayName());
+      elem.setColor(m_interactionType.getColor());
 		}
 		return elems;
 	}
