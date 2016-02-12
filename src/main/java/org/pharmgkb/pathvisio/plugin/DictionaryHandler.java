@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.core.util.Utils;
 import org.pathvisio.gui.handler.TypeHandler;
@@ -116,9 +117,9 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 			m_dictionaryDialog = new DictionaryDialog(m_frame, m_frame, m_property);
 		}
 		String v = (String)value;
-		if (!m_property.isCollection() && !Utils.isEmpty(v)) {
-			// convert from enum, which only has a value and no id
-			String key = m_property.getDictionaryType().getReverseEnteries().get(v);
+		if (!m_property.isCollection() && !StringUtils.isEmpty(v)) {
+      // convert from enum, which only has a value and no id
+			String key = m_property.getDictionaryType().getReverseEnteries().get(v.toLowerCase());
 			if (key == null) {
 				JOptionPane.showMessageDialog(this.m_button,
 						"Potentially obsolete data?  The '" + m_property.getName() + "' dictionary has no entry for '" + v + "'. Ignoring value!",
