@@ -25,11 +25,8 @@ public class SelectedDictionaryTableModel extends AbstractTableModel {
 	boolean m_isMultiselect;
 	private String m_initialState;
 	private Map<String, String> m_unsortedData = new HashMap<>();
-	private SortedMap<String, String> m_data = new TreeMap<>(new Comparator<String>() {
-		public int compare(String o1, String o2) {
-			return StyledTextComparator.getInstance().compare(m_unsortedData.get(o1), m_unsortedData.get(o2));
-		}
-	});
+	private SortedMap<String, String> m_data = new TreeMap<>((Comparator<String>)(o1, o2) ->
+      StyledTextComparator.getInstance().compare(m_unsortedData.get(o1), m_unsortedData.get(o2)));
 
 
 	/**
@@ -59,6 +56,7 @@ public class SelectedDictionaryTableModel extends AbstractTableModel {
 				m_data.put(items[0], items[1]);
 			}
 		}
+    fireTableDataChanged();
 	}
 
 	/**
