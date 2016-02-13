@@ -241,7 +241,7 @@ public class DictionaryValuesDialog extends OkCancelDialog {
 	private static class RegexFilter extends RowFilter<DictionaryValuesModel, Integer>  {
         private Matcher matcher;
 
-        RegexFilter(String pattern) {
+    RegexFilter(String pattern) {
 			matcher = Pattern.compile("^(<i>)?" + pattern, Pattern.CASE_INSENSITIVE).matcher("");
 		}
 
