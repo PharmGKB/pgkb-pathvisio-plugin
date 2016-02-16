@@ -6,8 +6,8 @@
     <dictionary id="pgkb.dict.cl" file="cl" />
     <dictionary id="pgkb.dict.cellularLocation" file="cellLoc" />
     <dictionary id="pgkb.dict.phenotype" file="diseases" />
-    <dictionary id="pgkb.dict.chemical" file="drugs" filter="drug,ion,metabolite,drugClass" />
-    <dictionary id="pgkb.dict.drug" file="drugs" filter="drug,ion,metabolite" />
+    <dictionary id="pgkb.dict.chemical" file="drugs" filter="drug,prodrug,ion,metabolite,drugClass" />
+    <dictionary id="pgkb.dict.drug" file="drugs" filter="drug,prodrug,ion,metabolite" />
     <dictionary id="pgkb.dict.drugClass" file="drugs" filter="drugClass" format="i" />
     <dictionary id="pgkb.dict.gene" file="genes" />
     <dictionary id="pgkb.dict.haplotype" file="haplotypes" />
