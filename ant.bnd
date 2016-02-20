@@ -24,6 +24,7 @@ Import-Package:  \
 !javax.persistence,\
 !javax.servlet.*,\
 !java.sql,\
+!net.spy.memcached,\
 !org.apache.commons.cli,\
 !org.apache.lucene.*,\
 !org.apache.pdfbox.*,\
@@ -54,6 +55,7 @@ Include-Resource: \
 org/pharmgkb/Global.class=../build/tmp/pathvisio/classes/org/pharmgkb/Global.class,\
 org/pharmgkb/aws=../build/tmp/pathvisio/classes/org/pharmgkb/aws,\
 org/pharmgkb/biopax=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
+org/pharmgkb/elasticsearch=../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/elasticsearch,\
 org/pharmgkb/exception=../build/tmp/pathvisio/classes/org/pharmgkb/exception,\
 org/pharmgkb/hibernate=../build/tmp/pathvisio/classes/org/pharmgkb/hibernate,\
 org/pharmgkb/jackson=../build/tmp/pathvisio/classes/org/pharmgkb/jackson,\
@@ -66,9 +68,16 @@ org/pharmgkb/util=../build/tmp/pathvisio/classes/org/pharmgkb/util,\
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/ehcache-core.jar,\
 @../pgkb-core/lib/guava.jar,\
-@../pgkb-core/lib/httpcore.jar,\
+@../pgkb-core/lib/httpasyncclient.jar,\
+@../pgkb-core/lib/httpasyncclient-cache.jar,\
 @../pgkb-core/lib/httpclient.jar,\
+@../pgkb-core/lib/httpclient-cache.jar,\
+@../pgkb-core/lib/httpcore.jar,\
+@../pgkb-core/lib/httpcore-nio.jar,\
+@../pgkb-core/lib/httpmime.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
+@../pgkb-core/lib/jest.jar,\
+@../pgkb-core/lib/jest-common.jar,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nullable.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nonnull.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
