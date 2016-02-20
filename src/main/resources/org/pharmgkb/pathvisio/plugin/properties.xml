@@ -77,10 +77,6 @@
         order="33">
     </property>
 
-    <property id="pgkb.prodrug" name="Is Prodrug" type="core.BOOLEAN"
-        description="Is this drug a prodrug?"
-        order="50" />
-
     <property id="pgkb.role" name="Role" type="ENUM"
         description="Role" defaultValue="NA"
         order="60">
@@ -182,7 +178,6 @@
 
       <controlProperty id="pgkb.type" condition="Drug">
         <dependentProperty id="pgkb.pgkbId"/>
-        <dependentProperty id="pgkb.prodrug"/>
         <dependentProperty id="pgkb.modification"/>
         <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
