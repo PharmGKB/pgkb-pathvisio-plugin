@@ -655,7 +655,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
         enableActions();
         break;
       case PATHWAY_SAVE:
-        GpmlValidator validator = new GpmlValidator((Pathway)e.getSource());
+        GpmlValidator validator = new GpmlValidator((Pathway)e.getSource(), null);
         if (!validator.validate()) {
           StringBuilder msgBuilder = new StringBuilder("The file was saved.\n");
 
