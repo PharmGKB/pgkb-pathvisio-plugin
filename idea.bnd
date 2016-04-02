@@ -8,6 +8,7 @@ Bundle-ManifestVersion: 2
 Import-Package:  \
 !apple.laf,\
 !com.apple.laf,\
+!com.fasterxml.jackson.datatype.hibernate5.*,\
 !com.google.api.*,\
 !com.google.gdata.*,\
 !com.stormpath.*,\
