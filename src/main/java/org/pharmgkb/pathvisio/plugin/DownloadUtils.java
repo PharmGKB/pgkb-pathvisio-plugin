@@ -16,6 +16,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -91,25 +92,33 @@ public class DownloadUtils {
 	 */
 	private static @Nullable Path downloadFromUrl(String urlValue, String fileName) throws PgkbPluginException {
 
-		try {
-			URL url = new URL(urlValue);
-			URLConnection conn = url.openConnection();
+    Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
+    try {
+      URL url = new URL(urlValue);
+      URLConnection conn = url.openConnection();
 
-			Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
-			if (Files.exists(dataFile)) {
-				if (conn.getLastModified() == 0 || Files.getLastModifiedTime(dataFile).toMillis() < conn.getLastModified()) {
-					// update file
-					System.out.println("  downloading update");
-					FileUtils.copyURLToFile(url, dataFile.toFile());
-					return dataFile;
-				} else {
-					return null;
-				}
-			} else {
-				System.out.println("  downloading ");
+      if (Files.exists(dataFile)) {
+        if (conn.getLastModified() == 0 || Files.getLastModifiedTime(dataFile).toMillis() < conn.getLastModified()) {
+          // update file
+          System.out.println("  downloading update");
+          FileUtils.copyURLToFile(url, dataFile.toFile());
+          return dataFile;
+        } else {
+          return null;
+        }
+      } else {
+        System.out.println("  downloading ");
         FileUtils.copyURLToFile(url, dataFile.toFile());
-				return dataFile;
-			}
+        return dataFile;
+      }
+
+    } catch (UnknownHostException ex) {
+      if (Files.exists(dataFile)) {
+        throw new NetworkException("No internet?\n\nCould not download " + fileName +
+            " from preview.  Using existing older version.\n\nProceed at your own risk.");
+      } else {
+        throw new PgkbPluginException("Could not download " + fileName + " from preview", ex);
+      }
 
 		} catch (Exception ex) {
 			throw new PgkbPluginException("Error processing '" + urlValue + "'", ex);
@@ -118,7 +127,7 @@ public class DownloadUtils {
 
 
 
-  public static boolean hasNewVersion() throws IOException {
+  public static boolean hasNewVersion() throws IOException, NetworkException {
     return getLatestVersion().isAfter(getThisVersion());
   }
 
@@ -132,20 +141,21 @@ public class DownloadUtils {
     }
   }
 
-  private static Instant getLatestVersion() throws IOException {
+  private static Instant getLatestVersion() throws IOException, NetworkException {
 
     // download timestamp
     URL url = new URL("https://stanford.box.com/shared/static/l98dyxkmwciukz2c76rmoml8qai5rubw.txt");
     Path versionFile = GlobalPreference.getDataDir().toPath().resolve("pgkb-pathvisio.timestamp.txt");
-    FileUtils.copyURLToFile(url, versionFile.toFile());
+    try {
+      FileUtils.copyURLToFile(url, versionFile.toFile());
+    } catch (UnknownHostException ex) {
+      throw new NetworkException("No network?  Skipping version check", ex);
+    }
     // read and parse
     try (Reader reader = Files.newBufferedReader(versionFile);
          StringWriter curVersionWriter = new StringWriter()) {
       StreamUtils.copy(reader, curVersionWriter);
       return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
-    } catch (Exception ex) {
-      ex.printStackTrace();
-      throw ex;
     }
   }
 }

@@ -120,6 +120,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			}
 
 			System.out.println("Done initializing PgkbPlugin");
+
+
 		} catch (Exception ex) {
 			Logger.log.error("Error initializing plugin", ex);
       showErrorMessage(ex);
@@ -396,7 +398,12 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 			PvUtils.registerProperty(PgkbType.getProperty(), m_desktop.getFrame());
 			PvUtils.registerProperty(BiopaxInteractionType.getProperty(), m_desktop.getFrame());
 
-			DownloadUtils.downloadAndUnpackDataFile();
+      try {
+        DownloadUtils.downloadAndUnpackDataFile();
+      } catch (NetworkException ex) {
+        JOptionPane.showMessageDialog(m_desktop.getFrame(), ex.getMessage(),
+            "No Network", JOptionPane.INFORMATION_MESSAGE);
+      }
 			// initialize properties from XML
 			initPropertyFile();
 
