@@ -23,7 +23,7 @@ public class LineTemplate extends DefaultTemplates.LineTemplate {
 
 
 	public LineTemplate(BiopaxInteractionType type) {
-		super(type.getDisplayName().toLowerCase(), type.getLineStyle(), type.getStartLineType(), type.getEndLineType(),
+		super(type.getDisplayName().toLowerCase(), type.getLineStyle(), type.getStartLineStyle(), type.getEndLineStyle(),
 				ConnectorType.STRAIGHT);
 		m_interactionType = type;
 	}

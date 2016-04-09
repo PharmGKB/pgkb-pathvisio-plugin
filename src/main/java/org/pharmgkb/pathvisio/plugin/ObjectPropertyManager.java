@@ -209,8 +209,8 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
 					if (!Utils.isEmpty(value)) {
 						BiopaxInteractionType interactionType = BiopaxInteractionType.lookupByName(value);
 						elem.setLineStyle(interactionType.getLineStyle());
-						elem.setStartLineType(interactionType.getStartLineType());
-						elem.setEndLineType(interactionType.getEndLineType());
+						elem.setStartLineType(interactionType.getStartLineStyle());
+						elem.setEndLineType(interactionType.getEndLineStyle());
 						elem.setColor(interactionType.getColor());
 					}
 				}
