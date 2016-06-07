@@ -58,6 +58,7 @@ org/pharmgkb/Global.class     = ../build/packages/pharmgkb/WEB-INF/classes/org/p
 org/pharmgkb/aws              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/aws,\
 org/pharmgkb/biopax           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
 org/pharmgkb/common           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/common,\
+org/pharmgkb/commonmark       = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/commonmark,\
 org/pharmgkb/elasticsearch    = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/elasticsearch,\
 org/pharmgkb/exception        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/exception,\
 org/pharmgkb/hibernate        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/hibernate,\
@@ -69,6 +70,8 @@ org/pharmgkb/pathvisio        = ../build/packages/pharmgkb/WEB-INF/classes/org/p
 org/pharmgkb/pathvisio/plugin = ../build/tmp/pathvisio/classes/org/pharmgkb/pathvisio/plugin,\
 org/pharmgkb/util             = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
 @../pgkb-core/lib/aws-java-sdk.jar,\
+@../pgkb-core/lib/commonmark.jar,\
+@../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
 @../pgkb-core/lib/ehcache-core.jar,\
 @../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/httpasyncclient.jar,\
