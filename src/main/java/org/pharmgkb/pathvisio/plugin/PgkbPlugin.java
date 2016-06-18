@@ -216,7 +216,6 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		JComboBox<Action> shapeCombo = new JComboBox<>();
 		for (PgkbType type : PgkbType.getAllSortedByName()) {
 			String dictPropTypeId = null;
-			boolean dictValueRequired = true;
 			switch (type) {
 				case GENE:
 				case GENE_COLLECTION:
@@ -224,6 +223,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				case BIOLOGICAL_INTERMEDIATE:
         // TODO(markwoon): hide BLACK_BOX until we can eliminate it
         case BLACK_BOX:
+          // skip, these types have their own button
 					continue;
 				case HAPLOTYPE:
 					dictPropTypeId = DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID;
@@ -231,13 +231,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				case METABOLITE:
 				case ION:
 					dictPropTypeId = DictionaryPropertyType.CHEMICAL_DICTIONARY_ID;
-					dictValueRequired = false;
 					break;
 				case DRUG_CLASS:
 					dictPropTypeId = DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID;
 					break;
 				case PHENOTYPE:
-					dictValueRequired = false;
 					dictPropTypeId = DictionaryPropertyType.PHENOTYPE_DICTIONARY_ID;
 					break;
 				case PATHWAY:
@@ -250,7 +248,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
           dictPropTypeId = DictionaryPropertyType.PROCESS_DICTIONARY_ID;
           break;
 			}
-			Action action = newNodeAction(type, dictPropTypeId, dictValueRequired, -1);
+			Action action = newNodeAction(type, dictPropTypeId, true, -1);
 			if (type.isDrawingOnly()) {
 				shapeCombo.addItem(action);
 			} else {
@@ -268,7 +266,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 				PgkbType.GENE_COLLECTION);
 		addAction(toolbar, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_DICTIONARY_ID, true, KeyEvent.VK_3),
 				PgkbType.DRUG);
-		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, false, KeyEvent.VK_4),
+		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, true, KeyEvent.VK_4),
 				PgkbType.BIOLOGICAL_INTERMEDIATE);
 		// node dropdown
     toolbar.add(getSpacer());
