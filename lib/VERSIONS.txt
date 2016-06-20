@@ -7,7 +7,7 @@ jgoodies-common.jar       JGoodies Common 1.9.0
                           from http://www.jgoodies.com/
 
 
-jide-oss.jar              JIDE Common Layer 3.6.13
+jide-oss.jar              JIDE Common Layer 3.6.14
                           from https://github.com/jidesoft/jide-oss/
 
 
