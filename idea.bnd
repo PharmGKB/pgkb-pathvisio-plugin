@@ -55,6 +55,8 @@ org.pathvisio.gui,\
 
 Include-Resource: \
 org/pharmgkb/Global.class     = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\
+org/pharmgkb/Global$1.class   = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$1.class,\
+org/pharmgkb/Global$GlobalHelperSingleton.class = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$GlobalHelperSingleton.class,\
 org/pharmgkb/aws              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/aws,\
 org/pharmgkb/biopax           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
 org/pharmgkb/common           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/common,\
@@ -73,6 +75,7 @@ org/pharmgkb/util             = ../build/packages/pharmgkb/WEB-INF/classes/org/p
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
 @../pgkb-core/lib/ehcache-core.jar,\
+@../pgkb-core/lib/gson.jar,\
 @../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/httpasyncclient.jar,\
 @../pgkb-core/lib/httpasyncclient-cache.jar,\
