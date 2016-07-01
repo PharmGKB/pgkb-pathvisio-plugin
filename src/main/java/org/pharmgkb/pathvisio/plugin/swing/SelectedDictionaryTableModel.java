@@ -15,6 +15,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.table.AbstractTableModel;
 import org.pathvisio.core.util.Utils;
+import org.pharmgkb.pathvisio.DataConstants;
+
 
 /**
  * This table model holds the list of selected dictioanry entries.
@@ -22,7 +24,7 @@ import org.pathvisio.core.util.Utils;
  * @author Rebecca Tang
  */
 public class SelectedDictionaryTableModel extends AbstractTableModel {
-	boolean m_isMultiselect;
+	private boolean m_isMultiselect;
 	private String m_initialState;
 	private Map<String, String> m_unsortedData = new HashMap<>();
 	private SortedMap<String, String> m_data = new TreeMap<>((Comparator<String>)(o1, o2) ->
@@ -49,12 +51,12 @@ public class SelectedDictionaryTableModel extends AbstractTableModel {
 			m_unsortedData.clear();
 		}
 		if (!Utils.isEmpty(initialState)) {
-			String[] data = initialState.split("\t");
-			for (String d : data) {
-				String[] items = d.split("::");
-				m_unsortedData.put(items[0], items[1]);
-				m_data.put(items[0], items[1]);
-			}
+      Map<String, String> dataMap = DataConstants.TERMS_SPLITTER.split(initialState);
+      for (String key : dataMap.keySet()) {
+        String value = dataMap.get(key);
+        m_unsortedData.put(key, value);
+        m_data.put(key, value);
+      }
 		}
     fireTableDataChanged();
 	}
@@ -67,16 +69,7 @@ public class SelectedDictionaryTableModel extends AbstractTableModel {
 		String data = "";
 		if (m_data.entrySet().size() > 0) {
 			if (m_isMultiselect) {
-				StringBuilder dataBuilder = new StringBuilder();
-				for (Map.Entry<String, String> e : m_data.entrySet()) {
-					if (dataBuilder.length() > 0) {
-						dataBuilder.append("\t");
-					}
-					dataBuilder.append(e.getKey())
-							.append("::")
-							.append(e.getValue());
-				}
-				data = dataBuilder.toString();
+        data = DataConstants.TERMS_JOINER.join(m_data);
 			} else {
 				// treat it like an enum
 				data = m_data.entrySet().iterator().next().getValue();

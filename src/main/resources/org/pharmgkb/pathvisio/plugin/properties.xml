@@ -54,6 +54,23 @@
         multiSelect="true"
         order="18"/>
 
+    <property id="pgkb.organism" name="Organism" type="core.STRING" description="Organism name"
+        order="21">
+    </property>
+
+    <property id="pgkb.organismId" name="Organism NCBI Taxonomy Id" type="core.STRING" description="NCBI Taxonomy Id"
+        order="22">
+    </property>
+
+    <property id="pgkb.geneSymbol" name="Gene Symbol" type="core.STRING" description="Gene symbol"
+        order="23">
+    </property>
+
+    <property id="pgkb.geneXref" name="Gene Xref" type="core.STRING" description="Gene cross-reference (URL)"
+        order="24">
+    </property>
+
+
     <property id="pgkb.cellularLocation" name="Cellular Location" type="DICTIONARY" typeId="pgkb.dict.cellularLocation"
         description="Cellular Location"
         order="29">
@@ -145,6 +162,16 @@
         <dependentProperty id="pgkb.modification"/>
         <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
+      <controlProperty id="pgkb.type" condition="Non-human Gene">
+        <dependentProperty id="pgkb.organism"/>
+        <dependentProperty id="pgkb.organismId"/>
+        <dependentProperty id="pgkb.geneSymbol"/>
+        <dependentProperty id="pgkb.geneXref"/>
+        <dependentProperty id="pgkb.role"/>
+        <dependentProperty id="pgkb.state"/>
+        <dependentProperty id="pgkb.modification"/>
+        <dependentProperty id="pgkb.modification.position"/>
+      </controlProperty>
       <controlProperty id="pgkb.type" condition="Gene Collection">
         <dependentProperty id="pgkb.memberGenes"/>
         <dependentProperty id="pgkb.state"/>
@@ -163,7 +190,6 @@
         <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Gene Group">
-        <dependentProperty id="pgkb.memberGenes"/>
         <dependentProperty id="pgkb.state"/>
         <dependentProperty id="pgkb.modification"/>
         <dependentProperty id="pgkb.modification.position"/>

@@ -17,10 +17,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.core.util.Utils;
 import org.pathvisio.gui.handler.TypeHandler;
+import org.pharmgkb.pathvisio.DataConstants;
 import org.pharmgkb.pathvisio.plugin.swing.DictionaryDialog;
 import org.pharmgkb.pathvisio.plugin.swing.StyledTableCellRenderer;
 
@@ -78,26 +81,21 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 
 	//-- TableCellRenderer methods --//
 
+  private static final Joiner sf_termValueJoiner = Joiner.on(", ").skipNulls();
+
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
 
 		StringBuilder valBuilder = new StringBuilder();
 		String entries = (String)value;
-		if (!Utils.isEmpty(entries)) {
-			if (!m_property.isCollection()) {
-				// treat as enum (i.e. only have value, no id)
-				valBuilder.append(entries);
-			} else {
-				String[] data = entries.split("\t");
-				for (String d : data) {
-					String[] entry = d.split("::");
-					if (valBuilder.length() > 0) {
-						valBuilder.append(", ");
-					}
-					valBuilder.append(entry[1]);
-				}
-			}
-		}
+    if (!Utils.isEmpty(entries)) {
+      if (!m_property.isCollection()) {
+        // treat as enum (i.e. only have value, no id)
+        valBuilder.append(entries);
+      } else {
+        sf_termValueJoiner.appendTo(valBuilder, DataConstants.TERMS_SPLITTER.split(entries).values());
+      }
+    }
 		return m_valueRenderer.getTableCellRendererComponent(table, valBuilder.toString(), isSelected, hasFocus, row, column);
 	}
 
@@ -126,7 +124,7 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
 						"Warning", JOptionPane.WARNING_MESSAGE);
 				v = "";
 			} else {
-				v = key + "::" + v;
+        v = DataConstants.TERMS_JOINER.join(ImmutableMap.of(key, v));
 			}
 		}
 		m_dictionaryDialog.setData(v);
