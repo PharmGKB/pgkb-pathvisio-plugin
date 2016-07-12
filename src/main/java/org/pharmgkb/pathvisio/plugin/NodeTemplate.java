@@ -19,7 +19,7 @@ import org.pathvisio.core.view.DefaultTemplates;
 import org.pathvisio.core.view.VPathway;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.gui.view.VPathwaySwing;
-import org.pharmgkb.pathvisio.DataConstants;
+import org.pharmgkb.pathvisio.DynamicProperty;
 import org.pharmgkb.pathvisio.PgkbType;
 import org.pharmgkb.pathvisio.plugin.swing.NewDictionaryElementDialog;
 import org.pharmgkb.pathvisio.plugin.swing.NewElementDialog;
@@ -42,7 +42,7 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 		m_type = type;
 		m_name = m_type.getDisplayName();
 		if (m_type.getNotes() != null) {
-			m_name = m_type.getDisplayName() + " " + m_type.getNotes();
+			m_name = m_name + " " + m_type.getNotes();
 		}
 		m_desktop = desktop;
 		if (dictPropType == null) {
@@ -53,6 +53,29 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 	}
 
 
+  /**
+   * Constructor for nodes that have preset name.
+   */
+  public NodeTemplate(@Nonnull PgkbType type, @Nonnull PvDesktop desktop) {
+    super(type.getDataNodeType());
+    m_type = type;
+    switch (m_type) {
+      case DNA_ENTITY:
+        m_name = "DNA";
+        break;
+      case RNA_ENTITY:
+        m_name = "RNA";
+        break;
+      default:
+        throw new UnsupportedOperationException("Unsupported type: " + m_type);
+    }
+    if (m_type.getNotes() != null) {
+      m_name = m_name + " " + m_type.getNotes();
+    }
+    m_desktop = desktop;
+  }
+
+
 	@Override
 	public String getName() {
 		return m_name;
@@ -61,25 +84,30 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 
 	public @Nullable PathwayElement[] addElements(Pathway p, double mx, double my) {
 
-		JDialog dialog;
+		JDialog dialog = null;
 		if (m_newElementDialog != null) {
 			dialog = m_newElementDialog;
 			m_newElementDialog.reset();
-		} else {
+		} else if (m_newDictionaryElementDialog != null) {
 			dialog = m_newDictionaryElementDialog;
 			m_newDictionaryElementDialog.reset();
 		}
-		dialog.setLocationRelativeTo(m_desktop.getFrame());
-		dialog.setVisible(true);
 
-		String name;
-		String accId = null;
-		if (m_newElementDialog != null) {
-			name = m_newElementDialog.getName();
-		} else {
-			name = m_newDictionaryElementDialog.getSelectedName();
-			accId = m_newDictionaryElementDialog.getSelectedAccessionId();
-		}
+    String name;
+    String accId = null;
+    if (dialog != null) {
+      dialog.setLocationRelativeTo(m_desktop.getFrame());
+      dialog.setVisible(true);
+
+      if (m_newElementDialog != null) {
+        name = m_newElementDialog.getName();
+      } else {
+        name = m_newDictionaryElementDialog.getSelectedName();
+        accId = m_newDictionaryElementDialog.getSelectedAccessionId();
+      }
+    } else {
+      name = m_name;
+    }
 		if (Utils.isEmpty(name)) {
 			return null;
 		}
@@ -88,7 +116,7 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
 		PvUtils.customizePathwayElement(element, m_type);
 		element.setTextLabel(name);
 		if (!Utils.isEmpty(accId)) {
-			element.setDynamicProperty(DataConstants.PGKB_PGKB_ID, accId);
+      DynamicProperty.PGKB_ID.set(element, accId);
 		}
 
 		element.setMCenterX(mx);

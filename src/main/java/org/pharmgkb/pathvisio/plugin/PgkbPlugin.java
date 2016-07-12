@@ -193,7 +193,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		addToToolbar(toolbar, label);
 		JComboBox<Action> interactionCombo = new JComboBox<>();
 		for (BiopaxInteractionType interactionType : BiopaxInteractionType.getAllSortedByName()) {
-			if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE) {
+			if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE ||
+          interactionType == BiopaxInteractionType.TEMPLATE_REACTION_REGULATION) {
 				continue;
 			}
 			Action action = new CommonActions.NewElementAction(swingEngine.getEngine(), new LineTemplate(interactionType));
@@ -341,12 +342,18 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	private Action newNodeAction(@Nonnull PgkbType type, @Nullable String dictPropTypeId, boolean dictValueRequired,
 			int keyStroke) {
 
-		DictionaryPropertyType dictPropType = null;
-		if (dictPropTypeId != null) {
-			dictPropType = (DictionaryPropertyType)PropertyManager.getPropertyType(dictPropTypeId);
-		}
-		Action action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
-				new NodeTemplate(type, m_desktop, dictPropType, dictValueRequired));
+    Action action;
+    if (type.isStatic()) {
+      action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
+          new NodeTemplate(type, m_desktop));
+    } else {
+      DictionaryPropertyType dictPropType = null;
+      if (dictPropTypeId != null) {
+        dictPropType = (DictionaryPropertyType)PropertyManager.getPropertyType(dictPropTypeId);
+      }
+      action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
+          new NodeTemplate(type, m_desktop, dictPropType, dictValueRequired));
+    }
 		if (keyStroke != -1) {
 			action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(keyStroke,
 					Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));

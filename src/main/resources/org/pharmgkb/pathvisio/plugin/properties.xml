@@ -52,14 +52,20 @@
     <property id="pgkb.drugComplexComponents" name="Drug Components" type="DICTIONARY" typeId="pgkb.dict.drug"
         description="Drugs that are components of this complex."
         multiSelect="true"
-        order="18"/>
+        order="19"/>
 
     <property id="pgkb.organism" name="Organism" type="core.STRING" description="Organism name"
         order="21">
     </property>
-
     <property id="pgkb.organismId" name="Organism NCBI Taxonomy Id" type="core.STRING" description="NCBI Taxonomy Id"
         order="22">
+    </property>
+
+    <property id="pgkb.organism.humanDefault" name="Organism" type="core.STRING" description="Organism name"
+        order="21" defaultValue="Homo sapiens">
+    </property>
+    <property id="pgkb.organismId.humanDefault" name="Organism NCBI Taxonomy Id" type="core.STRING" description="NCBI Taxonomy Id"
+        order="22" defaultValue="9606">
     </property>
 
     <property id="pgkb.geneSymbol" name="Gene Symbol" type="core.STRING" description="Gene symbol"
@@ -251,6 +257,15 @@
       <controlProperty id="pgkb.type" condition="Physical Entity">
         <dependentProperty id="pgkb.pgkbId"/>
       </controlProperty>
+      <controlProperty id="pgkb.type" condition="DNA Entity">
+        <dependentProperty id="pgkb.organism.humanDefault"/>
+        <dependentProperty id="pgkb.organismId.humanDefault"/>
+      </controlProperty>
+      <controlProperty id="pgkb.type" condition="RNA Entity">
+        <dependentProperty id="pgkb.organism.humanDefault"/>
+        <dependentProperty id="pgkb.organismId.humanDefault"/>
+      </controlProperty>
+
     </object>
 
     <object id="pgkb.line" name="Line" type="LINE">
