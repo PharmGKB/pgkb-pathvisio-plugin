@@ -54,6 +54,11 @@
         multiSelect="true"
         order="19"/>
 
+    <property id="pgkb.allMembersRequired" name="All Required" type="core.BOOLEAN"
+        description="All members required for interaction to occur"
+        defaultValue="false"
+        order="20"/>
+
     <property id="pgkb.organism" name="Organism" type="core.STRING" description="Organism name"
         order="21">
     </property>
@@ -180,6 +185,7 @@
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Gene Collection">
         <dependentProperty id="pgkb.memberGenes"/>
+        <dependentProperty id="pgkb.allMembersRequired"/>
         <dependentProperty id="pgkb.state"/>
         <dependentProperty id="pgkb.modification"/>
         <dependentProperty id="pgkb.modification.position"/>
@@ -218,6 +224,7 @@
       </controlProperty>
       <controlProperty id="pgkb.type" condition="Drug Collection">
         <dependentProperty id="pgkb.memberDrugs"/>
+        <dependentProperty id="pgkb.allMembersRequired"/>
         <dependentProperty id="pgkb.modification"/>
         <dependentProperty id="pgkb.modification.position"/>
       </controlProperty>

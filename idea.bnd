@@ -4,6 +4,7 @@ Implementation-Vendor: PharmGKB
 Bundle-SymbolicName: org.pharmgkb.pathvisio.plugin
 Bundle-Activator:    org.pharmgkb.pathvisio.plugin.Activator
 Bundle-ManifestVersion: 2
+Bundle-Version: 1.0.0
 
 Import-Package:  \
 !apple.laf,\

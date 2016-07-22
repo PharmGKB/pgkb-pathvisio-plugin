@@ -61,6 +61,8 @@ import org.pharmgkb.pathvisio.PgkbType;
 import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
 import org.pharmgkb.pathvisio.SimpleProperty;
 import org.pharmgkb.pathvisio.SimplePropertyType;
+import org.pharmgkb.pathvisio.plugin.action.AddLiteratureAction;
+import org.pharmgkb.pathvisio.plugin.action.EditLiteratureAction;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -139,6 +141,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	private void addToToolbar(JToolBar toolbar, Action action) {
 		action.setEnabled(false);
 		m_actions.add(action);
+
+    //JideButton button = new JideButton(action);
+    //button.setAction(action);
+    //toolbar.add(button);
+
 		JButton button = toolbar.add(action);
 		button.setBorder(sf_buttonBorder);
 		button.setFocusable(false);
@@ -297,11 +304,21 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		toolbar.add(getBorderSpacer());
 
 		// add default layout actions to toolbar
-		for(Action layoutAction : swingEngine.getActions().layoutActions) {
+		for (Action layoutAction : swingEngine.getActions().layoutActions) {
 			addToToolbar(toolbar, layoutAction);
 		}
 
+    toolbar.add(getBorderSpacer());
+    toolbar.addSeparator();
+    toolbar.add(getBorderSpacer());
+
+    // add hotkey for literature action
+    addToToolbar(toolbar, new AddLiteratureAction(m_desktop.getSwingEngine()));
+    addToToolbar(toolbar, new EditLiteratureAction(m_desktop.getSwingEngine()));
+
+    // done with toolbar
 		addToToolbar(toolbar, Box.createHorizontalGlue());
+
 		System.out.println("  done initializing actions");
     checkForNewVersion();
 	}
@@ -342,18 +359,12 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	private Action newNodeAction(@Nonnull PgkbType type, @Nullable String dictPropTypeId, boolean dictValueRequired,
 			int keyStroke) {
 
-    Action action;
-    if (type.isStatic()) {
-      action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
-          new NodeTemplate(type, m_desktop));
-    } else {
-      DictionaryPropertyType dictPropType = null;
-      if (dictPropTypeId != null) {
-        dictPropType = (DictionaryPropertyType)PropertyManager.getPropertyType(dictPropTypeId);
-      }
-      action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
-          new NodeTemplate(type, m_desktop, dictPropType, dictValueRequired));
+    DictionaryPropertyType dictPropType = null;
+    if (dictPropTypeId != null) {
+      dictPropType = (DictionaryPropertyType)PropertyManager.getPropertyType(dictPropTypeId);
     }
+    Action action = new CommonActions.NewElementAction(m_desktop.getSwingEngine().getEngine(),
+        new NodeTemplate(type, m_desktop, dictPropType, dictValueRequired));
 		if (keyStroke != -1) {
 			action.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(keyStroke,
 					Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -643,7 +654,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	}
 
 
-	//-- ObjectPropertyListener  methods --//
+  //-- ObjectPropertyListener  methods --//
 	public void objectModified(ObjectPropertyEvent event) {
 
 		PathwayElement elem = event.getElement();
