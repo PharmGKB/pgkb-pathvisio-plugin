@@ -8,6 +8,7 @@ package org.pharmgkb.pathvisio.plugin;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,10 +23,10 @@ import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
@@ -34,6 +35,8 @@ import javax.swing.border.EmptyBorder;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import com.jidesoft.icons.IconsFactory;
+import com.jidesoft.swing.JideButton;
+import com.jidesoft.swing.JideLabel;
 import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
@@ -63,6 +66,7 @@ import org.pharmgkb.pathvisio.SimpleProperty;
 import org.pharmgkb.pathvisio.SimplePropertyType;
 import org.pharmgkb.pathvisio.plugin.action.AddLiteratureAction;
 import org.pharmgkb.pathvisio.plugin.action.EditLiteratureAction;
+import org.pharmgkb.pathvisio.plugin.swing.WrapLayout;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -138,25 +142,40 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	}
 
 
-	private void addToToolbar(JToolBar toolbar, Action action) {
-		action.setEnabled(false);
-		m_actions.add(action);
+	private @Nonnull JPanel addPanelToToolbar(@Nonnull JToolBar toolbar, @Nullable String title) {
 
-    //JideButton button = new JideButton(action);
-    //button.setAction(action);
-    //toolbar.add(button);
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+    if (title != null) {
+      panel.add(new JideLabel(title, JLabel.LEFT));
+    }
+    toolbar.add(panel);
+    return panel;
+  }
 
-		JButton button = toolbar.add(action);
-		button.setBorder(sf_buttonBorder);
-		button.setFocusable(false);
-		disableToolbarItem(button);
-	}
+	private void addToPanelInToolbar(JPanel panel, Action action, boolean hideText) {
 
-	private void addToToolbar(JToolBar toolbar, Component component) {
-		m_toolbarComponents.add(component);
-		toolbar.add(component);
-		disableToolbarItem(component);
-	}
+    action.setEnabled(false);
+    m_actions.add(action);
+
+    JideButton button = new JideButton(action);
+    button.setBorder(sf_buttonBorder);
+    button.setFocusable(false);
+    button.setHideActionText(hideText);
+    disableToolbarItem(button);
+
+    panel.add(button);
+  }
+
+  private void endPadToolbarPanel(@Nonnull JPanel panel) {
+    panel.add(getBorderSpacer());
+  }
+
+  private void addToPanelInToolbar(JPanel panel, Component component) {
+    m_toolbarComponents.add(component);
+    panel.add(component);
+    disableToolbarItem(component);
+  }
 
 	private void disableToolbarItem(Component component) {
 		component.setEnabled(false);
@@ -175,153 +194,147 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		swingEngine.getApplicationPanel().getSideBarTabbedPane().remove(swingEngine.getApplicationPanel().getObjectsPane());
 		// customizing tool bar
 		JToolBar toolbar = swingEngine.getApplicationPanel().getToolBar();
-		toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.LINE_AXIS));
+    toolbar.setLayout(new WrapLayout(FlowLayout.LEFT));
+
 		toolbar.removeAll();
 		swingEngine.getApplicationPanel().getToolbarGroup(MainPanel.TB_GROUP_SHOW_IF_VPATHWAY).clear();
 
+    // construct comboboxes
+    JComboBox<Action> interactionCombo = new JComboBox<>();
+    for (BiopaxInteractionType interactionType : BiopaxInteractionType.getAllSortedByName()) {
+      if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE ||
+          interactionType == BiopaxInteractionType.TEMPLATE_REACTION_REGULATION) {
+        continue;
+      }
+      Action action = new CommonActions.NewElementAction(swingEngine.getEngine(), new LineTemplate(interactionType));
+      interactionCombo.addItem(action);
+    }
+    JComboBox<Action> nodeCombo = new JComboBox<>();
+    JComboBox<Action> shapeCombo = new JComboBox<>();
+    for (PgkbType type : PgkbType.getAllSortedByName()) {
+      String dictPropTypeId = null;
+      switch (type) {
+        case GENE:
+        case GENE_COLLECTION:
+        case DRUG:
+        case BIOLOGICAL_INTERMEDIATE:
+          // TODO(markwoon): hide BLACK_BOX until we can eliminate it
+        case BLACK_BOX:
+          // skip, these types have their own button
+          continue;
+        case HAPLOTYPE:
+          dictPropTypeId = DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID;
+          break;
+        case METABOLITE:
+        case ION:
+          dictPropTypeId = DictionaryPropertyType.CHEMICAL_DICTIONARY_ID;
+          break;
+        case DRUG_CLASS:
+          dictPropTypeId = DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID;
+          break;
+        case PHENOTYPE:
+          dictPropTypeId = DictionaryPropertyType.PHENOTYPE_DICTIONARY_ID;
+          break;
+        case PATHWAY:
+          dictPropTypeId = DictionaryPropertyType.PATHWAY_DICTIONARY_ID;
+          break;
+        case PHYSICAL_ENTITY:
+          dictPropTypeId = DictionaryPropertyType.PHYSICAL_ENTITY_DICTIONARY_ID;
+          break;
+        case PROCESS:
+          dictPropTypeId = DictionaryPropertyType.PROCESS_DICTIONARY_ID;
+          break;
+      }
+      Action action = newNodeAction(type, dictPropTypeId, true, -1);
+      if (type.isDrawingOnly()) {
+        shapeCombo.addItem(action);
+      } else {
+        nodeCombo.addItem(action);
+      }
+    }
+
+
 		// zoom
-		toolbar.add(getSpacer());
-		JLabel label = new JLabel("Zoom: ", JLabel.LEFT);
-		addToToolbar(toolbar, label);
-		label.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+    JPanel panel = addPanelToToolbar(toolbar, "Zoom: ");
 		JComboBox<Action> zoomCombo = new JComboBox<>(swingEngine.getActions().zoomActions);
 		zoomCombo.setMaximumSize(zoomCombo.getPreferredSize());
 		zoomCombo.setEditable(true);
 		zoomCombo.setSelectedIndex(5); // 100%
 		zoomCombo.addActionListener(new ZoomComboListener());
-		addToToolbar(toolbar, zoomCombo);
+		addToPanelInToolbar(panel, zoomCombo);
 
-		toolbar.add(getBorderSpacer());
-		toolbar.addSeparator();
-		toolbar.add(getBorderSpacer());
+    endPadToolbarPanel(panel);
 
 		// interactions
-		label = new JLabel("Edges: ", JLabel.LEFT);
-		addToToolbar(toolbar, label);
-		JComboBox<Action> interactionCombo = new JComboBox<>();
-		for (BiopaxInteractionType interactionType : BiopaxInteractionType.getAllSortedByName()) {
-			if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE ||
-          interactionType == BiopaxInteractionType.TEMPLATE_REACTION_REGULATION) {
-				continue;
-			}
-			Action action = new CommonActions.NewElementAction(swingEngine.getEngine(), new LineTemplate(interactionType));
-			interactionCombo.addItem(action);
-		}
-		addToToolbar(toolbar, optimizeComboBox(interactionCombo));
-		toolbar.add(getSpacer());
-		JButton lineButton = new JButton(new ImageIcon(Resources.getResourceURL("newarrow.gif")));
-		lineButton.setBorder(sf_buttonBorder);
-		lineButton.setToolTipText("Add edge");
-		lineButton.addActionListener(new ActionComboListener(interactionCombo));
-		addToToolbar(toolbar, lineButton);
+    panel = addPanelToToolbar(toolbar, "Interactions: ");
+		// combobox
+		addToPanelInToolbar(panel, optimizeComboBox(interactionCombo));
+    // button
+    addToPanelInToolbar(panel, createComboButton("Add interaction", "newarrow.gif", interactionCombo));
 
-		toolbar.add(getBorderSpacer());
-		toolbar.addSeparator();
-		toolbar.add(getBorderSpacer());
+    endPadToolbarPanel(panel);
 
 		// nodes
-		JComboBox<Action> nodeCombo = new JComboBox<>();
-		JComboBox<Action> shapeCombo = new JComboBox<>();
-		for (PgkbType type : PgkbType.getAllSortedByName()) {
-			String dictPropTypeId = null;
-			switch (type) {
-				case GENE:
-				case GENE_COLLECTION:
-				case DRUG:
-				case BIOLOGICAL_INTERMEDIATE:
-        // TODO(markwoon): hide BLACK_BOX until we can eliminate it
-        case BLACK_BOX:
-          // skip, these types have their own button
-					continue;
-				case HAPLOTYPE:
-					dictPropTypeId = DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID;
-					break;
-				case METABOLITE:
-				case ION:
-					dictPropTypeId = DictionaryPropertyType.CHEMICAL_DICTIONARY_ID;
-					break;
-				case DRUG_CLASS:
-					dictPropTypeId = DictionaryPropertyType.DRUG_CLASS_DICTIONARY_ID;
-					break;
-				case PHENOTYPE:
-					dictPropTypeId = DictionaryPropertyType.PHENOTYPE_DICTIONARY_ID;
-					break;
-				case PATHWAY:
-					dictPropTypeId = DictionaryPropertyType.PATHWAY_DICTIONARY_ID;
-					break;
-				case PHYSICAL_ENTITY:
-					dictPropTypeId = DictionaryPropertyType.PHYSICAL_ENTITY_DICTIONARY_ID;
-					break;
-        case PROCESS:
-          dictPropTypeId = DictionaryPropertyType.PROCESS_DICTIONARY_ID;
-          break;
-			}
-			Action action = newNodeAction(type, dictPropTypeId, true, -1);
-			if (type.isDrawingOnly()) {
-				shapeCombo.addItem(action);
-			} else {
-				nodeCombo.addItem(action);
-			}
-		}
-
-		label = new JLabel("Nodes:", JLabel.LEFT);
-		addToToolbar(toolbar, label);
-
+    panel = addPanelToToolbar(toolbar, "Nodes: ");
 		// quick object buttons
-		addAction(toolbar, newNodeAction(PgkbType.GENE, DictionaryPropertyType.GENE_DICTIONARY_ID, true, KeyEvent.VK_1),
+		addAction(panel, newNodeAction(PgkbType.GENE, DictionaryPropertyType.GENE_DICTIONARY_ID, true, KeyEvent.VK_1),
 				PgkbType.GENE);
-		addAction(toolbar, newNodeAction(PgkbType.GENE_COLLECTION, KeyEvent.VK_2),
+		addAction(panel, newNodeAction(PgkbType.GENE_COLLECTION, KeyEvent.VK_2),
 				PgkbType.GENE_COLLECTION);
-		addAction(toolbar, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_DICTIONARY_ID, true, KeyEvent.VK_3),
+		addAction(panel, newNodeAction(PgkbType.DRUG, DictionaryPropertyType.DRUG_DICTIONARY_ID, true, KeyEvent.VK_3),
 				PgkbType.DRUG);
-		addAction(toolbar, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, true, KeyEvent.VK_4),
+		addAction(panel, newNodeAction(PgkbType.BIOLOGICAL_INTERMEDIATE, DictionaryPropertyType.BIOLOGICAL_INTERMEDIATE_DICTIONARY_ID, true, KeyEvent.VK_4),
 				PgkbType.BIOLOGICAL_INTERMEDIATE);
+
+    panel.add(getSpacer());
+
 		// node dropdown
-    toolbar.add(getSpacer());
-		addToToolbar(toolbar, optimizeComboBox(nodeCombo));
-		JButton newNodeButton = new JButton(new ImageIcon(Resources.getResourceURL("newrectangle.gif")));
-		newNodeButton.setBorder(sf_buttonBorder);
-		newNodeButton.setToolTipText("Add node");
-		newNodeButton.addActionListener(new ActionComboListener(nodeCombo));
-		addToToolbar(toolbar, newNodeButton);
+    panel = addPanelToToolbar(toolbar, null);
+    // combobox
+    addToPanelInToolbar(panel, optimizeComboBox(nodeCombo));
+    // button
+    addToPanelInToolbar(panel, createComboButton("Add node", "newrectangle.gif", nodeCombo));
 
-		toolbar.add(getBorderSpacer());
-		toolbar.addSeparator();
-		toolbar.add(getBorderSpacer());
+    endPadToolbarPanel(panel);
 
-		label = new JLabel("Drawing Only: ", JLabel.LEFT);
-		addToToolbar(toolbar, label);
+    // drawing only nodes
+    panel = addPanelToToolbar(toolbar, "Drawing Only: ");
+    // combobox
+    addToPanelInToolbar(panel, optimizeComboBox(shapeCombo));
+    // button
+		addToPanelInToolbar(panel, createComboButton("Add shape", "newmitochondria.gif", shapeCombo));
 
-		addToToolbar(toolbar, optimizeComboBox(shapeCombo));
-		JButton newShapeButton = new JButton(new ImageIcon(Resources.getResourceURL("newmitochondria.gif")));
-		newShapeButton.setBorder(sf_buttonBorder);
-		newShapeButton.setToolTipText("Add shape");
-		newShapeButton.addActionListener(new ActionComboListener(shapeCombo));
-		addToToolbar(toolbar, newShapeButton);
-
-		toolbar.add(getBorderSpacer());
-		toolbar.addSeparator();
-		toolbar.add(getBorderSpacer());
+    endPadToolbarPanel(panel);
 
 		// add default layout actions to toolbar
-		for (Action layoutAction : swingEngine.getActions().layoutActions) {
-			addToToolbar(toolbar, layoutAction);
+    panel = addPanelToToolbar(toolbar, "Layout: ");
+    for (Action layoutAction : swingEngine.getActions().layoutActions) {
+			addToPanelInToolbar(panel, layoutAction, true);
 		}
 
-    toolbar.add(getBorderSpacer());
-    toolbar.addSeparator();
-    toolbar.add(getBorderSpacer());
+		endPadToolbarPanel(panel);
 
     // add hotkey for literature action
-    addToToolbar(toolbar, new AddLiteratureAction(m_desktop.getSwingEngine()));
-    addToToolbar(toolbar, new EditLiteratureAction(m_desktop.getSwingEngine()));
+    panel = addPanelToToolbar(toolbar, "Literature: ");
+    addToPanelInToolbar(panel, new AddLiteratureAction(m_desktop.getSwingEngine()), true);
+    addToPanelInToolbar(panel, new EditLiteratureAction(m_desktop.getSwingEngine()), true);
 
     // done with toolbar
-		addToToolbar(toolbar, Box.createHorizontalGlue());
+		toolbar.add(Box.createHorizontalGlue());
+    toolbar.updateUI();
 
 		System.out.println("  done initializing actions");
     checkForNewVersion();
 	}
+
+	private JideButton createComboButton(@Nonnull String tooltip, @Nonnull String icon, @Nonnull JComboBox comboBox) {
+    JideButton button = new JideButton(new ImageIcon(Resources.getResourceURL(icon)));
+    button.setBorder(sf_buttonBorder);
+    button.setToolTipText(tooltip);
+    button.setHideActionText(true);
+    button.addActionListener(new ActionComboListener(comboBox));
+    return button;
+  }
 
 	private JComboBox optimizeComboBox(@Nonnull JComboBox<Action> comboBox) {
 
@@ -342,14 +355,14 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	}
 
 
-	private void addAction(@Nonnull JToolBar toolbar, @Nonnull Action action, @Nonnull PgkbType type) {
+	private void addAction(@Nonnull JPanel panel, @Nonnull Action action, @Nonnull PgkbType type) {
 
 		ImageIcon icon = IconsFactory.getImageIcon(PgkbPlugin.class, type.getShortName() + ".png");
 		if (icon != null) {
 			action.putValue(Action.SMALL_ICON, icon);
 			action.putValue(Action.LARGE_ICON_KEY, icon);
 		}
-		addToToolbar(toolbar, action);
+		addToPanelInToolbar(panel, action, true);
 	}
 
 	private Action newNodeAction(@Nonnull PgkbType type, int keyStroke) {
@@ -384,6 +397,12 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 		for (Component comp : m_toolbarComponents) {
 			comp.setEnabled(true);
 		}
+		JToolBar toolbar = m_desktop.getSwingEngine().getApplicationPanel().getToolBar();
+    Component[] components = toolbar.getComponents();
+		if (components[components.length - 1] instanceof JComboBox) {
+		  toolbar.remove(components.length - 1);
+      toolbar.updateUI();
+    }
 	}
 
 
@@ -753,7 +772,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 	private class ActionComboListener implements ActionListener {
 		private JComboBox m_interactionComboBox;
 
-		public ActionComboListener(JComboBox interactionComboBox) {
+		private ActionComboListener(JComboBox interactionComboBox) {
 			m_interactionComboBox = interactionComboBox;
 		}
 
