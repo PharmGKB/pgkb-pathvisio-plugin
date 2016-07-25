@@ -91,6 +91,7 @@ org/pharmgkb/util             = ../build/packages/pharmgkb/WEB-INF/classes/org/p
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nullable.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nonnull.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
+@../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\
