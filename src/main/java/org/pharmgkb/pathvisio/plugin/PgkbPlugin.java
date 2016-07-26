@@ -203,7 +203,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     JComboBox<Action> interactionCombo = new JComboBox<>();
     for (BiopaxInteractionType interactionType : BiopaxInteractionType.getAllSortedByName()) {
       if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE ||
-          interactionType == BiopaxInteractionType.TEMPLATE_REACTION_REGULATION) {
+          interactionType == BiopaxInteractionType.TEMPLATE_REACTION_REGULATION ||
+          interactionType == BiopaxInteractionType.SUBINTERACTION) {
         continue;
       }
       Action action = new CommonActions.NewElementAction(swingEngine.getEngine(), new LineTemplate(interactionType));
