@@ -5,5 +5,5 @@ bnd.jar                   aQute Bundle Tool 2.4.0
                           via Maven
 
 
-pathvisio.jar             PathVisio [https://github.com/markwoon/pathvisio/commit/c965fe28c24ecc9c63426996c926217126a86ff3]
+pathvisio.jar             PathVisio [https://github.com/markwoon/pathvisio/commit/4a55aaa97ad6f50f87cc8ea02c4386e45a01e83d]
                           from http://www.pathvisio.org/
