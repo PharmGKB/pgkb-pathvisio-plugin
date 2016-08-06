@@ -87,7 +87,7 @@
         order="29">
     </property>
 
-    <property id="pgkb.transmembraneTypes" name="Transmembrane Types" type="DICTIONARY" typeId="pgkb.dict.transmembraneTypes"
+    <property id="pgkb.transmembraneType" name="Transmembrane Type" type="DICTIONARY" typeId="pgkb.dict.transmembraneTypes"
         description="Transmembrane Types" defaultValue="Plasma Membrane"
         order="30">
     </property>
@@ -163,7 +163,7 @@
       <property id="pgkb.cell"/>
 
       <controlProperty id="pgkb.cellularLocation" condition="Transmembrane">
-        <dependentProperty id="pgkb.transmembraneTypes"/>
+        <dependentProperty id="pgkb.transmembraneType"/>
       </controlProperty>
 
       <controlProperty id="pgkb.type" condition="Gene">
