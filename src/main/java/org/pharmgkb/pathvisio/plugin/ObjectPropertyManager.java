@@ -31,9 +31,10 @@ import org.pathvisio.core.util.Utils;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.gui.handler.PathwayTableModel;
 import org.pharmgkb.pathvisio.BiopaxInteractionType;
-import org.pharmgkb.pathvisio.DataConstants;
+import org.pharmgkb.pathvisio.DynamicProperty;
 import org.pharmgkb.pathvisio.EnumProperty;
 import org.pharmgkb.pathvisio.ExtendedProperty;
+import org.pharmgkb.pathvisio.PathvisioUtils;
 import org.pharmgkb.pathvisio.PgkbType;
 
 
@@ -195,12 +196,16 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
 				}
 			}
 			if (elem.getObjectType() == ObjectType.LINE) {
-				if (e.affectsProperty(DataConstants.PGKB_LINE_STRENGTH)) {
-					EnumProperty prop = (EnumProperty)PropertyManager.getProperty(DataConstants.PGKB_LINE_STRENGTH);
-					elem.setLineThickness(prop.getDataDouble(elem.getDynamicProperty(prop.getId())));
-				} else if (e.affectsProperty(DataConstants.PGKB_IS_REVERSIBLE)) {
-					if (Boolean.parseBoolean(elem.getDynamicProperty(DataConstants.PGKB_IS_REVERSIBLE))) {
-						elem.setStartLineType(LineType.ARROW);
+				if (e.affectsProperty(DynamicProperty.LINE_STRENGTH.getShortName())) {
+					EnumProperty prop = (EnumProperty)PropertyManager.getProperty(DynamicProperty.LINE_STRENGTH.getShortName());
+          String value = DynamicProperty.LINE_STRENGTH.of(elem);
+          if (value != null) {
+            elem.setLineThickness(prop.getDataDouble(value));
+          }
+				} else if (e.affectsProperty(DynamicProperty.IS_REVERSIBLE.getShortName())) {
+				  String value = DynamicProperty.IS_REVERSIBLE.of(elem);
+					if (Boolean.parseBoolean(value)) {
+						elem.setStartLineType(PathvisioUtils.getInteractionType(elem).getEndLineStyle());
 					} else {
 						elem.setStartLineType(LineType.LINE);
 					}

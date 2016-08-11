@@ -277,31 +277,61 @@
 
     <object id="pgkb.line" name="Line" type="LINE">
       <property id="pgkb.biopaxInteractionType"/>
-      <property id="pgkb.reactionName"/>
-      <property id="pgkb.lineStrength"/>
 
       <!-- all conversions should have reversible property -->
       <controlProperty id="pgkb.biopaxInteractionType" condition="Biochemical Reaction">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
       <controlProperty id="pgkb.biopaxInteractionType" condition="Complex Assembly">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
       <controlProperty id="pgkb.biopaxInteractionType" condition="Conversion">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
       <controlProperty id="pgkb.biopaxInteractionType" condition="Degradation">
-        <dependentProperty id="pgkb.isReversible"/>
-      </controlProperty>
-      <controlProperty id="pgkb.biopaxInteractionType" condition="Molecular Interaction">
-        <dependentProperty id="pgkb.isReversible"/>
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
+        <!-- not reversible -->
       </controlProperty>
       <controlProperty id="pgkb.biopaxInteractionType" condition="Template Reaction">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
       <controlProperty id="pgkb.biopaxInteractionType" condition="Transport">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
         <dependentProperty id="pgkb.isReversible"/>
       </controlProperty>
+
+      <!-- controls -->
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Activation">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Catalysis">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Inhibition">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Leads To">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
+      </controlProperty>
+      <controlProperty id="pgkb.biopaxInteractionType" condition="Comes From">
+        <dependentProperty id="pgkb.reactionName"/>
+        <dependentProperty id="pgkb.lineStrength"/>
+      </controlProperty>
+
     </object>
   </objects>
 </pathvisio>
