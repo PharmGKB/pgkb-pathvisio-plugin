@@ -202,6 +202,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     // construct comboboxes
     JComboBox<Action> interactionCombo = new JComboBox<>();
     for (BiopaxInteractionType interactionType : BiopaxInteractionType.getAllSortedByName()) {
+      // TODO(markwoon): filter out deprecated types until they're gone for good
       if (interactionType == BiopaxInteractionType.INFO_LABEL_LINE ||
           interactionType == BiopaxInteractionType.TEMPLATE_REACTION_REGULATION ||
           interactionType == BiopaxInteractionType.SUBINTERACTION) {
@@ -219,9 +220,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
         case GENE_COLLECTION:
         case DRUG:
         case BIOLOGICAL_INTERMEDIATE:
-          // TODO(markwoon): hide BLACK_BOX until we can eliminate it
         case BLACK_BOX:
-          // skip, these types have their own button
+          // TODO(markwoon): filter out BLACK_BOX until they're gone for good
           continue;
         case HAPLOTYPE:
           dictPropTypeId = DictionaryPropertyType.HAPLOTYPE_DICTIONARY_ID;
@@ -248,7 +248,14 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
       }
       Action action = newNodeAction(type, dictPropTypeId, true, -1);
       if (type.isDrawingOnly()) {
-        shapeCombo.addItem(action);
+        // TODO(markwoon): filter out deprecated types until they're gone for good
+        switch (type) {
+          case DNA:
+          case RNA:
+            break;
+          default:
+            shapeCombo.addItem(action);
+        }
       } else {
         nodeCombo.addItem(action);
       }
