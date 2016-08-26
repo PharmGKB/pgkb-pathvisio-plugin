@@ -57,7 +57,7 @@ org.pathvisio.gui,\
 Include-Resource: \
 org/pharmgkb/Global.class     = ../build/tmp/pathvisio/classes/org/pharmgkb/Global.class,\
 org/pharmgkb/Global$1.class   = ../build/tmp/pathvisio/classes/org/pharmgkb/Global$1.class,\
-org/pharmgkb/Global$GlobalHelperSingleton.class = ../build/tmp/pathvisio/classes/org/pharmgkb/Global$GlobalHelperSingleton.class,\
+org/pharmgkb/Global$GlobalProperties.class = ../build/tmp/pathvisio/classes/org/pharmgkb/Global$GlobalProperties.class,\
 org/pharmgkb/aws              = ../build/tmp/pathvisio/classes/org/pharmgkb/aws,\
 org/pharmgkb/biopax           = ../build/tmp/pathvisio/classes/org/pharmgkb/biopax,\
 org/pharmgkb/common           = ../build/tmp/pathvisio/classes/org/pharmgkb/common,\
