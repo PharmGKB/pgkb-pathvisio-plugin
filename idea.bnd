@@ -95,7 +95,6 @@ org/pharmgkb/util             = ../build/packages/pharmgkb/WEB-INF/classes/org/p
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\
-@../pgkb-pathvisio/lib/commons-lang.jar,\
 @../pgkb-pathvisio/lib/paxtools-core.jar,\
 @../pgkb-pathvisio-plugin/lib/jide-oss.jar,\
 @../pgkb-pathvisio-plugin/lib/jgoodies-common.jar,\
