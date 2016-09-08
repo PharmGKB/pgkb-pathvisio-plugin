@@ -1,4 +1,4 @@
-felix.jar                 Apache Felix 5.0.1
+felix.jar                 Apache Felix 5.4.0
                           from http://felix.apache.org/
 
 
