@@ -55,23 +55,26 @@ org.pathvisio.gui,\
 *
 
 Include-Resource: \
-org/pharmgkb/Global.class     = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\
-org/pharmgkb/Global$1.class   = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$1.class,\
+logback.xml                      = ../build/tmp/pathvisio/classes/logback.xml,\
+pgkb-pathvisio-plugin.properties = ../build/tmp/pathvisio/classes/pgkb-pathvisio-plugin.properties,\
+pgkb-pathvisio.icns              = ../build/tmp/pathvisio/classes/pgkb-pathvisio.icns,\
+org/pharmgkb/Global.class        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\
+org/pharmgkb/Global$1.class      = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$1.class,\
 org/pharmgkb/Global$GlobalProperties.class = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$GlobalProperties.class,\
-org/pharmgkb/aws              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/aws,\
-org/pharmgkb/biopax           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
-org/pharmgkb/common           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/common,\
-org/pharmgkb/commonmark       = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/commonmark,\
-org/pharmgkb/elasticsearch    = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/elasticsearch,\
-org/pharmgkb/exception        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/exception,\
-org/pharmgkb/hibernate        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/hibernate,\
-org/pharmgkb/jackson          = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jackson,\
-org/pharmgkb/jersey           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jersey,\
-org/pharmgkb/jsonld           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jsonld,\
-org/pharmgkb/model            = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/model,\
-org/pharmgkb/pathvisio        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/pathvisio,\
-org/pharmgkb/pathvisio/plugin = ../build/tmp/pathvisio/classes/org/pharmgkb/pathvisio/plugin,\
-org/pharmgkb/util             = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
+org/pharmgkb/aws                 = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/aws,\
+org/pharmgkb/biopax              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
+org/pharmgkb/common              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/common,\
+org/pharmgkb/commonmark          = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/commonmark,\
+org/pharmgkb/elasticsearch       = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/elasticsearch,\
+org/pharmgkb/exception           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/exception,\
+org/pharmgkb/hibernate           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/hibernate,\
+org/pharmgkb/jackson             = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jackson,\
+org/pharmgkb/jersey              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jersey,\
+org/pharmgkb/jsonld              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jsonld,\
+org/pharmgkb/model               = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/model,\
+org/pharmgkb/pathvisio           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/pathvisio,\
+org/pharmgkb/pathvisio/plugin    = ../build/tmp/pathvisio/classes/org/pharmgkb/pathvisio/plugin,\
+org/pharmgkb/util                = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\

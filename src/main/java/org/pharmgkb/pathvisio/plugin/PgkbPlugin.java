@@ -25,7 +25,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -66,6 +65,7 @@ import org.pharmgkb.pathvisio.SimpleProperty;
 import org.pharmgkb.pathvisio.SimplePropertyType;
 import org.pharmgkb.pathvisio.plugin.action.AddLiteratureAction;
 import org.pharmgkb.pathvisio.plugin.action.EditLiteratureAction;
+import org.pharmgkb.pathvisio.plugin.swing.PopupDialogBuilder;
 import org.pharmgkb.pathvisio.plugin.swing.WrapLayout;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -444,8 +444,10 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
       try {
         DownloadUtils.downloadAndUnpackDataFile();
       } catch (NetworkException ex) {
-        JOptionPane.showMessageDialog(m_desktop.getFrame(), ex.getMessage(),
-            "No Network", JOptionPane.INFORMATION_MESSAGE);
+        new PopupDialogBuilder(m_desktop).error()
+            .title("No Network")
+            .message("Can't connect to the network: " + ex.getMessage())
+            .show();
       }
 			// initialize properties from XML
 			initPropertyFile();
@@ -462,19 +464,20 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     StringBuilder errBuilder = new StringBuilder();
     while (t != null) {
       if (errBuilder.length() != 0) {
-        errBuilder.append("\nCaused by ");
+        errBuilder.append("<p>Caused by ");
       }
       errBuilder.append(t.getClass().getSimpleName())
-          .append(":\n  ")
+          .append(":<br />  ")
           .append(t.getMessage());
       t = t.getCause();
     }
-    JOptionPane.showMessageDialog(m_desktop.getFrame(),
-				"Uh-oh.  Something went hideously wrong.\n\n" +
-						errBuilder.toString() +
-						"\n\nDO NOT CONTINUE USING PATHVISIO!\n\n" +
-						"Please go yell at Mark.\n\n",
-				"Error Initializing Plugin", JOptionPane.ERROR_MESSAGE);
+    new PopupDialogBuilder(m_desktop).error()
+        .title("Error Initializing Plugin")
+        .htmlMessage("<p>Uh-oh.  Something went horribly, horribly wrong." +
+            "<p><b>DO NOT CONTINUE USING PATHVISIO!</b>" +
+            "<p>Please go yell at Mark and tell him:" +
+            errBuilder.toString())
+        .show();
   }
 
 
@@ -705,31 +708,42 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
         enableActions();
         break;
       case PATHWAY_SAVE:
-        GpmlValidator validator = new GpmlValidator.Builder().forPathway((Pathway)e.getSource()).build();
-        if (!validator.validate()) {
-          StringBuilder msgBuilder = new StringBuilder("The file was saved.\n");
+        try {
+          GpmlValidator validator = new GpmlValidator.Builder().forPathway((Pathway)e.getSource()).build();
+          if (!validator.validate()) {
+            StringBuilder msgBuilder = new StringBuilder("<p>The file was saved.");
 
-          if (!validator.getWarnings().isEmpty()) {
-            msgBuilder.append("\nBut there are a few things you might want to fix:\n");
-            for (String warn : validator.getWarnings()) {
-              msgBuilder.append("* ")
-                  .append(warn)
-                  .append("\n");
+            if (!validator.getWarnings().isEmpty()) {
+              msgBuilder.append("<p>But there are a few things you might want to fix:<ul>");
+              for (String warn : validator.getWarnings()) {
+                msgBuilder.append("<li>")
+                    .append(warn)
+                    .append("</li>");
+              }
+              msgBuilder.append("</ul>");
             }
-          }
 
-          if (!validator.getErrors().isEmpty()) {
-            msgBuilder.append("\nThe following errors were found:\n");
-            for (String err : validator.getErrors()) {
-              msgBuilder.append("* ")
-                  .append(err)
-                  .append("\n");
+            if (!validator.getErrors().isEmpty()) {
+              msgBuilder.append("<p>The following errors were found:<ul>");
+              for (String err : validator.getErrors()) {
+                msgBuilder.append("<li>")
+                    .append(err)
+                    .append("</li>");
+              }
+              msgBuilder.append("</ul>");
             }
+            new PopupDialogBuilder(m_desktop).error()
+                .title("Validation Problems")
+                .htmlMessage(msgBuilder.toString())
+                .show();
           }
-          JOptionPane.showMessageDialog(m_desktop.getFrame(),
-              msgBuilder.toString(),
-              "Data Warning", JOptionPane.INFORMATION_MESSAGE);
-
+        } catch (Exception ex) {
+          Logger.log.error("Validation error", ex);
+          new PopupDialogBuilder(m_desktop).error()
+              .title("Validation Problems")
+              .htmlMessage("<p>Something went horribly wrong (" + ex.getMessage() + ")." +
+                  "<p>Please contact a developer.")
+              .show();
         }
         break;
     }
@@ -741,13 +755,26 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
     try {
       if (DownloadUtils.hasNewVersion()) {
-        JOptionPane.showMessageDialog(m_desktop.getFrame(),
-            "There is a new version of PathVisio available.\n\nPlease update as soon as possible.",
-            "New Version Available", JOptionPane.INFORMATION_MESSAGE);
+        StringBuilder msgBuilder = new StringBuilder()
+            .append("<p>There is a new version of PathVisio available.<p><a href=\"");
+        if (System.getProperty("os.name").toLowerCase().contains("mac os")) {
+          msgBuilder.append("https://stanford.box.com/shared/static/e7dzeopmu7tw7d82gnr2kjdb095pkqr7.zip");
+        } else {
+          msgBuilder.append("https://stanford.box.com/shared/static/1zru5xs42gsscyb2p3w857sptsaa7nlr.zip");
+        }
+        msgBuilder.append("\">Please update as soon as possible.</a>");
+        new PopupDialogBuilder(m_desktop).info()
+            .title("Time To Upgrade!")
+            .htmlMessage(msgBuilder.toString())
+            .show();
       }
     } catch (Exception ex) {
-      JOptionPane.showMessageDialog(m_desktop.getFrame(), ex.getMessage(),
-          "Version Check Error", JOptionPane.ERROR_MESSAGE);
+      Logger.log.error("Error checking version", ex);
+      new PopupDialogBuilder(m_desktop)
+          .title("Version Check Error")
+          .error()
+          .message("Error checking for newer version: " + ex.getMessage())
+          .show();
     }
   }
 
