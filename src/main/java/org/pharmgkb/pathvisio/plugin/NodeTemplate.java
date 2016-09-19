@@ -53,29 +53,6 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
   }
 
 
-  /**
-   * Constructor for nodes that have preset name.
-   */
-  public NodeTemplate(@Nonnull PgkbType type, @Nonnull PvDesktop desktop) {
-    super(type.getDataNodeType());
-    m_type = type;
-    switch (m_type) {
-      case DNA_ENTITY:
-        m_name = "DNA";
-        break;
-      case RNA_ENTITY:
-        m_name = "RNA";
-        break;
-      default:
-        throw new UnsupportedOperationException("Unsupported type: " + m_type);
-    }
-    if (m_type.getNotes() != null) {
-      m_name = m_name + " " + m_type.getNotes();
-    }
-    m_desktop = desktop;
-  }
-
-
   @Override
   public String getName() {
     return m_name;
