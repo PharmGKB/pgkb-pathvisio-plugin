@@ -24,58 +24,58 @@ import org.pathvisio.core.util.Resources;
  * @author Rebecca Tang
  */
 public class DeleteableTextCellRenderer implements TableCellRenderer, MouseListener {
-	private static final String REMOVE_BUTTON_ACTION = "Remove";
-	private static final URL REMOVE_BUTTON_IMG = Resources.getResourceURL("cancel.gif");
+  private static final String REMOVE_BUTTON_ACTION = "Remove";
+  private static final URL REMOVE_BUTTON_IMG = Resources.getResourceURL("cancel.gif");
 
-	private JPanel m_panel;
-	private StyledLabel m_label;
-	private JTable m_table;
-	private long m_lastClick;
+  private JPanel m_panel;
+  private StyledLabel m_label;
+  private JTable m_table;
+  private long m_lastClick;
 
-	public DeleteableTextCellRenderer() {
+  public DeleteableTextCellRenderer() {
 
-		m_panel = new JPanel(new BorderLayout());
-		m_label = new StyledLabel();
-		m_panel.add(m_label, BorderLayout.CENTER);
-		JButton btnRemove = new JButton();
-		btnRemove.setActionCommand(REMOVE_BUTTON_ACTION);
-		btnRemove.setIcon(new ImageIcon(REMOVE_BUTTON_IMG));
-		btnRemove.setBackground(Color.WHITE);
-		btnRemove.setBorder(null);
-		btnRemove.setToolTipText("Remove this dictionary entry");
-		m_panel.add(btnRemove, BorderLayout.EAST);
-	}
+    m_panel = new JPanel(new BorderLayout());
+    m_label = new StyledLabel();
+    m_panel.add(m_label, BorderLayout.CENTER);
+    JButton btnRemove = new JButton();
+    btnRemove.setActionCommand(REMOVE_BUTTON_ACTION);
+    btnRemove.setIcon(new ImageIcon(REMOVE_BUTTON_IMG));
+    btnRemove.setBackground(Color.WHITE);
+    btnRemove.setBorder(null);
+    btnRemove.setToolTipText("Remove this dictionary entry");
+    m_panel.add(btnRemove, BorderLayout.EAST);
+  }
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
+  public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
 
-		StyledTableCellRenderer.updateStyledLabel(m_label, (String)value);
-		table.addMouseListener(this);
-		m_table = table;
-		return m_panel;
-	}
+    StyledTableCellRenderer.updateStyledLabel(m_label, (String)value);
+    table.addMouseListener(this);
+    m_table = table;
+    return m_panel;
+  }
 
-	private void remove(MouseEvent e) {
-		if (e.getWhen() > m_lastClick) {
-			int row = e.getY() / m_table.getRowHeight();
-			((SelectedDictionaryTableModel)m_table.getModel()).removeValueAt(row);
-			m_lastClick = e.getWhen();
-		}
-	}
+  private void remove(MouseEvent e) {
+    if (e.getWhen() > m_lastClick) {
+      int row = e.getY() / m_table.getRowHeight();
+      ((SelectedDictionaryTableModel)m_table.getModel()).removeValueAt(row);
+      m_lastClick = e.getWhen();
+    }
+  }
 
-	public void mouseClicked(MouseEvent e) {
-		remove(e);
-	}
+  public void mouseClicked(MouseEvent e) {
+    remove(e);
+  }
 
-	public void mousePressed(MouseEvent e) {
-	}
+  public void mousePressed(MouseEvent e) {
+  }
 
-	public void mouseReleased(MouseEvent e) {
-	}
+  public void mouseReleased(MouseEvent e) {
+  }
 
-	public void mouseEntered(MouseEvent e) {
-	}
+  public void mouseEntered(MouseEvent e) {
+  }
 
-	public void mouseExited(MouseEvent e) {
-	}
+  public void mouseExited(MouseEvent e) {
+  }
 }

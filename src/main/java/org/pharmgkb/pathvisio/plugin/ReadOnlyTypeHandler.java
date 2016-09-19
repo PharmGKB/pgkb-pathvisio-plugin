@@ -23,61 +23,61 @@ import org.pathvisio.gui.handler.TypeHandler;
  * @author Mark Woon
  */
 public class ReadOnlyTypeHandler implements TypeHandler {
-	private PropertyType m_type;
-	private TypeHandler m_handler;
-	private NotEditableTableCellEditor m_cellEditor;
+  private PropertyType m_type;
+  private TypeHandler m_handler;
+  private NotEditableTableCellEditor m_cellEditor;
 
 
-	public ReadOnlyTypeHandler(@Nonnull PropertyType type, @Nonnull TypeHandler typeHandler) {
-		Preconditions.checkNotNull(type);
-		Preconditions.checkNotNull(typeHandler);
-		m_type = type;
-		m_handler = typeHandler;
-		m_cellEditor = new NotEditableTableCellEditor(typeHandler);
-	}
+  public ReadOnlyTypeHandler(@Nonnull PropertyType type, @Nonnull TypeHandler typeHandler) {
+    Preconditions.checkNotNull(type);
+    Preconditions.checkNotNull(typeHandler);
+    m_type = type;
+    m_handler = typeHandler;
+    m_cellEditor = new NotEditableTableCellEditor(typeHandler);
+  }
 
 
-	public PropertyType getType() {
-		return m_type;
-	}
+  public PropertyType getType() {
+    return m_type;
+  }
 
-	public TableCellRenderer getLabelRenderer() {
-		return m_handler.getLabelRenderer();
-	}
+  public TableCellRenderer getLabelRenderer() {
+    return m_handler.getLabelRenderer();
+  }
 
-	public TableCellRenderer getValueRenderer() {
-		return m_handler.getValueRenderer();
-	}
+  public TableCellRenderer getValueRenderer() {
+    return m_handler.getValueRenderer();
+  }
 
-	public TableCellEditor getValueEditor() {
-		return m_cellEditor;
-	}
+  public TableCellEditor getValueEditor() {
+    return m_cellEditor;
+  }
 
 
-	private class NotEditableTableCellEditor extends AbstractCellEditor implements TableCellEditor {
-		private TypeHandler m_handler;
-		private Object m_value;
+  private class NotEditableTableCellEditor extends AbstractCellEditor implements TableCellEditor {
+    private TypeHandler m_handler;
+    private Object m_value;
 
-		public NotEditableTableCellEditor(TypeHandler handler) {
-			m_handler = handler;
-		}
+    public NotEditableTableCellEditor(TypeHandler handler) {
+      m_handler = handler;
+    }
 
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-			m_value = value;
-			return m_handler.getValueEditor().getTableCellEditorComponent(table, value, isSelected, row, column);
-		}
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+      m_value = value;
+      return m_handler.getValueEditor().getTableCellEditorComponent(table, value, isSelected, row, column);
+    }
 
-		public Object getCellEditorValue() {
-			return m_value;
-		}
+    public Object getCellEditorValue() {
+      return m_value;
+    }
 
-		public boolean isCellEditable(EventObject anEvent) {
-			return false;
-		}
-	}
+    public boolean isCellEditable(EventObject anEvent) {
+      return false;
+    }
+  }
 
-	@Override
-	public String toString() {
-		return "ReadOnlyTypeHandler:" + m_handler.getType();
-	}
+  @Override
+  public String toString() {
+    return "ReadOnlyTypeHandler:" + m_handler.getType();
+  }
 }

@@ -14,31 +14,31 @@ import java.util.Comparator;
  * @author Mark Woon
  */
 public class StyledTextComparator implements Comparator<String> {
-	private static final StyledTextComparator sf_comparator = new StyledTextComparator();
+  private static final StyledTextComparator sf_comparator = new StyledTextComparator();
 
 
-	public static StyledTextComparator getInstance() {
-		return sf_comparator;
-	}
+  public static StyledTextComparator getInstance() {
+    return sf_comparator;
+  }
 
 
-	public int compare(String o1, String o2) {
+  public int compare(String o1, String o2) {
 
-		if (o1 == null) {
-			if (o2 == null) {
-				return 0;
-			} else {
-				return -1;
-			}
-		} else if (o2 == null) {
-			return 1;
-		}
-		if (o1.startsWith("<i>")) {
-			o1 = o1.substring(3);
-		}
-		if (o2.startsWith("<i>")) {
-			o2 = o2.substring(3);
-		}
-		return o1.compareToIgnoreCase(o2);
-	}
+    if (o1 == null) {
+      if (o2 == null) {
+        return 0;
+      } else {
+        return -1;
+      }
+    } else if (o2 == null) {
+      return 1;
+    }
+    if (o1.startsWith("<i>")) {
+      o1 = o1.substring(3);
+    }
+    if (o2.startsWith("<i>")) {
+      o2 = o2.substring(3);
+    }
+    return o1.compareToIgnoreCase(o2);
+  }
 }

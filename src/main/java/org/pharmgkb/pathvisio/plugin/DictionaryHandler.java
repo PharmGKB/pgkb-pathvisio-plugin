@@ -33,61 +33,61 @@ import org.pharmgkb.pathvisio.plugin.swing.StyledTableCellRenderer;
  * @author Rebecca Tang
  */
 public class DictionaryHandler extends AbstractCellEditor implements TypeHandler, TableCellEditor, TableCellRenderer,
-		ActionListener {
-	private static final String sf_buttonLabel = "Select Data From Dictionary";
-	private static final String sf_editAction = "edit";
+    ActionListener {
+  private static final String sf_buttonLabel = "Select Data From Dictionary";
+  private static final String sf_editAction = "edit";
 
-	private JFrame m_frame;
-	private DictionaryProperty m_property;
-	private TableCellRenderer m_valueRenderer = new StyledTableCellRenderer();
-	private JButton m_button;
-	private DictionaryDialog m_dictionaryDialog;
+  private JFrame m_frame;
+  private DictionaryProperty m_property;
+  private TableCellRenderer m_valueRenderer = new StyledTableCellRenderer();
+  private JButton m_button;
+  private DictionaryDialog m_dictionaryDialog;
 
 
-	public DictionaryHandler(JFrame frame, DictionaryProperty property) {
+  public DictionaryHandler(JFrame frame, DictionaryProperty property) {
 
-		if (property == null) {
-			throw new NullPointerException("property cannot be null");
-		}
-		m_frame = frame;
-		m_property = property;
-		m_button = new JButton();
-		m_button.setText(sf_buttonLabel);
-		m_button.setActionCommand(sf_editAction);
-		m_button.addActionListener(this);
-	}
-
-  @Override
-	public PropertyType getType() {
-		return m_property.getType();
-	}
-
+    if (property == null) {
+      throw new NullPointerException("property cannot be null");
+    }
+    m_frame = frame;
+    m_property = property;
+    m_button = new JButton();
+    m_button.setText(sf_buttonLabel);
+    m_button.setActionCommand(sf_editAction);
+    m_button.addActionListener(this);
+  }
 
   @Override
-	public @Nullable TableCellRenderer getLabelRenderer() {
-		return null;
-	}
+  public PropertyType getType() {
+    return m_property.getType();
+  }
+
+
+  @Override
+  public @Nullable TableCellRenderer getLabelRenderer() {
+    return null;
+  }
 
   @Override
   public @Nullable TableCellRenderer getValueRenderer() {
-		return this;
-	}
+    return this;
+  }
 
   @Override
   public @Nullable TableCellEditor getValueEditor() {
-		return this;
-	}
+    return this;
+  }
 
 
-	//-- TableCellRenderer methods --//
+  //-- TableCellRenderer methods --//
 
   private static final Joiner sf_termValueJoiner = Joiner.on(", ").skipNulls();
 
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-			int row, int column) {
+  public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+      int row, int column) {
 
-		StringBuilder valBuilder = new StringBuilder();
-		String entries = (String)value;
+    StringBuilder valBuilder = new StringBuilder();
+    String entries = (String)value;
     if (!Utils.isEmpty(entries)) {
       if (!m_property.isCollection()) {
         // treat as enum (i.e. only have value, no id)
@@ -96,57 +96,57 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
         sf_termValueJoiner.appendTo(valBuilder, DataConstants.TERMS_SPLITTER.split(entries).values());
       }
     }
-		return m_valueRenderer.getTableCellRendererComponent(table, valBuilder.toString(), isSelected, hasFocus, row, column);
-	}
+    return m_valueRenderer.getTableCellRendererComponent(table, valBuilder.toString(), isSelected, hasFocus, row, column);
+  }
 
 
-	//-- TableCellEditor methods --//
+  //-- TableCellEditor methods --//
 
-	public Object getCellEditorValue() {
-		if (m_dictionaryDialog == null) {
-			return "";
-		} else {
-			return m_dictionaryDialog.getData();
-		}
-	}
+  public Object getCellEditorValue() {
+    if (m_dictionaryDialog == null) {
+      return "";
+    } else {
+      return m_dictionaryDialog.getData();
+    }
+  }
 
-	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		if (m_dictionaryDialog == null) {
-			m_dictionaryDialog = new DictionaryDialog(m_frame, m_frame, m_property);
-		}
-		String v = (String)value;
-		if (!m_property.isCollection() && !StringUtils.isEmpty(v)) {
+  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    if (m_dictionaryDialog == null) {
+      m_dictionaryDialog = new DictionaryDialog(m_frame, m_frame, m_property);
+    }
+    String v = (String)value;
+    if (!m_property.isCollection() && !StringUtils.isEmpty(v)) {
       // convert from enum, which only has a value and no id
-			String key = m_property.getDictionaryType().getReverseEnteries().get(v.toLowerCase());
-			if (key == null) {
-				JOptionPane.showMessageDialog(this.m_button,
-						"Potentially obsolete data?  The '" + m_property.getName() + "' dictionary has no entry for '" + v + "'. Ignoring value!",
-						"Warning", JOptionPane.WARNING_MESSAGE);
-				v = "";
-			} else {
+      String key = m_property.getDictionaryType().getReverseEnteries().get(v.toLowerCase());
+      if (key == null) {
+        JOptionPane.showMessageDialog(this.m_button,
+            "Potentially obsolete data?  The '" + m_property.getName() + "' dictionary has no entry for '" + v + "'. Ignoring value!",
+            "Warning", JOptionPane.WARNING_MESSAGE);
+        v = "";
+      } else {
         v = DataConstants.TERMS_JOINER.join(ImmutableMap.of(key, v));
-			}
-		}
-		m_dictionaryDialog.setData(v);
-		return m_button;
-	}
+      }
+    }
+    m_dictionaryDialog.setData(v);
+    return m_button;
+  }
 
 
-	public void actionPerformed(ActionEvent e) {
-		if (sf_editAction.equals(e.getActionCommand())) {
-			if (m_property.getDictionaryType().getEntries().isEmpty()) {
-				JOptionPane.showMessageDialog(this.m_button,
-						"The '" + m_property.getName() + "' dictionary has no entries", "Warning",
-						JOptionPane.WARNING_MESSAGE);
-			} else {
-				m_dictionaryDialog.setVisible(true);
-				fireEditingStopped();
-			}
-		}
-	}
+  public void actionPerformed(ActionEvent e) {
+    if (sf_editAction.equals(e.getActionCommand())) {
+      if (m_property.getDictionaryType().getEntries().isEmpty()) {
+        JOptionPane.showMessageDialog(this.m_button,
+            "The '" + m_property.getName() + "' dictionary has no entries", "Warning",
+            JOptionPane.WARNING_MESSAGE);
+      } else {
+        m_dictionaryDialog.setVisible(true);
+        fireEditingStopped();
+      }
+    }
+  }
 
-	@Override
-	public String toString() {
-		return "DictionaryHandler:" + m_property.getId();
-	}
+  @Override
+  public String toString() {
+    return "DictionaryHandler:" + m_property.getId();
+  }
 }

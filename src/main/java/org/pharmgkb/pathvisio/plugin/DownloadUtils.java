@@ -87,10 +87,10 @@ public class DownloadUtils {
 
 
   /**
-	 * Saves a URL as a local file.  If file already exists locally, it will only be downloaded again if it has been
-	 * modified on the server.
-	 */
-	private static @Nullable Path downloadFromUrl(String urlValue, String fileName) throws PgkbPluginException {
+   * Saves a URL as a local file.  If file already exists locally, it will only be downloaded again if it has been
+   * modified on the server.
+   */
+  private static @Nullable Path downloadFromUrl(String urlValue, String fileName) throws PgkbPluginException {
 
     Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
     try {
@@ -120,10 +120,10 @@ public class DownloadUtils {
         throw new PgkbPluginException("Could not download " + fileName + " from preview", ex);
       }
 
-		} catch (Exception ex) {
-			throw new PgkbPluginException("Error processing '" + urlValue + "'", ex);
-		}
-	}
+    } catch (Exception ex) {
+      throw new PgkbPluginException("Error processing '" + urlValue + "'", ex);
+    }
+  }
 
 
 

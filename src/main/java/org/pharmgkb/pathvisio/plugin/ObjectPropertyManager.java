@@ -45,192 +45,192 @@ import org.pharmgkb.pathvisio.PgkbType;
  * @author Mark Woon
  */
 public class ObjectPropertyManager implements Engine.ApplicationEventListener, PathwayListener, PathwayElementListener {
-	private PvDesktop m_desktop;
-	private PathwayTableModel m_tableModel;
-	private Map<ObjectType, ObjectProperties> m_objectProperties = new HashMap<>();
-	private Set<ObjectPropertyListener> m_listeners = new HashSet<>();
+  private PvDesktop m_desktop;
+  private PathwayTableModel m_tableModel;
+  private Map<ObjectType, ObjectProperties> m_objectProperties = new HashMap<>();
+  private Set<ObjectPropertyListener> m_listeners = new HashSet<>();
 
 
-	public ObjectPropertyManager(PvDesktop desktop) {
-		m_desktop = desktop;
-		m_tableModel = desktop.getSwingEngine().getApplicationPanel().getModel();
-		m_desktop.getSwingEngine().getEngine().addApplicationEventListener(this);
-	}
+  public ObjectPropertyManager(PvDesktop desktop) {
+    m_desktop = desktop;
+    m_tableModel = desktop.getSwingEngine().getApplicationPanel().getModel();
+    m_desktop.getSwingEngine().getEngine().addApplicationEventListener(this);
+  }
 
 
-	public void addListener(ObjectPropertyListener listener) {
-		m_listeners.add(listener);
-	}
+  public void addListener(ObjectPropertyListener listener) {
+    m_listeners.add(listener);
+  }
 
-	private void fireEvent(int type, PathwayElement elem) {
+  private void fireEvent(int type, PathwayElement elem) {
 
-		ObjectPropertyEvent event = new ObjectPropertyEvent(type, elem);
-		for (ObjectPropertyListener listener : m_listeners) {
-			listener.objectModified(event);
-		}
-	}
+    ObjectPropertyEvent event = new ObjectPropertyEvent(type, elem);
+    for (ObjectPropertyListener listener : m_listeners) {
+      listener.objectModified(event);
+    }
+  }
 
 
-	/**
-	 * Associates an property with an object type.
-	 */
-	public void registerProperty(ObjectType type, Property prop) {
+  /**
+   * Associates an property with an object type.
+   */
+  public void registerProperty(ObjectType type, Property prop) {
 
-		ObjectProperties objProps = m_objectProperties.get(type);
-		if (objProps == null) {
-			objProps = new ObjectProperties();
-			m_objectProperties.put(type, objProps);
-		}
-		objProps.addProperty(prop);
-	}
+    ObjectProperties objProps = m_objectProperties.get(type);
+    if (objProps == null) {
+      objProps = new ObjectProperties();
+      m_objectProperties.put(type, objProps);
+    }
+    objProps.addProperty(prop);
+  }
 
-	/**
-	 * Associates a dependent property with an object type.
-	 */
-	public void registerDependentProperty(@Nonnull ObjectType pvType, @Nonnull Property propControl,
+  /**
+   * Associates a dependent property with an object type.
+   */
+  public void registerDependentProperty(@Nonnull ObjectType pvType, @Nonnull Property propControl,
       @Nonnull String condition, @Nonnull Property dependentProp) {
 
-		ObjectProperties objProps = m_objectProperties.get(pvType);
-		if (objProps == null) {
-			objProps = new ObjectProperties();
-			m_objectProperties.put(pvType, objProps);
-		}
-		objProps.addDependentProperty(propControl, condition, dependentProp);
-	}
+    ObjectProperties objProps = m_objectProperties.get(pvType);
+    if (objProps == null) {
+      objProps = new ObjectProperties();
+      m_objectProperties.put(pvType, objProps);
+    }
+    objProps.addDependentProperty(propControl, condition, dependentProp);
+  }
 
 
-	/**
-	 * Initializes the properties of a {@link PathwayElement} based on ObjectProperties when it is first added to the
-	 * pathway.
-	 */
-	private void initializeProperties(PathwayElement elem) {
+  /**
+   * Initializes the properties of a {@link PathwayElement} based on ObjectProperties when it is first added to the
+   * pathway.
+   */
+  private void initializeProperties(PathwayElement elem) {
 
-		ObjectProperties objProps = m_objectProperties.get(elem.getObjectType());
-		// only update
-		if (objProps != null) {
-			if (!objProps.getDependentPropertyControls().isEmpty()) {
-				// listen to handle dependent properties
-				elem.addListener(this);
-				Property typeProp = PgkbType.getProperty();
-				// type property is often already set, in which case we should check if dependent props exist for it
-				if (elem.getDynamicProperty(typeProp.getId()) != null &&
-						objProps.getDependentPropertyControls().contains(typeProp)) {
-					updateDependentProperty(elem, typeProp, objProps);
-				}
-			} else if (elem.getObjectType() == ObjectType.LINE) {
-				elem.addListener(this);
-			}
-			if (objProps.getProperties() != null && !objProps.getProperties().isEmpty()) {
-				for (Property p : objProps.getProperties()) {
-					if (Utils.isEmpty(elem.getDynamicProperty(p.getId()))) {
-						// add property to PathwayElement
-						String value = getDefaultValue(p);
-						elem.setDynamicProperty(p.getId(), value);
-					}
-				}
-			}
-		}
-	}
+    ObjectProperties objProps = m_objectProperties.get(elem.getObjectType());
+    // only update
+    if (objProps != null) {
+      if (!objProps.getDependentPropertyControls().isEmpty()) {
+        // listen to handle dependent properties
+        elem.addListener(this);
+        Property typeProp = PgkbType.getProperty();
+        // type property is often already set, in which case we should check if dependent props exist for it
+        if (elem.getDynamicProperty(typeProp.getId()) != null &&
+            objProps.getDependentPropertyControls().contains(typeProp)) {
+          updateDependentProperty(elem, typeProp, objProps);
+        }
+      } else if (elem.getObjectType() == ObjectType.LINE) {
+        elem.addListener(this);
+      }
+      if (objProps.getProperties() != null && !objProps.getProperties().isEmpty()) {
+        for (Property p : objProps.getProperties()) {
+          if (Utils.isEmpty(elem.getDynamicProperty(p.getId()))) {
+            // add property to PathwayElement
+            String value = getDefaultValue(p);
+            elem.setDynamicProperty(p.getId(), value);
+          }
+        }
+      }
+    }
+  }
 
-	/**
-	 * Gets the default value of the property.
-	 */
-	private String getDefaultValue(Property prop) {
+  /**
+   * Gets the default value of the property.
+   */
+  private String getDefaultValue(Property prop) {
 
-		String defaultValue = "";
-		if (prop instanceof ExtendedProperty && ((ExtendedProperty)prop).getDefaultValue() != null) {
-			defaultValue = ((ExtendedProperty)prop).getDefaultValue();
-		}
-		return defaultValue;
-	}
-
-
-	//-- ApplicationEventListener methods --//
-
-	public void applicationEvent(ApplicationEvent e) {
-
-		if (e.getType() == ApplicationEvent.Type.PATHWAY_NEW || e.getType() == ApplicationEvent.Type.PATHWAY_OPENED) {
-			Pathway p = m_desktop.getSwingEngine().getEngine().getActivePathway();
-			p.addListener(this);
-			// mappInfo is the property holder for the pathway
-			initializeProperties(p.getMappInfo());
-			if (e.getType() == ApplicationEvent.Type.PATHWAY_OPENED) {
-				for (PathwayElement elem : p.getDataObjects()) {
-					initializeProperties(elem);
-				}
-				fireEvent(ObjectPropertyEvent.PATHWAY_OPENED, p.getMappInfo());
-			} else {
-				fireEvent(ObjectPropertyEvent.PATHWAY_NEW, p.getMappInfo());
-			}
-		}
-	}
+    String defaultValue = "";
+    if (prop instanceof ExtendedProperty && ((ExtendedProperty)prop).getDefaultValue() != null) {
+      defaultValue = ((ExtendedProperty)prop).getDefaultValue();
+    }
+    return defaultValue;
+  }
 
 
-	//-- PathwayListener methods --//
+  //-- ApplicationEventListener methods --//
 
-	public void pathwayModified(PathwayEvent e) {
+  public void applicationEvent(ApplicationEvent e) {
 
-		if (e.getType() == PathwayEvent.ADDED) {
-			PathwayElement elem = e.getAffectedData();
-			if (elem.getGraphId() == null) {
-				elem.setGeneratedGraphId();
-			}
-			initializeProperties(elem);
-			fireEvent(ObjectPropertyEvent.ELEMENT_ADDED, elem);
-		}
-	}
+    if (e.getType() == ApplicationEvent.Type.PATHWAY_NEW || e.getType() == ApplicationEvent.Type.PATHWAY_OPENED) {
+      Pathway p = m_desktop.getSwingEngine().getEngine().getActivePathway();
+      p.addListener(this);
+      // mappInfo is the property holder for the pathway
+      initializeProperties(p.getMappInfo());
+      if (e.getType() == ApplicationEvent.Type.PATHWAY_OPENED) {
+        for (PathwayElement elem : p.getDataObjects()) {
+          initializeProperties(elem);
+        }
+        fireEvent(ObjectPropertyEvent.PATHWAY_OPENED, p.getMappInfo());
+      } else {
+        fireEvent(ObjectPropertyEvent.PATHWAY_NEW, p.getMappInfo());
+      }
+    }
+  }
 
-	//-- PathwayElementListener methods --//
 
-	public void gmmlObjectModified(PathwayElementEvent e) {
+  //-- PathwayListener methods --//
 
-		if (!e.isCoordinateChange()) {
-			// check if dependent property has changed
-			PathwayElement elem = e.getModifiedPathwayElement();
-			ObjectProperties objProps = m_objectProperties.get(elem.getObjectType());
-			boolean doRefresh = false;
-			for (Property p : objProps.getDependentPropertyControls()) {
-				if (e.affectsProperty(p.getId())) {
-					doRefresh = true;
-					updateDependentProperty(elem, p, objProps);
-				}
-			}
-			if (elem.getObjectType() == ObjectType.LINE) {
-				if (e.affectsProperty(DynamicProperty.LINE_STRENGTH.getShortName())) {
-					EnumProperty prop = (EnumProperty)PropertyManager.getProperty(DynamicProperty.LINE_STRENGTH.getShortName());
+  public void pathwayModified(PathwayEvent e) {
+
+    if (e.getType() == PathwayEvent.ADDED) {
+      PathwayElement elem = e.getAffectedData();
+      if (elem.getGraphId() == null) {
+        elem.setGeneratedGraphId();
+      }
+      initializeProperties(elem);
+      fireEvent(ObjectPropertyEvent.ELEMENT_ADDED, elem);
+    }
+  }
+
+  //-- PathwayElementListener methods --//
+
+  public void gmmlObjectModified(PathwayElementEvent e) {
+
+    if (!e.isCoordinateChange()) {
+      // check if dependent property has changed
+      PathwayElement elem = e.getModifiedPathwayElement();
+      ObjectProperties objProps = m_objectProperties.get(elem.getObjectType());
+      boolean doRefresh = false;
+      for (Property p : objProps.getDependentPropertyControls()) {
+        if (e.affectsProperty(p.getId())) {
+          doRefresh = true;
+          updateDependentProperty(elem, p, objProps);
+        }
+      }
+      if (elem.getObjectType() == ObjectType.LINE) {
+        if (e.affectsProperty(DynamicProperty.LINE_STRENGTH.getShortName())) {
+          EnumProperty prop = (EnumProperty)PropertyManager.getProperty(DynamicProperty.LINE_STRENGTH.getShortName());
           String value = DynamicProperty.LINE_STRENGTH.of(elem);
           if (value != null) {
             elem.setLineThickness(prop.getDataDouble(value));
           }
-				} else if (e.affectsProperty(DynamicProperty.IS_REVERSIBLE.getShortName())) {
-				  String value = DynamicProperty.IS_REVERSIBLE.of(elem);
-					if (Boolean.parseBoolean(value)) {
-						elem.setStartLineType(PathvisioUtils.getInteractionType(elem).getEndLineStyle());
-					} else {
-						elem.setStartLineType(LineType.LINE);
-					}
-				} else if (e.affectsProperty(BiopaxInteractionType.getProperty().getId())) {
-					String value = elem.getDynamicProperty(BiopaxInteractionType.getProperty().getId());
-					if (!Utils.isEmpty(value)) {
-						BiopaxInteractionType interactionType = BiopaxInteractionType.lookupByName(value);
-						elem.setLineStyle(interactionType.getLineStyle());
-						elem.setStartLineType(interactionType.getStartLineStyle());
-						elem.setEndLineType(interactionType.getEndLineStyle());
-						elem.setColor(interactionType.getColor());
-					}
-				}
-			}
-			if (doRefresh) {
-				m_tableModel.refresh(true);
-			}
-			fireEvent(ObjectPropertyEvent.ELEMENT_MODIFIED, elem);
-		}
-	}
+        } else if (e.affectsProperty(DynamicProperty.IS_REVERSIBLE.getShortName())) {
+          String value = DynamicProperty.IS_REVERSIBLE.of(elem);
+          if (Boolean.parseBoolean(value)) {
+            elem.setStartLineType(PathvisioUtils.getInteractionType(elem).getEndLineStyle());
+          } else {
+            elem.setStartLineType(LineType.LINE);
+          }
+        } else if (e.affectsProperty(BiopaxInteractionType.getProperty().getId())) {
+          String value = elem.getDynamicProperty(BiopaxInteractionType.getProperty().getId());
+          if (!Utils.isEmpty(value)) {
+            BiopaxInteractionType interactionType = BiopaxInteractionType.lookupByName(value);
+            elem.setLineStyle(interactionType.getLineStyle());
+            elem.setStartLineType(interactionType.getStartLineStyle());
+            elem.setEndLineType(interactionType.getEndLineStyle());
+            elem.setColor(interactionType.getColor());
+          }
+        }
+      }
+      if (doRefresh) {
+        m_tableModel.refresh(true);
+      }
+      fireEvent(ObjectPropertyEvent.ELEMENT_MODIFIED, elem);
+    }
+  }
 
 
-	private boolean updateDependentProperty(PathwayElement elem, Property controlProperty, ObjectProperties objProps) {
+  private boolean updateDependentProperty(PathwayElement elem, Property controlProperty, ObjectProperties objProps) {
 
-		String value = StringUtils.stripToEmpty(elem.getDynamicProperty(controlProperty.getId()));
+    String value = StringUtils.stripToEmpty(elem.getDynamicProperty(controlProperty.getId()));
     boolean hasDependents = false;
 
     // unset irrelevant properties
@@ -250,118 +250,118 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
     m_tableModel.updatePropertyCounts(elem, false);
 
     return hasDependents;
-	}
+  }
 
 
-	/**
-	 * This class tracks what properties are associated with an object type.
-	 */
-	public static class ObjectProperties {
-		private List<Property> m_properties = new ArrayList<>();
-		private Map<Property, Map<String, List<Property>>> m_dependentPropertiesMap =
-				new HashMap<>();
-		private Map<Property, Map<String, Set<Property>>> m_dependentPropertiesReverseMap =
-				new HashMap<>();
-		private boolean m_isDependentPropsDirty = true;
+  /**
+   * This class tracks what properties are associated with an object type.
+   */
+  public static class ObjectProperties {
+    private List<Property> m_properties = new ArrayList<>();
+    private Map<Property, Map<String, List<Property>>> m_dependentPropertiesMap =
+        new HashMap<>();
+    private Map<Property, Map<String, Set<Property>>> m_dependentPropertiesReverseMap =
+        new HashMap<>();
+    private boolean m_isDependentPropsDirty = true;
 
 
-		/**
-		 * Gets all top-level properties associated with this object.  There may be other properties associated with
-		 * this object that depend on the value of one of these top-level typed properties.
-		 */
-		public List<Property> getProperties() {
-			return m_properties;
-		}
+    /**
+     * Gets all top-level properties associated with this object.  There may be other properties associated with
+     * this object that depend on the value of one of these top-level typed properties.
+     */
+    public List<Property> getProperties() {
+      return m_properties;
+    }
 
-		public boolean containsProperty(Property prop) {
-			return m_properties.contains(prop);
-		}
+    public boolean containsProperty(Property prop) {
+      return m_properties.contains(prop);
+    }
 
-		/**
-		 * Associates a Property to this object.
-		 */
-		public void addProperty(Property prop) {
-			m_properties.add(prop);
-		}
-
-
-		/**
-		 * Gets all the control properties that have dependent properties for this object.
-		 */
-		public Set<Property> getDependentPropertyControls() {
-			return m_dependentPropertiesMap.keySet();
-		}
+    /**
+     * Associates a Property to this object.
+     */
+    public void addProperty(Property prop) {
+      m_properties.add(prop);
+    }
 
 
-		/**
-		 * Gets all dependent properties based a control property's value.
-		 *
-		 * @return depependent properties or null if none exists
-		 */
-		public @Nullable List<Property> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
-
-			Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
-			if (dependentProps != null) {
-				return dependentProps.get(value);
-			}
-			return null;
-		}
-
-		/**
-		 * Gets all properties that should no longer be associated with the object based on a control property's value.
-		 */
-		public @Nonnull Set<Property> getIrrelevantProperties(@Nonnull Property propControl, @Nonnull String value) {
-
-			if (m_isDependentPropsDirty) {
-				m_dependentPropertiesReverseMap.clear();
-				m_isDependentPropsDirty = false;
-			}
-			Map<String, Set<Property>> reverseProps = m_dependentPropertiesReverseMap.get(propControl);
-			if (reverseProps == null) {
-				reverseProps = new HashMap<>();
-				m_dependentPropertiesReverseMap.put(propControl, reverseProps);
-			}
-			Set<Property> irrelevantProps = reverseProps.get(value);
-			if (irrelevantProps == null) {
-				irrelevantProps = new HashSet<>();
-				reverseProps.put(value, irrelevantProps);
-
-				Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
-				for (String key : dependentProps.keySet()) {
-					if (!key.equals(value)) {
-						irrelevantProps.addAll(dependentProps.get(key));
-					}
-				}
-				List<Property> relevantProps = dependentProps.get(value);
-				if (relevantProps != null) {
-					irrelevantProps.removeAll(relevantProps);
-				}
-			}
-			return irrelevantProps;
-		}
+    /**
+     * Gets all the control properties that have dependent properties for this object.
+     */
+    public Set<Property> getDependentPropertyControls() {
+      return m_dependentPropertiesMap.keySet();
+    }
 
 
-		/**
-		 * Adds a dependent Property.
-		 *
-		 * @param propControl   the control property
-		 * @param condition	 the value of the property under which the sub-property is visible
-		 * @param dependentProp the dependent Property
-		 */
-		public void addDependentProperty(Property propControl, String condition, Property dependentProp) {
+    /**
+     * Gets all dependent properties based a control property's value.
+     *
+     * @return depependent properties or null if none exists
+     */
+    public @Nullable List<Property> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
 
-			m_isDependentPropsDirty = true;
-			Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
-			if (dependentProps == null) {
-				dependentProps = new HashMap<>();
-				m_dependentPropertiesMap.put(propControl, dependentProps);
-			}
-			List<Property> props = dependentProps.get(condition);
-			if (props == null) {
-				props = new ArrayList<>();
-				dependentProps.put(condition, props);
-			}
-			props.add(dependentProp);
-		}
-	}
+      Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
+      if (dependentProps != null) {
+        return dependentProps.get(value);
+      }
+      return null;
+    }
+
+    /**
+     * Gets all properties that should no longer be associated with the object based on a control property's value.
+     */
+    public @Nonnull Set<Property> getIrrelevantProperties(@Nonnull Property propControl, @Nonnull String value) {
+
+      if (m_isDependentPropsDirty) {
+        m_dependentPropertiesReverseMap.clear();
+        m_isDependentPropsDirty = false;
+      }
+      Map<String, Set<Property>> reverseProps = m_dependentPropertiesReverseMap.get(propControl);
+      if (reverseProps == null) {
+        reverseProps = new HashMap<>();
+        m_dependentPropertiesReverseMap.put(propControl, reverseProps);
+      }
+      Set<Property> irrelevantProps = reverseProps.get(value);
+      if (irrelevantProps == null) {
+        irrelevantProps = new HashSet<>();
+        reverseProps.put(value, irrelevantProps);
+
+        Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
+        for (String key : dependentProps.keySet()) {
+          if (!key.equals(value)) {
+            irrelevantProps.addAll(dependentProps.get(key));
+          }
+        }
+        List<Property> relevantProps = dependentProps.get(value);
+        if (relevantProps != null) {
+          irrelevantProps.removeAll(relevantProps);
+        }
+      }
+      return irrelevantProps;
+    }
+
+
+    /**
+     * Adds a dependent Property.
+     *
+     * @param propControl   the control property
+     * @param condition	 the value of the property under which the sub-property is visible
+     * @param dependentProp the dependent Property
+     */
+    public void addDependentProperty(Property propControl, String condition, Property dependentProp) {
+
+      m_isDependentPropsDirty = true;
+      Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
+      if (dependentProps == null) {
+        dependentProps = new HashMap<>();
+        m_dependentPropertiesMap.put(propControl, dependentProps);
+      }
+      List<Property> props = dependentProps.get(condition);
+      if (props == null) {
+        props = new ArrayList<>();
+        dependentProps.put(condition, props);
+      }
+      props.add(dependentProp);
+    }
+  }
 }

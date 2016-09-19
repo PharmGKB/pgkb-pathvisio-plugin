@@ -23,36 +23,36 @@ import org.pathvisio.gui.handler.TypeHandler;
  * @author Mark Woon
  */
 public class StringTypeHandler extends DefaultCellEditor implements TypeHandler {
- private DefaultTableCellRenderer m_valueRenderer = new DefaultTableCellRenderer();
+  private DefaultTableCellRenderer m_valueRenderer = new DefaultTableCellRenderer();
 
- public StringTypeHandler() {
-  super(new JTextField());
- }
-
-
- @Override
- public PropertyType getType() {
-  return StaticPropertyType.STRING;
- }
-
- @Override
- public TableCellRenderer getLabelRenderer() {
-  return null;
- }
-
- @Override
- public TableCellRenderer getValueRenderer() {
-  return m_valueRenderer;
- }
-
- @Override
- public TableCellEditor getValueEditor() {
-  return this;
- }
+  public StringTypeHandler() {
+    super(new JTextField());
+  }
 
 
- @Override
- public String toString() {
-  return "StringTypeHandler";
- }
+  @Override
+  public PropertyType getType() {
+    return StaticPropertyType.STRING;
+  }
+
+  @Override
+  public TableCellRenderer getLabelRenderer() {
+    return null;
+  }
+
+  @Override
+  public TableCellRenderer getValueRenderer() {
+    return m_valueRenderer;
+  }
+
+  @Override
+  public TableCellEditor getValueEditor() {
+    return this;
+  }
+
+
+  @Override
+  public String toString() {
+    return "StringTypeHandler";
+  }
 }

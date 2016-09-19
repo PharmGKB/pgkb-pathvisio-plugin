@@ -18,24 +18,24 @@ import javax.swing.KeyStroke;
  * @author Mark Woon
  */
 public class SwingUtils {
-	public static final String CANCEL_BUTTON_ACTION = "CANCEL_BUTTON";
+  public static final String CANCEL_BUTTON_ACTION = "CANCEL_BUTTON";
 
-	/**
-	 * Private constructor.
-	 */
-	private SwingUtils() {
-	}
+  /**
+   * Private constructor.
+   */
+  private SwingUtils() {
+  }
 
 
-	/**
-	 * Returns a cancel button that calls the given action, and binds it to the ESC key.
-	 */
-	public static JButton buildCancelButton(JComponent parent, Action cancelAction) {
-		KeyStroke escKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-		parent.getInputMap().put(escKeystroke, CANCEL_BUTTON_ACTION);
-		parent.getActionMap().put(CANCEL_BUTTON_ACTION, cancelAction);
-		JButton cancelButton = new JButton(cancelAction);
-		cancelButton.setText("Cancel");
-		return cancelButton;
-	}
+  /**
+   * Returns a cancel button that calls the given action, and binds it to the ESC key.
+   */
+  public static JButton buildCancelButton(JComponent parent, Action cancelAction) {
+    KeyStroke escKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+    parent.getInputMap().put(escKeystroke, CANCEL_BUTTON_ACTION);
+    parent.getActionMap().put(CANCEL_BUTTON_ACTION, cancelAction);
+    JButton cancelButton = new JButton(cancelAction);
+    cancelButton.setText("Cancel");
+    return cancelButton;
+  }
 }

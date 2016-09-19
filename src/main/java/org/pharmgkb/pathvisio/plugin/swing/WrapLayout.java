@@ -17,15 +17,7 @@ import javax.swing.SwingUtilities;
  * @author Mark Woon
  */
 public class WrapLayout extends FlowLayout {
-  private Dimension preferredLayoutSize;
 
-  /**
-   * Constructs a new <code>WrapLayout</code> with a left
-   * alignment and a default 5-unit horizontal and vertical gap.
-   */
-  public WrapLayout() {
-    super();
-  }
 
   /**
    * Constructs a new <code>FlowLayout</code> with the specified
