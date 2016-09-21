@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -585,7 +586,16 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
           if (!isEditable) {
             dictType = getReadOnlyPropertyType(typeId, dictType);
           }
-          prop = new DictionaryProperty(id, name, desc, order, defaultValue, isCollection, dictType);
+          if (!isCollection && ((DictionaryPropertyType)dictType).getEntries().size() < 20) {
+            // if not collection and there are less than 20 entries, allow selection via dropdown
+            EnumProperty enumProp = new EnumProperty(id, name, desc, order, defaultValue, dictType, false);
+            for (Map.Entry<String, String> entry : ((DictionaryPropertyType)dictType).getEntries().entrySet()) {
+              enumProp.addValue(entry.getValue(), entry.getKey());
+            }
+            prop = enumProp;
+          } else {
+            prop = new DictionaryProperty(id, name, desc, order, defaultValue, isCollection, dictType);
+          }
 
         } else if (TYPE_ENUM.equals(type)) {
           if (isCollection) {
