@@ -39,6 +39,9 @@ public class PvUtils {
 
   public static void registerProperty(ExtendedProperty prop, JFrame frame) throws PgkbPluginException {
 
+    if (prop instanceof DependentProperty) {
+      throw new PgkbPluginException("Cannot register DependentProperty!");
+    }
     // register type if it's not already registered
     PropertyType type = PropertyManager.getPropertyType(prop.getType().getId());
     if (type != null) {
