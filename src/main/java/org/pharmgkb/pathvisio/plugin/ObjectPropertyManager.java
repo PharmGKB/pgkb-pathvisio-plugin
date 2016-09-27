@@ -7,13 +7,13 @@
 package org.pharmgkb.pathvisio.plugin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
@@ -231,25 +231,28 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
   private boolean updateDependentProperty(PathwayElement elem, Property controlProperty, ObjectProperties objProps) {
 
     String value = StringUtils.stripToEmpty(elem.getDynamicProperty(controlProperty.getId()));
-    boolean hasDependents = false;
+    final Boolean[] changed = new Boolean[1];
 
     // unset irrelevant properties
     m_tableModel.updatePropertyCounts(elem, true);
-    for (Property ip : objProps.getIrrelevantProperties(controlProperty, value)) {
-      elem.setDynamicProperty(ip.getId(), null);
-      hasDependents = true;
-    }
+    objProps.getIrrelevantProperties(controlProperty, value).stream()
+        // PGKB_ID is a special case, never remove it
+        .filter(ip -> !(ip.getId().equals(DynamicProperty.PGKB_ID.getShortName())))
+        .forEach(ip -> {
+          elem.setDynamicProperty(ip.getId(), null);
+          changed[0] = true;
+        });
+
     // add dependent properties
-    List<DependentProperty> props = objProps.getDependentProperties(controlProperty, value);
-    if (props != null) {
-      props.stream()
-          .filter(dp -> elem.getDynamicProperty(dp.getId()) == null)
-          .forEach(dp -> elem.setDynamicProperty(dp.getId(), getDefaultValue(dp)));
-      hasDependents = true;
-    }
+    objProps.getDependentProperties(controlProperty, value).stream()
+        .filter(dp -> elem.getDynamicProperty(dp.getId()) == null)
+        .forEach(dp -> {
+          elem.setDynamicProperty(dp.getId(), getDefaultValue(dp));
+          changed[0] = true;
+        });
     m_tableModel.updatePropertyCounts(elem, false);
 
-    return hasDependents;
+    return changed[0];
   }
 
 
@@ -298,13 +301,13 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
      *
      * @return depependent properties or null if none exists
      */
-    public @Nullable List<DependentProperty> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
+    public @Nonnull List<DependentProperty> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
 
       Map<String, List<DependentProperty>> dependentProps = m_dependentPropertiesMap.get(propControl);
-      if (dependentProps != null) {
+      if (dependentProps != null && dependentProps.containsKey(value)) {
         return dependentProps.get(value);
       }
-      return null;
+      return Collections.emptyList();
     }
 
     /**
@@ -316,11 +319,8 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
         m_dependentPropertiesReverseMap.clear();
         m_isDependentPropsDirty = false;
       }
-      Map<String, Set<DependentProperty>> reverseProps = m_dependentPropertiesReverseMap.get(propControl);
-      if (reverseProps == null) {
-        reverseProps = new HashMap<>();
-        m_dependentPropertiesReverseMap.put(propControl, reverseProps);
-      }
+      Map<String, Set<DependentProperty>> reverseProps =
+          m_dependentPropertiesReverseMap.compute(propControl, (k, v) -> v == null ? new HashMap<>() : v);
       Set<DependentProperty> irrelevantProps = reverseProps.get(value);
       if (irrelevantProps == null) {
         irrelevantProps = new HashSet<>();
