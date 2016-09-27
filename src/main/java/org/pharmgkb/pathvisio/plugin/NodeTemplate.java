@@ -92,14 +92,10 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
     element.setGraphId(p.getUniqueGraphId());
     PvUtils.customizePathwayElement(element, m_type);
     element.setTextLabel(name);
-    if (!Utils.isEmpty(accId)) {
-      DynamicProperty.PGKB_ID.set(element, accId);
-    }
 
     element.setMCenterX(mx);
     element.setMCenterY(my);
     element.setRotation(0);
-
     element.setInitialSize();
     int fontSize = (int)(element.getMFontSize());
     int width = (int)(fontSize * element.getTextLabel().length() * 0.75);
@@ -107,7 +103,11 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
       element.setMWidth(width);
     }
 
+    // this will add the element to the pathway AND initialize all dynamic properties
     addElement(element, p);
+    if (!Utils.isEmpty(accId)) {
+      DynamicProperty.PGKB_ID.set(element, accId);
+    }
 
     return new PathwayElement[] { element };
   }
