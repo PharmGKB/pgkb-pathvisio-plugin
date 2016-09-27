@@ -570,7 +570,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
         String desc = propElem.getAttribute("description");
         boolean isCollection = Boolean.parseBoolean(propElem.getAttribute("multiSelect"));
         int order = Integer.parseInt(propElem.getAttribute("order"));
-        String defaultValue = propElem.getAttribute("defaultValue");
+        String defaultValue = StringUtils.stripToNull(propElem.getAttribute("defaultValue"));
         boolean isEditable = true;
         if (propElem.hasAttribute("editable")) {
           isEditable = Boolean.parseBoolean(propElem.getAttribute("editable"));
@@ -591,6 +591,14 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
             EnumProperty enumProp = new EnumProperty(id, name, desc, order, defaultValue, dictType, false);
             for (Map.Entry<String, String> entry : ((DictionaryPropertyType)dictType).getEntries().entrySet()) {
               enumProp.addValue(entry.getValue(), entry.getKey());
+            }
+            if (defaultValue != null) {
+              if (!enumProp.getValues().contains(defaultValue)) {
+                throw new PgkbPluginException(id + " property does not have expected default value of '" + defaultValue + "'");
+              }
+            } else {
+              // support empty value
+              enumProp.addValue("", "");
             }
             prop = enumProp;
           } else {
@@ -619,6 +627,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
               optionData = optionElem.getAttribute("data");
             }
             enumProp.addValue(optionName, optionData);
+          }
+          if (defaultValue != null) {
+            if (!enumProp.getValues().contains(defaultValue)) {
+              throw new PgkbPluginException(id + " property does not have expected default value of '" + defaultValue + "'");
+            }
           }
 
         } else {
@@ -691,7 +704,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
               throw new PgkbPluginException("Dependent property '" + dependentPropId + "' is not an ExtendedProperty");
             }
             DependentProperty objProp = new DependentProperty((ExtendedProperty)dependentProp);
-            String defaultValue = dependentPropElem.getAttribute("defaultValue");
+            String defaultValue = StringUtils.stripToNull(dependentPropElem.getAttribute("defaultValue"));
             if (defaultValue != null) {
               objProp.setDefaultValue(defaultValue);
             }
