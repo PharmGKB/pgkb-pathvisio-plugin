@@ -88,7 +88,7 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
    * Associates a dependent property with an object type.
    */
   public void registerDependentProperty(@Nonnull ObjectType pvType, @Nonnull Property propControl,
-      @Nonnull String condition, @Nonnull Property dependentProp) {
+      @Nonnull String condition, @Nonnull DependentProperty dependentProp) {
 
     ObjectProperties objProps = m_objectProperties.get(pvType);
     if (objProps == null) {
@@ -240,7 +240,7 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
       hasDependents = true;
     }
     // add dependent properties
-    List<Property> props = objProps.getDependentProperties(controlProperty, value);
+    List<DependentProperty> props = objProps.getDependentProperties(controlProperty, value);
     if (props != null) {
       props.stream()
           .filter(dp -> elem.getDynamicProperty(dp.getId()) == null)
@@ -258,9 +258,9 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
    */
   public static class ObjectProperties {
     private List<Property> m_properties = new ArrayList<>();
-    private Map<Property, Map<String, List<Property>>> m_dependentPropertiesMap =
+    private Map<Property, Map<String, List<DependentProperty>>> m_dependentPropertiesMap =
         new HashMap<>();
-    private Map<Property, Map<String, Set<Property>>> m_dependentPropertiesReverseMap =
+    private Map<Property, Map<String, Set<DependentProperty>>> m_dependentPropertiesReverseMap =
         new HashMap<>();
     private boolean m_isDependentPropsDirty = true;
 
@@ -298,9 +298,9 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
      *
      * @return depependent properties or null if none exists
      */
-    public @Nullable List<Property> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
+    public @Nullable List<DependentProperty> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
 
-      Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
+      Map<String, List<DependentProperty>> dependentProps = m_dependentPropertiesMap.get(propControl);
       if (dependentProps != null) {
         return dependentProps.get(value);
       }
@@ -310,29 +310,29 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
     /**
      * Gets all properties that should no longer be associated with the object based on a control property's value.
      */
-    public @Nonnull Set<Property> getIrrelevantProperties(@Nonnull Property propControl, @Nonnull String value) {
+    public @Nonnull Set<DependentProperty> getIrrelevantProperties(@Nonnull Property propControl, @Nonnull String value) {
 
       if (m_isDependentPropsDirty) {
         m_dependentPropertiesReverseMap.clear();
         m_isDependentPropsDirty = false;
       }
-      Map<String, Set<Property>> reverseProps = m_dependentPropertiesReverseMap.get(propControl);
+      Map<String, Set<DependentProperty>> reverseProps = m_dependentPropertiesReverseMap.get(propControl);
       if (reverseProps == null) {
         reverseProps = new HashMap<>();
         m_dependentPropertiesReverseMap.put(propControl, reverseProps);
       }
-      Set<Property> irrelevantProps = reverseProps.get(value);
+      Set<DependentProperty> irrelevantProps = reverseProps.get(value);
       if (irrelevantProps == null) {
         irrelevantProps = new HashSet<>();
         reverseProps.put(value, irrelevantProps);
 
-        Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
+        Map<String, List<DependentProperty>> dependentProps = m_dependentPropertiesMap.get(propControl);
         for (String key : dependentProps.keySet()) {
           if (!key.equals(value)) {
             irrelevantProps.addAll(dependentProps.get(key));
           }
         }
-        List<Property> relevantProps = dependentProps.get(value);
+        List<DependentProperty> relevantProps = dependentProps.get(value);
         if (relevantProps != null) {
           irrelevantProps.removeAll(relevantProps);
         }
@@ -348,19 +348,12 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
      * @param condition	 the value of the property under which the sub-property is visible
      * @param dependentProp the dependent Property
      */
-    public void addDependentProperty(Property propControl, String condition, Property dependentProp) {
+    public void addDependentProperty(Property propControl, String condition, DependentProperty dependentProp) {
 
       m_isDependentPropsDirty = true;
-      Map<String, List<Property>> dependentProps = m_dependentPropertiesMap.get(propControl);
-      if (dependentProps == null) {
-        dependentProps = new HashMap<>();
-        m_dependentPropertiesMap.put(propControl, dependentProps);
-      }
-      List<Property> props = dependentProps.get(condition);
-      if (props == null) {
-        props = new ArrayList<>();
-        dependentProps.put(condition, props);
-      }
+      Map<String, List<DependentProperty>> dependentProps =
+          m_dependentPropertiesMap.compute(propControl, (k, v) -> v == null ? new HashMap<>() : v);
+      List<DependentProperty> props = dependentProps.compute(condition, (k, v) -> v == null ? new ArrayList<>() : v);
       props.add(dependentProp);
     }
   }

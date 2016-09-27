@@ -682,11 +682,20 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
           NodeList dependentPropertyNL = controlPropElem.getElementsByTagName("dependentProperty");
           for (int p = 0; p < dependentPropertyNL.getLength(); p++) {
             Element dependentPropElem = (Element)dependentPropertyNL.item(p);
-            Property dependentProp = PropertyManager.getProperty(dependentPropElem.getAttribute("id"));
+            String dependentPropId = dependentPropElem.getAttribute("id");
+            Property dependentProp = PropertyManager.getProperty(dependentPropId);
             if (dependentProp == null) {
-              throw new PgkbPluginException("Unknown dependent property: '" + dependentPropElem.getAttribute("id") + "'");
+              throw new PgkbPluginException("Unknown dependent property: '" + dependentPropId + "'");
             }
-            m_objectPropertiesManager.registerDependentProperty(pvType, controlProp, condition, dependentProp);
+            if (!(dependentProp instanceof ExtendedProperty)) {
+              throw new PgkbPluginException("Dependent property '" + dependentPropId + "' is not an ExtendedProperty");
+            }
+            DependentProperty objProp = new DependentProperty((ExtendedProperty)dependentProp);
+            String defaultValue = dependentPropElem.getAttribute("defaultValue");
+            if (defaultValue != null) {
+              objProp.setDefaultValue(defaultValue);
+            }
+            m_objectPropertiesManager.registerDependentProperty(pvType, controlProp, condition, objProp);
           }
         }
       }
