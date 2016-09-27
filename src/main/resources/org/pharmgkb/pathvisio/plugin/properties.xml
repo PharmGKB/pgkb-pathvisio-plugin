@@ -114,7 +114,7 @@
       <option name="Inactive"/>
     </property>
 
-    <property id="pgkb.coe" name="CoE" type="DICTIONARY" typeId="pgkb.dict.coe"
+    <property id="pgkb.coe" name="PD and/or PK" type="DICTIONARY" typeId="pgkb.dict.coe"
         description="Categories of Evidence" multiSelect="true"
         order="80">
     </property>
