@@ -79,6 +79,7 @@ org/pharmgkb/util                = ../build/packages/pharmgkb/WEB-INF/classes/or
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
 @../pgkb-core/lib/ehcache-core.jar,\
+@../pgkb-core/lib/fluent-hc.jar,\
 @../pgkb-core/lib/gson.jar,\
 @../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/httpasyncclient.jar,\
