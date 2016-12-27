@@ -10,6 +10,7 @@ Import-Package:  \
 !apple.laf,\
 !com.apple.laf,\
 !com.fasterxml.jackson.datatype.hibernate5.*,\
+!com.fasterxml.jackson.dataformat.cbor.*,\
 !com.google.api.*,\
 !com.google.gdata.*,\
 !com.stormpath.*,\
@@ -78,7 +79,6 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
-@../pgkb-core/lib/ehcache.jar,\
 @../pgkb-core/lib/fluent-hc.jar,\
 @../pgkb-core/lib/gson.jar,\
 @../pgkb-core/lib/guava.jar,\
