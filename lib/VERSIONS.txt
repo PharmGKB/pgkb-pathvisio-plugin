@@ -11,7 +11,7 @@ jide-oss.jar                 JIDE Common Layer 3.6.15
                              from https://github.com/jidesoft/jide-oss/
 
 
-org.pathvisio.desktop.jar    PathVisio 3.2.3
+org.pathvisio.desktop.jar    PathVisio 3.2.4
 org.pathvisio.gui.jar        from http://www.pathvisio.org/
 org.pathvisio.launcher.jar
 org.pathvisio.pluginmanager.jar
