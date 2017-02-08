@@ -15,7 +15,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,6 +27,7 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.annotation.Nullable;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.client.fluent.Request;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
 import org.pharmgkb.util.StreamUtils;
@@ -44,7 +44,7 @@ public class DownloadUtils {
 
   public static void downloadAndUnpackDataFile() throws PgkbPluginException {
 
-    String url = "https://api.pharmgkb.org/v1/download/file/data/pathvisio.zip?ref=pgkb-pathvisio";
+    String url = "https://s3.pgkb.org/data/pathvisio.zip";
     // download and unzip data file
     System.out.println("Checking " + url);
     Path downloadedFile = downloadFromUrl(url, "pathvisio.zip");
@@ -94,24 +94,9 @@ public class DownloadUtils {
 
     Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
     try {
-      URL url = new URL(urlValue);
-      URLConnection conn = url.openConnection();
-
-      if (Files.exists(dataFile)) {
-        if (conn.getLastModified() == 0 || Files.getLastModifiedTime(dataFile).toMillis() < conn.getLastModified()) {
-          // update file
-          System.out.println("  downloading update");
-          FileUtils.copyURLToFile(url, dataFile.toFile());
-          return dataFile;
-        } else {
-          return null;
-        }
-      } else {
-        System.out.println("  downloading ");
-        FileUtils.copyURLToFile(url, dataFile.toFile());
-        return dataFile;
-      }
-
+      Request.Get(urlValue).execute()
+          .saveContent(dataFile.toFile());
+      return dataFile;
     } catch (UnknownHostException ex) {
       if (Files.exists(dataFile)) {
         throw new NetworkException("No internet?\n\nCould not download " + fileName +
