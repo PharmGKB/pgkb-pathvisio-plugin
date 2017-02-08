@@ -27,6 +27,7 @@ Import-Package:  \
 !javax.persistence,\
 !javax.servlet.*,\
 !java.sql,\
+!net.sf.ehcache,\
 !net.spy.memcached,\
 !org.apache.batik.dom.*,\
 !org.apache.commons.cli,\
@@ -48,6 +49,7 @@ Import-Package:  \
 !org.pharmgkb.web.*,\
 !org.pharmgkb.webapp.*,\
 !org.springframework.*,\
+!software.amazon.ion.*,\
 !sun.*,\
 javax.annotation;resolution:=optional,\
 org.pathvisio.core.*,\
@@ -79,16 +81,8 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
-@../pgkb-core/lib/fluent-hc.jar,\
 @../pgkb-core/lib/gson.jar,\
 @../pgkb-core/lib/guava.jar,\
-@../pgkb-core/lib/httpasyncclient.jar,\
-@../pgkb-core/lib/httpasyncclient-cache.jar,\
-@../pgkb-core/lib/httpclient.jar,\
-@../pgkb-core/lib/httpclient-cache.jar,\
-@../pgkb-core/lib/httpcore.jar,\
-@../pgkb-core/lib/httpcore-nio.jar,\
-@../pgkb-core/lib/httpmime.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jest.jar,\
 @../pgkb-core/lib/jest-common.jar,\
@@ -96,6 +90,8 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nonnull.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
+@../pgkb-core/lib/simplemagic.jar,\
+@../pgkb-core/lib/xmpcore.jar,\
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\
