@@ -27,10 +27,10 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.annotation.Nullable;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.fluent.Request;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
-import org.pharmgkb.util.StreamUtils;
 
 
 /**
@@ -66,7 +66,7 @@ public class DownloadUtils {
         dataFile = new File(GlobalPreference.getDataDir(), entry.getName());
         try (InputStream in = zipFile.getInputStream(entry);
              OutputStream out = new FileOutputStream(dataFile)) {
-          StreamUtils.copy(in, out);
+          IOUtils.copy(in, out);
         }
         fileCount += 1;
       }
@@ -121,7 +121,7 @@ public class DownloadUtils {
 
     try (Reader reader = new InputStreamReader(PgkbPlugin.class.getResourceAsStream("timestamp.txt"));
          StringWriter curVersionWriter = new StringWriter()) {
-      StreamUtils.copy(reader, curVersionWriter);
+      IOUtils.copy(reader, curVersionWriter);
       return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
     }
   }
@@ -139,7 +139,7 @@ public class DownloadUtils {
     // read and parse
     try (Reader reader = Files.newBufferedReader(versionFile);
          StringWriter curVersionWriter = new StringWriter()) {
-      StreamUtils.copy(reader, curVersionWriter);
+      IOUtils.copy(reader, curVersionWriter);
       return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
     }
   }
