@@ -13,7 +13,6 @@ Import-Package:  \
 !com.fasterxml.jackson.dataformat.cbor.*,\
 !com.google.api.*,\
 !com.google.gdata.*,\
-!com.stormpath.*,\
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
 !de.intarsys.*,\
