@@ -90,7 +90,6 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
-@../pgkb-core/lib/xmpcore.jar,\
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\
