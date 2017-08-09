@@ -19,7 +19,6 @@ Import-Package:  \
 !de.schlichtherle.*,\
 !groovy.lang,\
 !javax.jms,\
-!javax.mail.*,\
 !javax.management,\
 !javax.naming,\
 !javax.net.*,\
@@ -60,27 +59,27 @@ Include-Resource: \
 logback.xml                      = ../build/tmp/pathvisio/classes/logback.xml,\
 pgkb-pathvisio-plugin.properties = ../build/tmp/pathvisio/classes/pgkb-pathvisio-plugin.properties,\
 pgkb-pathvisio.icns              = ../build/tmp/pathvisio/classes/pgkb-pathvisio.icns,\
-org/pharmgkb/Global.class        = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global.class,\
-org/pharmgkb/Global$1.class      = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$1.class,\
-org/pharmgkb/Global$GlobalProperties.class = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/Global$GlobalProperties.class,\
-org/pharmgkb/aws                 = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/aws,\
-org/pharmgkb/biopax              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/biopax,\
-org/pharmgkb/common              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/common,\
-org/pharmgkb/commonmark          = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/commonmark,\
-org/pharmgkb/elasticsearch       = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/elasticsearch,\
-org/pharmgkb/exception           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/exception,\
-org/pharmgkb/hibernate           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/hibernate,\
-org/pharmgkb/jackson             = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jackson,\
-org/pharmgkb/jersey              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jersey,\
-org/pharmgkb/jsonld              = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/jsonld,\
-org/pharmgkb/model               = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/model,\
-org/pharmgkb/pathvisio           = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/pathvisio,\
+org/pharmgkb/Global.class        = ../build/idea/classes/production/PGKB Core/org/pharmgkb/Global.class,\
+org/pharmgkb/Global$1.class      = ../build/idea/classes/production/PGKB Core/org/pharmgkb/Global$1.class,\
+org/pharmgkb/Global$GlobalProperties.class = ../build/idea/classes/production/PGKB Core/org/pharmgkb/Global$GlobalProperties.class,\
+org/pharmgkb/aws                 = ../build/idea/classes/production/PGKB Core/org/pharmgkb/aws,\
+org/pharmgkb/biopax              = ../build/idea/classes/production/PGKB Pathvisio Core/org/pharmgkb/biopax,\
+org/pharmgkb/common              = ../build/idea/classes/production/PGKB Common/org/pharmgkb/common,\
+org/pharmgkb/common/io           = ../build/idea/classes/production/PGKB Common IO/org/pharmgkb/common/io,\
+org/pharmgkb/commonmark          = ../build/idea/classes/production/PGKB Core/org/pharmgkb/commonmark,\
+org/pharmgkb/elasticsearch       = ../build/idea/classes/production/PGKB Core/org/pharmgkb/elasticsearch,\
+org/pharmgkb/exception           = ../build/idea/classes/production/PGKB Core/org/pharmgkb/exception,\
+org/pharmgkb/hibernate           = ../build/idea/classes/production/PGKB Core/org/pharmgkb/hibernate,\
+org/pharmgkb/jackson             = ../build/idea/classes/production/PGKB Core/org/pharmgkb/jackson,\
+org/pharmgkb/jersey              = ../build/idea/classes/production/PGKB Core/org/pharmgkb/jersey,\
+org/pharmgkb/jsonld              = ../build/idea/classes/production/PGKB Core/org/pharmgkb/jsonld,\
+org/pharmgkb/model               = ../build/idea/classes/production/PGKB Core/org/pharmgkb/model,\
+org/pharmgkb/pathvisio           = ../build/idea/classes/production/PGKB Pathvisio Core/org/pharmgkb/pathvisio,\
 org/pharmgkb/pathvisio/plugin    = ../build/tmp/pathvisio/classes/org/pharmgkb/pathvisio/plugin,\
-org/pharmgkb/util                = ../build/packages/pharmgkb/WEB-INF/classes/org/pharmgkb/util,\
+org/pharmgkb/util                = ../build/idea/classes/production/PGKB Core/org/pharmgkb/util,\
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
-@../pgkb-core/lib/gson.jar,\
 @../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jest.jar,\
@@ -89,6 +88,7 @@ org/pharmgkb/util                = ../build/packages/pharmgkb/WEB-INF/classes/or
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nonnull.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
+@../pgkb-core/lib/sentry.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\

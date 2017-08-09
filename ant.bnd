@@ -19,7 +19,6 @@ Import-Package:  \
 !de.schlichtherle.*,\
 !groovy.lang,\
 !javax.jms,\
-!javax.mail.*,\
 !javax.management,\
 !javax.naming,\
 !javax.net.*,\
@@ -80,7 +79,6 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
-@../pgkb-core/lib/gson.jar,\
 @../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jest.jar,\
@@ -89,6 +87,7 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nonnull.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
+@../pgkb-core/lib/sentry.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
 @../pgkb-io/lib/jena-core.jar,\
 @../pgkb-io/lib/jena-iri.jar,\

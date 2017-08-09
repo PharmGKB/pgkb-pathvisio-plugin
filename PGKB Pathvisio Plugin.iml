@@ -18,9 +18,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="PGKB Pathvisio Core" exported="" />
-    <orderEntry type="library" exported="" name="JGoodies" level="project" />
-    <orderEntry type="library" exported="" name="JIDE Common Layer" level="project" />
+    <orderEntry type="module" module-name="PGKB Pathvisio Core" />
+    <orderEntry type="library" name="JGoodies" level="project" />
+    <orderEntry type="library" name="JIDE Common Layer" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Felix" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="PathVisio UI" level="project" />
     <orderEntry type="module-library" scope="RUNTIME">
