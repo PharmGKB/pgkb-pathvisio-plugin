@@ -2,15 +2,12 @@
 
 This contains everything needed to build the PGKB PathVisio plugin and create the PGKB PathVisio distribution.
 
-We are relying on a [fork of PathVisio 2.0.11](https://github.com/PharmGKB/pathvisio2).  The primary change is the addition of `PathwayElementEvent.getProperty()`.  This is critical for us to support what we're doing with the `PropertyDisplayManager` (i.e. the right info panel).
-
-
 
 ## Building
 
 Run: `ant pathvisio`
 
-This will generate `build/dist/pgkb-pathvisio.zip`.  If you're building this on a Mac, you'll also get `build/dist/pgkb-pathvisio-osx.zip`.  Both files should be uploaded to [the wiki](http://wiki.pharmgkb.org/display/PUB/PharmGKB+Plugin+for+PathVisio).
+This will generate `build/dist/pgkb-pathvisio.*`.
 
 Note that we're rewriting the classpath in `pathvisio.jar`'s manifest file.  We are:
 * changing the location it expects the libraries to be in
