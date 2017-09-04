@@ -5,9 +5,9 @@ org.apache.felix.configadmin.jar  1.8.14
 
 httpcore-osgi.jar                 Apache HttpCore 4.4.6
 httpclient-osgi.jar               Apache HttpClient 4.5.3
-httpasyncclient-osgi.jar          Apache HttpAsynchClient 4.1.2
-                                  NOTE: these are OSGI packages;
-                                        if you update these you must update corresponding packages in pgkb-core
+httpasyncclient-osgi.jar          Apache HttpAsynchClient 4.1.3 (modified MANIFEST.MF to increase commons-logging version range)
+                                  NOTE: These are OSGI packages; If you update these
+                                  you must update corresponding packages in pgkb-core
 
 
 jgoodies-forms.jar                JGoodies Forms 1.10.0
