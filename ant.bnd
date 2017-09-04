@@ -12,10 +12,10 @@ Import-Package:  \
 !com.fasterxml.jackson.datatype.hibernate5.*,\
 !com.fasterxml.jackson.dataformat.cbor.*,\
 !com.google.api.*,\
+!com.google.errorprone.annotations.*,\
 !com.google.gdata.*,\
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
-!de.intarsys.*,\
 !de.schlichtherle.*,\
 !groovy.lang,\
 !javax.jms,\
@@ -30,7 +30,6 @@ Import-Package:  \
 !org.apache.batik.dom.*,\
 !org.apache.commons.cli,\
 !org.apache.lucene.*,\
-!org.apache.pdfbox.*,\
 !org.apache.poi.*,\
 !org.apache.shiro.authz,\
 !org.aspectj.lang.*,\
