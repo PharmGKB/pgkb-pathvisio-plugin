@@ -48,7 +48,7 @@ Import-Package:  \
 !org.springframework.*,\
 !software.amazon.ion.*,\
 !sun.*,\
-javax.annotation;resolution:=optional,\
+javax.annotation;bundle-symbolic-name="org.jsr-305";resolution:=optional,\
 org.pathvisio.core.*,\
 org.pathvisio.desktop,\
 org.pathvisio.gui,\
