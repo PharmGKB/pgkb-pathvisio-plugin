@@ -40,7 +40,6 @@ Import-Package:  \
 !org.junit.*,\
 !org.pharmgkb.dictionary.*,\
 !org.pharmgkb.importer.*,\
-!org.pharmgkb.mongo,\
 !org.pharmgkb.processor,\
 !org.pharmgkb.search,\
 !org.pharmgkb.web.*,\
