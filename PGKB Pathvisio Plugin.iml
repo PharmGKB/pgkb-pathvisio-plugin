@@ -2,7 +2,7 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration manifestGenerationMode="Bnd" manifestLocation="" jarfileLocation="$PROJECT_DIR$\build\tmp\pathvisio\pgkb-pv-plugin.jar" outputPathType="SpecificOutputPath" bndFileLocation="idea.bnd" bundlorFileLocation="" bundleActivator="org.pharmgkb.pathvisio.plugin.Activator" bundleSymbolicName="org.pharmgkb.pathvisio.plugin" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
+      <configuration manifestGenerationMode="Bnd" manifestLocation="" jarfileLocation="pgkb-pv-plugin.jar" outputPathType="CompilerOutputPath" bndFileLocation="idea.bnd" bundlorFileLocation="" bundleActivator="org.pharmgkb.pathvisio.plugin.Activator" bundleSymbolicName="org.pharmgkb.pathvisio.plugin" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
         <additionalProperties />
         <additionalJARContents />
       </configuration>
