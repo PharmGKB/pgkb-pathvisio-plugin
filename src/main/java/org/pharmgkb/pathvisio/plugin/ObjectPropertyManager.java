@@ -121,13 +121,10 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
         elem.addListener(this);
       }
       if (objProps.getProperties() != null && !objProps.getProperties().isEmpty()) {
-        for (Property p : objProps.getProperties()) {
-          if (Utils.isEmpty(elem.getDynamicProperty(p.getId()))) {
-            // add property to PathwayElement
-            String value = getDefaultValue(p);
-            elem.setDynamicProperty(p.getId(), value);
-          }
-        }
+        // add property to PathwayElement
+        objProps.getProperties().stream()
+            .filter(p -> Utils.isEmpty(elem.getDynamicProperty(p.getId())))
+            .forEach(p -> elem.setDynamicProperty(p.getId(), getDefaultValue(p)));
       }
     }
   }
@@ -228,31 +225,24 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
   }
 
 
-  private boolean updateDependentProperty(PathwayElement elem, Property controlProperty, ObjectProperties objProps) {
+  private void updateDependentProperty(PathwayElement elem, Property controlProperty, ObjectProperties objProps) {
 
     String value = StringUtils.stripToEmpty(elem.getDynamicProperty(controlProperty.getId()));
-    final Boolean[] changed = new Boolean[1];
-
+    List<DependentProperty> dependentProperties = objProps.getDependentProperties(controlProperty, value);
     // unset irrelevant properties
     m_tableModel.updatePropertyCounts(elem, true);
     objProps.getIrrelevantProperties(controlProperty, value).stream()
         // PGKB_ID is a special case, never remove it
         .filter(ip -> !(ip.getId().equals(DynamicProperty.PGKB_ID.getShortName())))
-        .forEach(ip -> {
-          elem.setDynamicProperty(ip.getId(), null);
-          changed[0] = true;
-        });
+        // don't remove properties we're going to add back anyway
+        .filter(ip -> !dependentProperties.contains(ip))
+        .forEach(ip -> elem.setDynamicProperty(ip.getId(), null));
 
     // add dependent properties
-    objProps.getDependentProperties(controlProperty, value).stream()
+    dependentProperties.stream()
         .filter(dp -> elem.getDynamicProperty(dp.getId()) == null)
-        .forEach(dp -> {
-          elem.setDynamicProperty(dp.getId(), getDefaultValue(dp));
-          changed[0] = true;
-        });
+        .forEach(dp -> elem.setDynamicProperty(dp.getId(), getDefaultValue(dp)));
     m_tableModel.updatePropertyCounts(elem, false);
-
-    return changed[0];
   }
 
 

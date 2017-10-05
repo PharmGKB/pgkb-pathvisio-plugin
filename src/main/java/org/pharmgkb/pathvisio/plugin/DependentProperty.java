@@ -1,5 +1,6 @@
 package org.pharmgkb.pathvisio.plugin;
 
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 import org.pathvisio.core.model.PropertyType;
@@ -68,5 +69,24 @@ public class DependentProperty implements ExtendedProperty {
   @Override
   public boolean isCollection() {
     return m_baseProperty.isCollection();
+  }
+
+
+  @Override
+  public boolean equals(Object obj) {
+
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final DependentProperty other = (DependentProperty)obj;
+    return Objects.equals(getId(), other.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getId());
   }
 }
