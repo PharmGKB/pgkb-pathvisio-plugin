@@ -246,6 +246,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
         case PROCESS:
           dictPropTypeId = DictionaryPropertyType.PROCESS_DICTIONARY_ID;
           break;
+        default:
+          // fall out
       }
       Action action = newNodeAction(type, dictPropTypeId, true, -1);
       if (type.isDrawingOnly()) {
@@ -778,6 +780,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
               .show();
         }
         break;
+      default:
+        // fall out
     }
   }
 
