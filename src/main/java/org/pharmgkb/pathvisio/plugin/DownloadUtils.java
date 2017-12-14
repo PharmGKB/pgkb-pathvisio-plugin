@@ -119,7 +119,11 @@ public class DownloadUtils {
 
   private static Instant getThisVersion() throws IOException {
 
-    try (Reader reader = new InputStreamReader(PgkbPlugin.class.getResourceAsStream("timestamp.txt"));
+    InputStream in = PgkbPlugin.class.getResourceAsStream("/org/pharmgkb/pathvisio/plugin/timestamp.txt");
+    if (in == null) {
+      throw new IOException("Cannot find timestamp.txt");
+    }
+    try (Reader reader = new InputStreamReader(in);
          StringWriter curVersionWriter = new StringWriter()) {
       IOUtils.copy(reader, curVersionWriter);
       return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
