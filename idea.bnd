@@ -16,7 +16,6 @@ Import-Package:  \
 !com.google.gdata.*,\
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
-!de.schlichtherle.*,\
 !groovy.lang,\
 !javax.jms,\
 !javax.management,\
