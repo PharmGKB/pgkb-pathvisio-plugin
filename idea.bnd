@@ -53,9 +53,9 @@ org.pathvisio.gui,\
 *
 
 Include-Resource: \
-logback.xml                      = ../build/tmp/pathvisio/classes/logback.xml,\
-pgkb-pathvisio-plugin.properties = ../build/tmp/pathvisio/classes/pgkb-pathvisio-plugin.properties,\
-pgkb-pathvisio.icns              = ../build/tmp/pathvisio/classes/pgkb-pathvisio.icns,\
+logback.xml                      = src/main/resources/logback.xml,\
+pgkb-pathvisio-plugin.properties = src/main/resources/pgkb-pathvisio-plugin.properties,\
+pgkb-pathvisio.icns              = src/main/resources/pgkb-pathvisio.icns,\
 org/pharmgkb/Global.class        = ../build/idea/classes/production/PGKB Core/org/pharmgkb/Global.class,\
 org/pharmgkb/Global$1.class      = ../build/idea/classes/production/PGKB Core/org/pharmgkb/Global$1.class,\
 org/pharmgkb/Global$GlobalProperties.class = ../build/idea/classes/production/PGKB Core/org/pharmgkb/Global$GlobalProperties.class,\
