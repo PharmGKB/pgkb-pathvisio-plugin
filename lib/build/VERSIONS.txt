@@ -1,8 +1,8 @@
 appbundler.jar            AppBundler 1c645a073674 [local build on 5/12/15]
                           from https://bitbucket.org/infinitekind/appbundler
 
-bnd.jar                   aQute Bundle Tool 2.4.0
-                          via Maven
+bnd.jar                   aQute Bundle Tool 3.5.0
+                          via Maven [biz.aQute.bnd/biz.aQute.bnd]
 
 
 pathvisio.jar             PathVisio 3.3.0
