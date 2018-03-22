@@ -17,6 +17,7 @@ Import-Package:  \
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
 !groovy.lang,\
+!io.netty.*,\
 !javax.jms,\
 !javax.management,\
 !javax.naming,\
