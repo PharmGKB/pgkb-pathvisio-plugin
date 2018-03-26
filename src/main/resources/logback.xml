@@ -14,4 +14,14 @@
     <appender-ref ref="STDOUT" />
   </root>
 
+
+  <logger name="org.apache.http" level="WARN" />
+  <logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR" />
+  <!-- for REST client debugging -->
+  <!--
+  <logger name="org.apache.http.wire" level="DEBUG" />
+  -->
+  <logger name="org.biopax" level="WARN" />
+  <logger name="org.elasticsearch" level="WARN" />
+
 </configuration>
