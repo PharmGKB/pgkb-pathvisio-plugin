@@ -31,7 +31,6 @@ Import-Package:  \
 !org.apache.commons.cli,\
 !org.apache.lucene.*,\
 !org.apache.poi.*,\
-!org.apache.shiro.authz,\
 !org.aspectj.lang.*,\
 !org.codehaus.commons.compiler,\
 !org.codehaus.groovy.*,\
