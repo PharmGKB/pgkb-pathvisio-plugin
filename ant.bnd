@@ -11,6 +11,7 @@ Import-Package:  \
 !com.apple.laf,\
 !com.fasterxml.jackson.datatype.hibernate5.*,\
 !com.fasterxml.jackson.dataformat.cbor.*,\
+!com.fasterxml.jackson.dataformat.xml.*,\
 !com.google.api.*,\
 !com.google.errorprone.annotations.*,\
 !com.google.gdata.*,\
@@ -32,6 +33,7 @@ Import-Package:  \
 !org.apache.lucene.*,\
 !org.apache.poi.*,\
 !org.aspectj.lang.*,\
+!org.checkerframework.checker.nullness.qual,\
 !org.codehaus.commons.compiler,\
 !org.codehaus.groovy.*,\
 !org.codehaus.janino,\
