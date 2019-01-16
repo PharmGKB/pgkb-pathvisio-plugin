@@ -37,6 +37,7 @@ Import-Package:  \
 !org.codehaus.commons.compiler,\
 !org.codehaus.groovy.*,\
 !org.codehaus.janino,\
+!org.codehaus.stax2.*,\
 !org.hibernate.*,\
 !org.junit.*,\
 !org.pharmgkb.dictionary.*,\
@@ -79,7 +80,6 @@ org/pharmgkb/util                = ../build/idea/classes/production/PGKB Core/or
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
-@../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jest.jar,\
 @../pgkb-core/lib/jest-common.jar,\

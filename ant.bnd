@@ -37,6 +37,7 @@ Import-Package:  \
 !org.codehaus.commons.compiler,\
 !org.codehaus.groovy.*,\
 !org.codehaus.janino,\
+!org.codehaus.stax2.*,\
 !org.hibernate.*,\
 !org.junit.*,\
 !org.pharmgkb.dictionary.*,\
@@ -64,6 +65,7 @@ org/pharmgkb/Global$GlobalProperties.class = ../build/tmp/pathvisio/classes/org/
 org/pharmgkb/aws                 = ../build/tmp/pathvisio/classes/org/pharmgkb/aws,\
 org/pharmgkb/biopax              = ../build/tmp/pathvisio/classes/org/pharmgkb/biopax,\
 org/pharmgkb/common              = ../build/tmp/pathvisio/classes/org/pharmgkb/common,\
+org/pharmgkb/common/io           = ../build/tmp/pathvisio/classes/org/pharmgkb/common/io,\
 org/pharmgkb/commonmark          = ../build/tmp/pathvisio/classes/org/pharmgkb/commonmark,\
 org/pharmgkb/elasticsearch       = ../build/tmp/pathvisio/classes/org/pharmgkb/elasticsearch,\
 org/pharmgkb/exception           = ../build/tmp/pathvisio/classes/org/pharmgkb/exception,\
@@ -78,7 +80,6 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/aws-java-sdk.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
-@../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jest.jar,\
 @../pgkb-core/lib/jest-common.jar,\
