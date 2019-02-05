@@ -77,7 +77,12 @@ org/pharmgkb/model               = ../build/idea/classes/production/PGKB Core/or
 org/pharmgkb/pathvisio           = ../build/idea/classes/production/PGKB Pathvisio Core/org/pharmgkb/pathvisio,\
 org/pharmgkb/pathvisio/plugin    = ../build/tmp/pathvisio/classes/org/pharmgkb/pathvisio/plugin,\
 org/pharmgkb/util                = ../build/idea/classes/production/PGKB Core/org/pharmgkb/util,\
-@../pgkb-core/lib/aws-java-sdk.jar,\
+@../pgkb-core/lib/aws-java-sdk-cognitoidp.jar,\
+@../pgkb-core/lib/aws-java-sdk-core.jar,\
+@../pgkb-core/lib/aws-java-sdk-kms.jar,\
+@../pgkb-core/lib/aws-java-sdk-s3.jar,\
+@../pgkb-core/lib/aws-java-sdk-sns.jar,\
+@../pgkb-core/lib/aws-java-sdk-sqs.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
