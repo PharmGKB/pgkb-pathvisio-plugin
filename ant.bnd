@@ -85,9 +85,9 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/aws-java-sdk-sqs.jar,\
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
+@../pgkb-core/lib/elasticsearch-rest-client.jar,\
+@../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
-@../pgkb-core/lib/jest.jar,\
-@../pgkb-core/lib/jest-common.jar,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nullable.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/Nonnull.class,\
 @../pgkb-core/lib/jsr305.jar!/javax/annotation/meta/*,\
