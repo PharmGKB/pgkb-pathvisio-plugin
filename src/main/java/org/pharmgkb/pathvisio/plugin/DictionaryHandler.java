@@ -115,7 +115,7 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
       m_dictionaryDialog = new DictionaryDialog(m_frame, m_frame, m_property);
     }
     String v = (String)value;
-    if (!m_property.isCollection() && !StringUtils.isEmpty(v)) {
+    if (!m_property.isCollection() && !StringUtils.isBlank(v)) {
       // convert from enum, which only has a value and no id
       String key = m_property.getDictionaryType().getReverseEnteries().get(v.toLowerCase());
       if (key == null) {
