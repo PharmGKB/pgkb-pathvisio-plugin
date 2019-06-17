@@ -72,6 +72,7 @@ org/pharmgkb/exception           = ../build/idea/classes/production/PGKB Core/or
 org/pharmgkb/hibernate           = ../build/idea/classes/production/PGKB Core/org/pharmgkb/hibernate,\
 org/pharmgkb/jackson             = ../build/idea/classes/production/PGKB Core/org/pharmgkb/jackson,\
 org/pharmgkb/jersey              = ../build/idea/classes/production/PGKB Core/org/pharmgkb/jersey,\
+org/pharmgkb/jsend               = ../build/idea/classes/production/PGKB COre/org/pharmgkb/jsend,\
 org/pharmgkb/jsonld              = ../build/idea/classes/production/PGKB Core/org/pharmgkb/jsonld,\
 org/pharmgkb/model               = ../build/idea/classes/production/PGKB Core/org/pharmgkb/model,\
 org/pharmgkb/pathvisio           = ../build/idea/classes/production/PGKB Pathvisio Core/org/pharmgkb/pathvisio,\
@@ -94,8 +95,8 @@ org/pharmgkb/util                = ../build/idea/classes/production/PGKB Core/or
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
 @../pgkb-core/lib/sentry.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
-@../pgkb-io/lib/jena-core.jar,\
-@../pgkb-io/lib/jena-iri.jar,\
+@../pgkb-pathvisio/lib/jena-core.jar,\
+@../pgkb-pathvisio/lib/jena-iri.jar,\
 @../pgkb-pathvisio/lib/collections-generic.jar,\
 @../pgkb-pathvisio/lib/paxtools-core.jar,\
 @../pgkb-pathvisio-plugin/lib/jide-oss.jar,\
