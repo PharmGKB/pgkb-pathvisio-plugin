@@ -5,6 +5,8 @@ Bundle-SymbolicName: org.pharmgkb.pathvisio.plugin
 Bundle-Activator:    org.pharmgkb.pathvisio.plugin.Activator
 Bundle-ManifestVersion: 2
 Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 
 Import-Package:  \
 !apple.laf,\
@@ -12,9 +14,11 @@ Import-Package:  \
 !com.fasterxml.jackson.datatype.hibernate5.*,\
 !com.fasterxml.jackson.dataformat.cbor.*,\
 !com.fasterxml.jackson.dataformat.xml.*,\
+!com.fasterxml.jackson.module.jaxb.*,\
 !com.google.api.*,\
 !com.google.errorprone.annotations.*,\
 !com.google.gdata.*,\
+!com.google.gson.*,\
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
 !groovy.lang,\
