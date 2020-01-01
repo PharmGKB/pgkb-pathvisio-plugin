@@ -16,6 +16,7 @@ import org.pathvisio.core.util.Utils;
 import org.pathvisio.gui.handler.ComboHandler;
 import org.pathvisio.gui.handler.PropertyDisplayManager;
 import org.pathvisio.gui.handler.TypeHandler;
+import org.pharmgkb.pathvisio.DynamicProperty;
 import org.pharmgkb.pathvisio.EnumProperty;
 import org.pharmgkb.pathvisio.ExtendedProperty;
 import org.pharmgkb.pathvisio.PgkbType;
@@ -100,8 +101,8 @@ public class PvUtils {
   public static void customizePathwayElement(PathwayElement elem, PgkbType type) {
 
     if (elem.getObjectType() == ObjectType.DATANODE) {
-      if (Utils.isEmpty(elem.getDynamicProperty("pgkb.type"))) {
-        elem.setDynamicProperty("pgkb.type", type.getDisplayName());
+      if (Utils.isEmpty(elem.getDynamicProperty(DynamicProperty.TYPE.getShortName()))) {
+        elem.setDynamicProperty(DynamicProperty.TYPE.getShortName(), type.getDisplayName());
       }
       elem.setDataNodeType(type.getDataNodeType());
       if (type.getColor() != null) {
