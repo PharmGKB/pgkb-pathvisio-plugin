@@ -1,15 +1,8 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin;
 
 import java.awt.event.MouseEvent;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.JDialog;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.pathvisio.core.gui.SwingMouseEvent;
 import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.Pathway;
@@ -36,7 +29,7 @@ public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
   private NewDictionaryElementDialog m_newDictionaryElementDialog;
   private PvDesktop m_desktop;
 
-  public NodeTemplate(@Nonnull PgkbType type, @Nonnull PvDesktop desktop,
+  public NodeTemplate(PgkbType type, PvDesktop desktop,
       @Nullable DictionaryPropertyType dictPropType, boolean dictValueRequired) {
     super(type.getDataNodeType());
     m_type = type;

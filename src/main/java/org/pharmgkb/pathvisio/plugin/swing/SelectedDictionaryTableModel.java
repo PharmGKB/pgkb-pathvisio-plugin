@@ -1,9 +1,3 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin.swing;
 
 import java.util.Comparator;
@@ -11,9 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.table.AbstractTableModel;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.pathvisio.core.util.Utils;
 import org.pharmgkb.pathvisio.DataConstants;
 
@@ -89,7 +82,7 @@ public class SelectedDictionaryTableModel extends AbstractTableModel {
   }
 
 
-  public void setValue(@Nonnull String key, @Nullable String value) {
+  public void setValue(String key, @Nullable String value) {
     if (value != null) {
       m_unsortedData.put(key, value);
       m_data.put(key, value);

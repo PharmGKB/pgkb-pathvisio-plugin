@@ -1,9 +1,3 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin;
 
 import java.io.BufferedReader;
@@ -16,11 +10,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.pathvisio.core.model.PropertyType;
 
 /**
@@ -72,7 +65,7 @@ public class DictionaryPropertyType implements PropertyType {
     return m_nameIdMap;
   }
 
-  public void addEntry(@Nonnull String id, @Nonnull String name) {
+  public void addEntry(String id, String name) {
 
     Preconditions.checkNotNull(id);
     Preconditions.checkNotNull(name);

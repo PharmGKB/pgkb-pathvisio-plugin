@@ -1,7 +1,6 @@
 package org.pharmgkb.pathvisio.plugin;
 
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 import org.pathvisio.core.model.PropertyType;
 import org.pharmgkb.pathvisio.ExtendedProperty;
@@ -19,13 +18,13 @@ public class DependentProperty implements ExtendedProperty {
   private String m_defaultValue;
 
 
-  public DependentProperty(@Nonnull ExtendedProperty baseProperty) {
+  public DependentProperty(ExtendedProperty baseProperty) {
     Preconditions.checkNotNull(baseProperty);
     m_baseProperty = baseProperty;
     m_defaultValue = baseProperty.getDefaultValue();
   }
 
-  public @Nonnull ExtendedProperty getBaseProperty() {
+  public ExtendedProperty getBaseProperty() {
     return m_baseProperty;
   }
 
@@ -40,7 +39,7 @@ public class DependentProperty implements ExtendedProperty {
     return m_defaultValue;
   }
 
-  public void setDefaultValue(@Nonnull String defaultValue) {
+  public void setDefaultValue(String defaultValue) {
     Preconditions.checkNotNull(defaultValue);
     m_defaultValue = defaultValue;
   }

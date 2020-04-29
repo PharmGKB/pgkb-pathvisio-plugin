@@ -1,14 +1,7 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin;
 
 import java.awt.Component;
 import java.util.EventObject;
-import javax.annotation.Nonnull;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -28,7 +21,7 @@ public class ReadOnlyTypeHandler implements TypeHandler {
   private NotEditableTableCellEditor m_cellEditor;
 
 
-  public ReadOnlyTypeHandler(@Nonnull PropertyType type, @Nonnull TypeHandler typeHandler) {
+  public ReadOnlyTypeHandler(PropertyType type, TypeHandler typeHandler) {
     Preconditions.checkNotNull(type);
     Preconditions.checkNotNull(typeHandler);
     m_type = type;

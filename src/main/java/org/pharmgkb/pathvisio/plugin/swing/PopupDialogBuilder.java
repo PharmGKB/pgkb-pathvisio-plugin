@@ -3,7 +3,6 @@ package org.pharmgkb.pathvisio.plugin.swing;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Font;
-import javax.annotation.Nonnull;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,12 +25,12 @@ public class PopupDialogBuilder {
   private boolean m_isHtml;
 
 
-  public PopupDialogBuilder(@Nonnull PvDesktop desktop) {
+  public PopupDialogBuilder(PvDesktop desktop) {
     m_parent = desktop.getFrame();
   }
 
 
-  public PopupDialogBuilder title(@Nonnull String title) {
+  public PopupDialogBuilder title(String title) {
     Preconditions.checkNotNull(title);
     m_title = title;
     return this;
@@ -61,14 +60,14 @@ public class PopupDialogBuilder {
     return this;
   }
 
-  public PopupDialogBuilder message(@Nonnull String message) {
+  public PopupDialogBuilder message(String message) {
     Preconditions.checkNotNull(message);
     Preconditions.checkState(m_message == null, "Already provided message");
     m_message = message;
     return this;
   }
 
-  public PopupDialogBuilder htmlMessage(@Nonnull String message) {
+  public PopupDialogBuilder htmlMessage(String message) {
     Preconditions.checkNotNull(message);
     Preconditions.checkState(m_message == null, "Already provided message");
     m_message = message;

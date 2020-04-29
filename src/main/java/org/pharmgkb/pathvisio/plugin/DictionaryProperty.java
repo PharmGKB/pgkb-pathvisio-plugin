@@ -1,12 +1,5 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin;
 
-import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 import org.pathvisio.core.model.PropertyType;
 import org.pharmgkb.pathvisio.ExtendedProperty;
@@ -20,17 +13,17 @@ import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
  * @author Rebecca Tang
  */
 public class DictionaryProperty implements ExtendedProperty {
-  private String m_id;
-  private String m_name;
-  private String m_description;
-  private int m_order;
-  private String m_defaultValue;
-  private boolean m_isCollection;
-  private PropertyType m_type;
+  private final String m_id;
+  private final String m_name;
+  private final String m_description;
+  private final int m_order;
+  private final String m_defaultValue;
+  private final boolean m_isCollection;
+  private final PropertyType m_type;
 
 
   public DictionaryProperty(String id, String name, String desc, int order, String defaultValue, boolean isCollection,
-      @Nonnull PropertyType type) {
+      PropertyType type) {
     Preconditions.checkNotNull(type);
     Preconditions.checkArgument(type instanceof DictionaryPropertyType ||
         (type instanceof ReadOnlyPropertyType && ((ReadOnlyPropertyType)type).getBaseType() instanceof DictionaryPropertyType));

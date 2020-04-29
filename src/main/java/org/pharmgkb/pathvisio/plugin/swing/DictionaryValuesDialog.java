@@ -1,9 +1,3 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin.swing;
 
 import java.awt.Component;
@@ -16,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.annotation.Nullable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,6 +24,7 @@ import javax.swing.table.TableRowSorter;
 import com.jgoodies.forms.builder.FormBuilder;
 import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.pathvisio.gui.dialogs.OkCancelDialog;
 import org.pharmgkb.pathvisio.plugin.DictionaryProperty;
 

@@ -1,9 +1,3 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin;
 
 import java.awt.Component;
@@ -18,8 +12,6 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -38,6 +30,7 @@ import com.jidesoft.icons.IconsFactory;
 import com.jidesoft.swing.JideButton;
 import com.jidesoft.swing.JideLabel;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.debug.Logger;
@@ -143,7 +136,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
   }
 
 
-  private @Nonnull JPanel addPanelToToolbar(@Nonnull JToolBar toolbar, @Nullable String title) {
+  private JPanel addPanelToToolbar(JToolBar toolbar, @Nullable String title) {
 
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
@@ -168,7 +161,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     panel.add(button);
   }
 
-  private void endPadToolbarPanel(@Nonnull JPanel panel) {
+  private void endPadToolbarPanel(JPanel panel) {
     panel.add(getBorderSpacer());
   }
 
@@ -338,7 +331,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     checkForNewVersion();
   }
 
-  private JideButton createComboButton(@Nonnull String tooltip, @Nonnull String icon, @Nonnull JComboBox comboBox) {
+  private JideButton createComboButton(String tooltip, String icon, JComboBox comboBox) {
     JideButton button = new JideButton(new ImageIcon(Resources.getResourceURL(icon)));
     button.setBorder(sf_buttonBorder);
     button.setToolTipText(tooltip);
@@ -347,7 +340,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     return button;
   }
 
-  private JComboBox optimizeComboBox(@Nonnull JComboBox<Action> comboBox) {
+  private JComboBox optimizeComboBox(JComboBox<Action> comboBox) {
 
     String longestValue = "";
     Action longestAction = null;
@@ -366,7 +359,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
   }
 
 
-  private void addAction(@Nonnull JPanel panel, @Nonnull Action action, @Nonnull PgkbType type) {
+  private void addAction(JPanel panel, Action action, PgkbType type) {
 
     ImageIcon icon = IconsFactory.getImageIcon(PgkbPlugin.class, type.getShortName() + ".png");
     if (icon != null) {
@@ -376,11 +369,11 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     addToPanelInToolbar(panel, action, true);
   }
 
-  private Action newNodeAction(@Nonnull PgkbType type, int keyStroke) {
+  private Action newNodeAction(PgkbType type, int keyStroke) {
     return newNodeAction(type, null, false, keyStroke);
   }
 
-  private Action newNodeAction(@Nonnull PgkbType type, @Nullable String dictPropTypeId, boolean dictValueRequired,
+  private Action newNodeAction(PgkbType type, @Nullable String dictPropTypeId, boolean dictValueRequired,
       int keyStroke) {
 
     DictionaryPropertyType dictPropType = null;

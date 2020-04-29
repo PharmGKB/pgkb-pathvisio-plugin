@@ -1,9 +1,3 @@
-/*
- ----- BEGIN LICENSE BLOCK -----
- This Source Code Form is subject to the terms of the Mozilla Public License, v.2.0.
- If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
- ----- END LICENSE BLOCK -----
- */
 package org.pharmgkb.pathvisio.plugin;
 
 import java.util.ArrayList;
@@ -13,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
@@ -87,8 +80,8 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
   /**
    * Associates a dependent property with an object type.
    */
-  public void registerDependentProperty(@Nonnull ObjectType pvType, @Nonnull Property propControl,
-      @Nonnull String condition, @Nonnull DependentProperty dependentProp) {
+  public void registerDependentProperty(ObjectType pvType, Property propControl,
+      String condition, DependentProperty dependentProp) {
 
     ObjectProperties objProps = m_objectProperties.get(pvType);
     if (objProps == null) {
@@ -291,7 +284,7 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
      *
      * @return depependent properties or null if none exists
      */
-    public @Nonnull List<DependentProperty> getDependentProperties(@Nonnull Property propControl, @Nonnull String value) {
+    public List<DependentProperty> getDependentProperties(Property propControl, String value) {
 
       Map<String, List<DependentProperty>> dependentProps = m_dependentPropertiesMap.get(propControl);
       if (dependentProps != null && dependentProps.containsKey(value)) {
@@ -303,7 +296,7 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
     /**
      * Gets all properties that should no longer be associated with the object based on a control property's value.
      */
-    public @Nonnull Set<DependentProperty> getIrrelevantProperties(@Nonnull Property propControl, @Nonnull String value) {
+    public Set<DependentProperty> getIrrelevantProperties(Property propControl, String value) {
 
       if (m_isDependentPropsDirty) {
         m_dependentPropertiesReverseMap.clear();
