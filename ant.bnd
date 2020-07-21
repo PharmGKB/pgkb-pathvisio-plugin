@@ -10,6 +10,8 @@ Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 
 Import-Package:  \
 !apple.laf,\
+!com.amazonaws.metrics.internal.cloudwatch,\
+!com.amazonaws.services.securitytoken.internal,\
 !com.apple.laf,\
 !com.fasterxml.jackson.datatype.hibernate5.*,\
 !com.fasterxml.jackson.dataformat.cbor.*,\
@@ -19,6 +21,20 @@ Import-Package:  \
 !com.google.errorprone.annotations.*,\
 !com.google.gdata.*,\
 !com.google.gson.*,\
+!com.jgoodies.jsdl.common.focus,\
+!com.jidesoft.action,\
+!com.jidesoft.chart,\
+!com.jidesoft.diff,\
+!com.jidesoft.docking,\
+!com.jidesoft.document,\
+!com.jidesoft.editor,\
+!com.jidesoft.grid,\
+!com.jidesoft.pivot,\
+!com.jidesoft.rss,\
+!com.jidesoft.shortcut,\
+!com.jidesoft.treemap,\
+!com.jidesoft.wizard,\
+!com.sun.awt.*,\
 !com.sun.java.swing.plaf.windows,\
 !com.sun.org.apache.*,\
 !groovy.lang,\
@@ -30,6 +46,8 @@ Import-Package:  \
 !javax.persistence,\
 !javax.servlet.*,\
 !java.sql,\
+!jena.test,\
+!kotlin,\
 !net.sf.ehcache,\
 !net.spy.memcached,\
 !org.apache.batik.dom.*,\
@@ -37,6 +55,7 @@ Import-Package:  \
 !org.apache.lucene.*,\
 !org.apache.poi.*,\
 !org.aspectj.lang.*,\
+!org.bouncycastle.jce.provider,\
 !org.checkerframework.checker.nullness.qual,\
 !org.codehaus.commons.compiler,\
 !org.codehaus.groovy.*,\
@@ -44,6 +63,7 @@ Import-Package:  \
 !org.codehaus.stax2.*,\
 !org.hibernate.*,\
 !org.junit.*,\
+!org.openjena.riot,\
 !org.pharmgkb.dictionary.*,\
 !org.pharmgkb.importer.*,\
 !org.pharmgkb.processor,\
@@ -91,8 +111,8 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
 @../pgkb-core/lib/elasticsearch-rest-client.jar,\
-@../pgkb-core/lib/guava.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
+@../pgkb-core/lib/jmespath-java.jar,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
 @../pgkb-core/lib/sentry.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
