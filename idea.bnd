@@ -64,12 +64,9 @@ Import-Package:  \
 !org.hibernate.*,\
 !org.junit.*,\
 !org.openjena.riot,\
-!org.pharmgkb.dictionary.*,\
 !org.pharmgkb.importer.*,\
-!org.pharmgkb.processor,\
-!org.pharmgkb.search,\
+!org.pharmgkb.test,\
 !org.pharmgkb.web.*,\
-!org.pharmgkb.webapp.*,\
 !org.springframework.*,\
 !software.amazon.ion.*,\
 !sun.*,\

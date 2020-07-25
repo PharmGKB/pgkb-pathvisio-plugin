@@ -22,7 +22,6 @@ import java.util.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.fluent.Request;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
 
@@ -33,27 +32,50 @@ import org.pathvisio.core.preferences.GlobalPreference;
  * @author Mark Woon
  */
 public class DownloadUtils {
-  private static DateTimeFormatter sf_timestampFormatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss zzz");
+  private static final DateTimeFormatter sf_timestampFormatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss zzz");
 
 
   public static void downloadAndUnpackDataFile() throws PgkbPluginException {
-
     String url = "https://api.pharmgkb.org/v1/download/file/data/pathvisio.zip?ref=pathvisio";
-    // download and unzip data file
-    System.out.println("Checking " + url);
     Path downloadedFile = downloadFromUrl(url, "pathvisio.zip");
-    if (downloadedFile == null) {
-      return;
-    }
-    System.out.println("  done.");
-    File dataFile = null;
+    unzipFile(downloadedFile);
+  }
+
+
+  /**
+   * Saves a URL as a local file.  If file already exists locally, it will only be downloaded again if it has been
+   * modified on the server.
+   */
+  private static Path downloadFromUrl(String url, String fileName) throws PgkbPluginException {
+
+    System.out.println("Checking " + url);
+    Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
     try {
-      ZipFile zipFile = new ZipFile(downloadedFile.toFile());
+      Request.Get(url).execute()
+          .saveContent(dataFile.toFile());
+      return dataFile;
+    } catch (UnknownHostException ex) {
+      if (Files.exists(dataFile)) {
+        throw new NetworkException("No internet?\n\nCould not download " + fileName +
+            ".  Using existing older version.\n\nProceed at your own risk.");
+      } else {
+        throw new PgkbPluginException("Could not download " + fileName, ex);
+      }
+    } catch (Exception ex) {
+      throw new PgkbPluginException("Error processing '" + url + "'", ex);
+    }
+  }
+
+  private static void unzipFile(Path downloadedFile) throws PgkbPluginException {
+    System.out.println("Unpacking " + downloadedFile);
+    File dataFile = null;
+    try (ZipFile zipFile = new ZipFile(downloadedFile.toFile())) {
       Enumeration entries = zipFile.entries();
       int fileCount = 0;
       while (entries.hasMoreElements()) {
         ZipEntry entry = (ZipEntry)entries.nextElement();
-        if (entry.isDirectory() || entry.getName().startsWith("CREATED_")) {
+        if (entry.isDirectory() || entry.getName().startsWith("CREATED_") ||
+            entry.getName().startsWith("LICENSE.txt")) {
           continue;
         }
         // unpack file
@@ -65,7 +87,7 @@ public class DownloadUtils {
         fileCount += 1;
       }
       if (fileCount == 0) {
-        throw new PgkbPluginException("Empty zip file '" + url + "'");
+        throw new PgkbPluginException("Empty zip file '" + downloadedFile.getName(downloadedFile.getNameCount() - 1) + "'");
       }
 
     } catch (ZipException ex) {
@@ -77,33 +99,6 @@ public class DownloadUtils {
       throw new PgkbPluginException("Error unzipping data", ex);
     }
   }
-
-
-
-  /**
-   * Saves a URL as a local file.  If file already exists locally, it will only be downloaded again if it has been
-   * modified on the server.
-   */
-  private static @Nullable Path downloadFromUrl(String urlValue, String fileName) throws PgkbPluginException {
-
-    Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
-    try {
-      Request.Get(urlValue).execute()
-          .saveContent(dataFile.toFile());
-      return dataFile;
-    } catch (UnknownHostException ex) {
-      if (Files.exists(dataFile)) {
-        throw new NetworkException("No internet?\n\nCould not download " + fileName +
-            " from preview.  Using existing older version.\n\nProceed at your own risk.");
-      } else {
-        throw new PgkbPluginException("Could not download " + fileName + " from preview", ex);
-      }
-
-    } catch (Exception ex) {
-      throw new PgkbPluginException("Error processing '" + urlValue + "'", ex);
-    }
-  }
-
 
 
   public static boolean hasNewVersion() throws IOException, NetworkException {

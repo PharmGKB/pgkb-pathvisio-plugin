@@ -23,7 +23,7 @@ import org.pharmgkb.pathvisio.plugin.PgkbPlugin;
  * @author Mark Woon
  */
 public class AddLiteratureAction extends AbstractAction {
-  private SwingEngine m_engine;
+  private final SwingEngine m_engine;
 
   public AddLiteratureAction(SwingEngine engine) {
 

@@ -79,8 +79,8 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
   private PvDesktop m_desktop;
   private ObjectPropertyManager m_objectPropertiesManager;
-  private Set<Action> m_actions = new HashSet<>();
-  private Set<Component> m_toolbarComponents = new HashSet<>();
+  private final Set<Action> m_actions = new HashSet<>();
+  private final Set<Component> m_toolbarComponents = new HashSet<>();
 
 
   private Component getSpacer() {
