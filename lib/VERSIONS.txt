@@ -3,8 +3,8 @@ felix.jar                         Apache Felix 4.6.0 (must match version in Path
 org.apache.felix.configadmin.jar  1.8.14
 
 
-httpcore-osgi.jar                 Apache HttpCore 4.4.12
-httpclient-osgi.jar               Apache HttpClient 4.5.10
+httpcore-osgi.jar                 Apache HttpCore 4.4.14
+httpclient-osgi.jar               Apache HttpClient 4.5.13
 httpasyncclient-osgi.jar          Apache HttpAsynchClient 4.1.4
                                   NOTE: These are OSGI packages; If you update these
                                   you must update corresponding packages in pgkb-core
