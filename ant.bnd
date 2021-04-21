@@ -89,7 +89,6 @@ org/pharmgkb/Global$GlobalProperties.class = ../build/tmp/pathvisio/classes/org/
 org/pharmgkb/aws                 = ../build/tmp/pathvisio/classes/org/pharmgkb/aws,\
 org/pharmgkb/biopax              = ../build/tmp/pathvisio/classes/org/pharmgkb/biopax,\
 org/pharmgkb/common              = ../build/tmp/pathvisio/classes/org/pharmgkb/common,\
-org/pharmgkb/common/io           = ../build/tmp/pathvisio/classes/org/pharmgkb/common/io,\
 org/pharmgkb/commonmark          = ../build/tmp/pathvisio/classes/org/pharmgkb/commonmark,\
 org/pharmgkb/elasticsearch       = ../build/tmp/pathvisio/classes/org/pharmgkb/elasticsearch,\
 org/pharmgkb/exception           = ../build/tmp/pathvisio/classes/org/pharmgkb/exception,\
