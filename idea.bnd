@@ -86,7 +86,6 @@ org/pharmgkb/Global$GlobalProperties.class = ../build/idea/classes/production/PG
 org/pharmgkb/aws                 = ../build/idea/classes/production/PGKB Core/org/pharmgkb/aws,\
 org/pharmgkb/biopax              = ../build/idea/classes/production/PGKB Pathvisio Core/org/pharmgkb/biopax,\
 org/pharmgkb/common              = ../build/idea/classes/production/PGKB Common/org/pharmgkb/common,\
-org/pharmgkb/common/io           = ../build/idea/classes/production/PGKB Common IO/org/pharmgkb/common/io,\
 org/pharmgkb/commonmark          = ../build/idea/classes/production/PGKB Core/org/pharmgkb/commonmark,\
 org/pharmgkb/elasticsearch       = ../build/idea/classes/production/PGKB Core/org/pharmgkb/elasticsearch,\
 org/pharmgkb/exception           = ../build/idea/classes/production/PGKB Core/org/pharmgkb/exception,\
