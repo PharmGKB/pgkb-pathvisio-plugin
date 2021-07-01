@@ -34,9 +34,8 @@ Import-Package:  \
 !com.jidesoft.shortcut,\
 !com.jidesoft.treemap,\
 !com.jidesoft.wizard,\
-!com.sun.awt.*,\
-!com.sun.java.swing.plaf.windows,\
-!com.sun.org.apache.*,\
+!com.sun.*,\
+!com.vladmihalcea.hibernate.*,\
 !groovy.lang,\
 !io.netty.*,\
 !javax.jms,\
@@ -61,8 +60,10 @@ Import-Package:  \
 !org.codehaus.groovy.*,\
 !org.codehaus.janino,\
 !org.codehaus.stax2.*,\
+!org.commonmark.*,\
 !org.hibernate.*,\
 !org.junit.*,\
+!org.jvnet.*,\
 !org.openjena.riot,\
 !org.pharmgkb.importer.*,\
 !org.pharmgkb.test,\
@@ -107,6 +108,7 @@ org/pharmgkb/util                = ../build/idea/classes/production/PGKB Core/or
 @../pgkb-core/lib/commonmark.jar,\
 @../pgkb-core/lib/commonmark-ext-gfm-tables.jar,\
 @../pgkb-core/lib/elasticsearch-rest-client.jar,\
+@../pgkb-core/lib/jaxb-runtime.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jmespath-java.jar,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
