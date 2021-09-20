@@ -38,6 +38,7 @@ Import-Package:  \
 !com.vladmihalcea.hibernate.*,\
 !groovy.lang,\
 !io.netty.*,\
+!javax.annotation.meta,\
 !javax.jms,\
 !javax.management,\
 !javax.naming,\
@@ -111,6 +112,7 @@ org/pharmgkb/util                = ../build/idea/classes/production/PGKB Core/or
 @../pgkb-core/lib/jaxb-runtime.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jmespath-java.jar,\
+@../pgkb-core/lib/jsoup.jar,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
 @../pgkb-core/lib/sentry.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
