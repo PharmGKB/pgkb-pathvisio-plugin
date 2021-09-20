@@ -20,6 +20,7 @@
     <dictionary id="pgkb.dict.coe">
       <option id="PD" name="PD"/>
       <option id="PK" name="PK"/>
+      <option id="PK" name="ADR"/>
     </dictionary>
 
   </types>
