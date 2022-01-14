@@ -20,7 +20,7 @@ Import-Package:  \
 !com.google.api.*,\
 !com.google.errorprone.annotations.*,\
 !com.google.gdata.*,\
-!com.google.gson.*,\
+!com.google.gson.internal.*,\
 !com.jgoodies.jsdl.common.focus,\
 !com.jidesoft.action,\
 !com.jidesoft.chart,\
