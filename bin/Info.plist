@@ -68,7 +68,7 @@
       <string>-Dfile.encoding=UTF-8</string>
       <!--
        Commenting these out because universalJavaApplicationStub barfs if there's a space in the parameter.
-       They also appear to be unecessary under Java 8.
+       They also appear to be unnecessary under Java 8.
       -->
       <!--
       <string>-Dcom.apple.mrj.application.apple.menu.about.name=@PV_APP_NAME@</string>
