@@ -122,7 +122,7 @@ public class DownloadUtils {
   private static Instant getLatestVersion() throws IOException, NetworkException {
 
     // download timestamp
-    URL url = new URL("https://stanford.box.com/shared/static/l98dyxkmwciukz2c76rmoml8qai5rubw.txt");
+    URL url = new URL("https://drive.google.com/uc?export=download&id=1zz2SutEz9Odn6lenDr0zzgMW1cU9xxvP");
     Path versionFile = GlobalPreference.getDataDir().toPath().resolve("pgkb-pathvisio.timestamp.txt");
     try {
       FileUtils.copyURLToFile(url, versionFile.toFile());
