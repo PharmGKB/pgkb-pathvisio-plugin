@@ -784,17 +784,10 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
 
     try {
       if (DownloadUtils.hasNewVersion()) {
-        StringBuilder msgBuilder = new StringBuilder()
-            .append("<p>There is a new version of PathVisio available.<p><a href=\"");
-        if (System.getProperty("os.name").toLowerCase().contains("mac os")) {
-          msgBuilder.append("https://stanford.box.com/shared/static/e7dzeopmu7tw7d82gnr2kjdb095pkqr7.zip");
-        } else {
-          msgBuilder.append("https://stanford.box.com/shared/static/1zru5xs42gsscyb2p3w857sptsaa7nlr.zip");
-        }
-        msgBuilder.append("\">Please update as soon as possible.</a>");
         new PopupDialogBuilder(m_desktop).info()
             .title("Time To Upgrade!")
-            .htmlMessage(msgBuilder.toString())
+            .htmlMessage("<p>There is a new version of PathVisio available." +
+                "<p><a href=\"https://github.com/PharmGKB/PharmGKB/releases\">Please update as soon as possible.</a>")
             .show();
       }
     } catch (Exception ex) {
