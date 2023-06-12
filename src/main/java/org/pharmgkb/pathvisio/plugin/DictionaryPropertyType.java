@@ -61,7 +61,7 @@ public class DictionaryPropertyType implements PropertyType {
   /**
    * Gets the map of lower-cased names to IDs.
    */
-  public SortedMap<String, String> getReverseEnteries() {
+  public SortedMap<String, String> getReverseEntries() {
     return m_nameIdMap;
   }
 

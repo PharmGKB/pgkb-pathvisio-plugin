@@ -12,7 +12,7 @@ import org.pharmgkb.pathvisio.DataConstants;
 
 
 /**
- * This table model holds the list of selected dictioanry entries.
+ * This table model holds the list of selected dictionary entries.
  *
  * @author Rebecca Tang
  */

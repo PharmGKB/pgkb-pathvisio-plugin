@@ -125,7 +125,7 @@ public class DictionaryValuesDialog extends OkCancelDialog {
     private String[] columnNames = {"", ""};
     private List<Map.Entry<String, Boolean>> m_data;
     private Map<String, String> m_dictValues;
-    // only used when property.isCollection == fase
+    // only used when property.isCollection == false
     private int m_selectedRow = -1;
 
 

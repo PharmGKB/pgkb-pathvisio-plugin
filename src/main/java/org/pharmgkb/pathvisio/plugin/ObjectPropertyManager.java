@@ -282,7 +282,7 @@ public class ObjectPropertyManager implements Engine.ApplicationEventListener, P
     /**
      * Gets all dependent properties based a control property's value.
      *
-     * @return depependent properties or null if none exists
+     * @return dependent properties or null if none exists
      */
     public List<DependentProperty> getDependentProperties(Property propControl, String value) {
 

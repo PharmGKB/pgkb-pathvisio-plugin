@@ -111,7 +111,7 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
     String v = (String)value;
     if (!m_property.isCollection() && !StringUtils.isBlank(v)) {
       // convert from enum, which only has a value and no id
-      String key = m_property.getDictionaryType().getReverseEnteries().get(v.toLowerCase());
+      String key = m_property.getDictionaryType().getReverseEntries().get(v.toLowerCase());
       if (key == null) {
         JOptionPane.showMessageDialog(this.m_button,
             "Potentially obsolete data?  The '" + m_property.getName() + "' dictionary has no entry for '" + v + "'. Ignoring value!",

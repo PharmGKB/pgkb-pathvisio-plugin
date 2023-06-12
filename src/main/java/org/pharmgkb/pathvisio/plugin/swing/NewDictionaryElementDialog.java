@@ -78,7 +78,7 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
     } else {
       //noinspection unchecked
       m_autocompleteField.addItem(EMPTY_SELECTION);
-      for (String value : dictPropType.getReverseEnteries().keySet()) {
+      for (String value : dictPropType.getReverseEntries().keySet()) {
         //noinspection unchecked
         m_autocompleteField.addItem(value);
       }
@@ -202,7 +202,7 @@ public class NewDictionaryElementDialog extends JDialog implements ActionListene
       if (EMPTY_SELECTION.equals(name)) {
         m_pgkbIdField.setText("");
       } else {
-        m_pgkbIdField.setText(m_dictPropertyType.getReverseEnteries().get(name));
+        m_pgkbIdField.setText(m_dictPropertyType.getReverseEntries().get(name));
       }
     }
   }
