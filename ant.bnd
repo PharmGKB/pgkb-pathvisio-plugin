@@ -112,7 +112,6 @@ org/pharmgkb/util                = ../build/tmp/pathvisio/classes/org/pharmgkb/u
 @../pgkb-core/lib/jaxb-runtime.jar,\
 @../pgkb-core/lib/jersey-apache-connector.jar,\
 @../pgkb-core/lib/jmespath-java.jar,\
-@../pgkb-core/lib/jsoup.jar,\
 @../pgkb-core/lib/owasp-java-html-sanitizer.jar,\
 @../pgkb-core/lib/sentry.jar,\
 @../pgkb-core/lib/simplemagic.jar,\
