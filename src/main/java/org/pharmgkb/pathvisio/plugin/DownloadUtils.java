@@ -1,7 +1,6 @@
 package org.pharmgkb.pathvisio.plugin;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,7 +42,7 @@ public class DownloadUtils {
 
 
   /**
-   * Saves a URL as a local file.  If file already exists locally, it will only be downloaded again if it has been
+   * Saves a URL as a local file.  If the file already exists locally, it will only be downloaded again if it has been
    * modified on the server.
    */
   private static Path downloadFromUrl(String url, String fileName) throws PgkbPluginException {
@@ -81,7 +80,7 @@ public class DownloadUtils {
         // unpack file
         dataFile = new File(GlobalPreference.getDataDir(), entry.getName());
         try (InputStream in = zipFile.getInputStream(entry);
-             OutputStream out = new FileOutputStream(dataFile)) {
+             OutputStream out = Files.newOutputStream(dataFile.toPath())) {
           IOUtils.copy(in, out);
         }
         fileCount += 1;
