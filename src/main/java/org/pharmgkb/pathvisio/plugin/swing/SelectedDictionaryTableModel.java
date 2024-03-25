@@ -17,10 +17,10 @@ import org.pharmgkb.pathvisio.DataConstants;
  * @author Rebecca Tang
  */
 public class SelectedDictionaryTableModel extends AbstractTableModel {
-  private boolean m_isMultiselect;
+  private final boolean m_isMultiselect;
   private String m_initialState;
-  private Map<String, String> m_unsortedData = new HashMap<>();
-  private SortedMap<String, String> m_data = new TreeMap<>((Comparator<String>)(o1, o2) ->
+  private final Map<String, String> m_unsortedData = new HashMap<>();
+  private final SortedMap<String, String> m_data = new TreeMap<>((Comparator<String>)(o1, o2) ->
       StyledTextComparator.getInstance().compare(m_unsortedData.get(o1), m_unsortedData.get(o2)));
 
 
@@ -39,7 +39,7 @@ public class SelectedDictionaryTableModel extends AbstractTableModel {
   public void setData(String initialState) {
 
     m_initialState = initialState;
-    if (m_data.size() > 0) {
+    if (!m_data.isEmpty()) {
       m_data.clear();
       m_unsortedData.clear();
     }

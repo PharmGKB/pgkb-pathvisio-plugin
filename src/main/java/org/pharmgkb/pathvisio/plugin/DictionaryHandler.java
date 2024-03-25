@@ -31,10 +31,10 @@ public class DictionaryHandler extends AbstractCellEditor implements TypeHandler
   private static final String sf_buttonLabel = "Select Data From Dictionary";
   private static final String sf_editAction = "edit";
 
-  private JFrame m_frame;
-  private DictionaryProperty m_property;
-  private TableCellRenderer m_valueRenderer = new StyledTableCellRenderer();
-  private JButton m_button;
+  private final JFrame m_frame;
+  private final DictionaryProperty m_property;
+  private final TableCellRenderer m_valueRenderer = new StyledTableCellRenderer();
+  private final JButton m_button;
   private DictionaryDialog m_dictionaryDialog;
 
 

@@ -36,12 +36,12 @@ import org.pharmgkb.pathvisio.plugin.DictionaryPropertyType;
 public class NewDictionaryElementDialog extends JDialog implements ActionListener, ItemListener, KeyListener {
   private static final String EMPTY_SELECTION = "---";
   private static final String sf_okButtonAction = "OK_BUTTON";
-  private AutoCompletionComboBox m_autocompleteField;
-  private JTextField m_pgkbIdField;
+  private final AutoCompletionComboBox m_autocompleteField;
+  private final JTextField m_pgkbIdField;
   private JTextField m_freetextField;
-  private PgkbType m_type;
-  private DictionaryPropertyType m_dictPropertyType;
-  private PvDesktop m_desktop;
+  private final PgkbType m_type;
+  private final DictionaryPropertyType m_dictPropertyType;
+  private final PvDesktop m_desktop;
   private String m_selectedName;
 
 

@@ -23,9 +23,9 @@ import org.pharmgkb.pathvisio.plugin.DictionaryProperty;
  */
 public class DictionaryDialog extends OkCancelDialog {
   private static final String sf_addButtonAction = "Select Value";
-  private DictionaryProperty m_property;
-  private SelectedDictionaryTableModel m_dictTableModel;
-  private JButton m_addButton;
+  private final DictionaryProperty m_property;
+  private final SelectedDictionaryTableModel m_dictTableModel;
+  private final JButton m_addButton;
 
 
   public DictionaryDialog(Frame frame, Component locationComp, DictionaryProperty property) {

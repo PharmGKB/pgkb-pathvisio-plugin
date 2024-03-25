@@ -16,7 +16,7 @@ import com.jidesoft.swing.StyledLabel;
  */
 public class StyledTableCellRenderer implements TableCellRenderer {
   private static final StyleRange[] sf_plainStyledRange = new StyleRange[] { new StyleRange(Font.PLAIN) };
-  private StyledLabel m_label;
+  private final StyledLabel m_label;
 
   public StyledTableCellRenderer() {
     m_label = new StyledLabel();

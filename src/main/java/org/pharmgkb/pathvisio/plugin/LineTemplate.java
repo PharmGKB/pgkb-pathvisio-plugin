@@ -13,7 +13,7 @@ import org.pharmgkb.pathvisio.BiopaxInteractionType;
  * @author Mark Woon
  */
 public class LineTemplate extends DefaultTemplates.LineTemplate {
-  private BiopaxInteractionType m_interactionType;
+  private final BiopaxInteractionType m_interactionType;
 
 
   public LineTemplate(BiopaxInteractionType type) {

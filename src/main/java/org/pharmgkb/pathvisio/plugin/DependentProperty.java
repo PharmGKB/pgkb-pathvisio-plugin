@@ -7,14 +7,14 @@ import org.pharmgkb.pathvisio.ExtendedProperty;
 
 
 /**
- * This represents an dependent property that can have a custom default value.
+ * This represents a dependent property that can have a custom default value.
  * This should <b>ONLY</b> be used with {@link ObjectPropertyManager} and not PathVisio's
  * {@link org.pathvisio.core.model.PropertyManager}.
  *
  * @author Mark Woon
  */
 public class DependentProperty implements ExtendedProperty {
-  private ExtendedProperty m_baseProperty;
+  private final ExtendedProperty m_baseProperty;
   private String m_defaultValue;
 
 

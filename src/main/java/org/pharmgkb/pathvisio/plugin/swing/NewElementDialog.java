@@ -30,9 +30,9 @@ import org.pharmgkb.pathvisio.PgkbType;
  */
 public class NewElementDialog extends JDialog implements ActionListener, KeyListener {
   private static final String sf_okButtonAction = "OK_BUTTON";
-  private PgkbType m_type;
-  private JTextField m_textField;
-  private PvDesktop m_desktop;
+  private final PgkbType m_type;
+  private final JTextField m_textField;
+  private final PvDesktop m_desktop;
 
 
   public NewElementDialog(PvDesktop desktop, PgkbType type) {

@@ -18,7 +18,7 @@ import org.pathvisio.desktop.PvDesktop;
  * @author Mark Woon
  */
 public class PopupDialogBuilder {
-  private Component m_parent;
+  private final Component m_parent;
   private int m_type = JOptionPane.INFORMATION_MESSAGE;
   private String m_title = "Info";
   private String m_message;

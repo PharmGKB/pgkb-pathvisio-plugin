@@ -7,7 +7,7 @@ import org.pharmgkb.pathvisio.ReadOnlyPropertyType;
 
 
 /**
- * This defines an dictionary Property, which allows multiple selection on a specific vocabulary.
+ * This defines a dictionary Property, which allows multiple selection on a specific vocabulary.
  * This should be paired with the {@link DictionaryHandler}.
  *
  * @author Rebecca Tang

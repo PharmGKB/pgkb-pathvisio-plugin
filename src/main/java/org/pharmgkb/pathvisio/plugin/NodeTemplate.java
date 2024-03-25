@@ -23,11 +23,11 @@ import org.pharmgkb.pathvisio.plugin.swing.NewElementDialog;
  * @author Mark Woon
  */
 public class NodeTemplate extends DefaultTemplates.DataNodeTemplate {
-  private PgkbType m_type;
+  private final PgkbType m_type;
   private String m_name;
   private NewElementDialog m_newElementDialog;
   private NewDictionaryElementDialog m_newDictionaryElementDialog;
-  private PvDesktop m_desktop;
+  private final PvDesktop m_desktop;
 
   public NodeTemplate(PgkbType type, PvDesktop desktop,
       @Nullable DictionaryPropertyType dictPropType, boolean dictValueRequired) {

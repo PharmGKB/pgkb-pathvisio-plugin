@@ -18,7 +18,7 @@ import org.pharmgkb.pathvisio.plugin.PgkbPlugin;
 
 
 /**
- * Action to add a literature reference to multiple elements add once.
+ * Action to add a literature reference to multiple elements at once.
  *
  * @author Mark Woon
  */

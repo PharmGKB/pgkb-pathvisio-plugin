@@ -38,10 +38,10 @@ import org.pharmgkb.pathvisio.PgkbType;
  * @author Mark Woon
  */
 public class ObjectPropertyManager implements Engine.ApplicationEventListener, PathwayListener, PathwayElementListener {
-  private PvDesktop m_desktop;
-  private PathwayTableModel m_tableModel;
-  private Map<ObjectType, ObjectProperties> m_objectProperties = new HashMap<>();
-  private Set<ObjectPropertyListener> m_listeners = new HashSet<>();
+  private final PvDesktop m_desktop;
+  private final PathwayTableModel m_tableModel;
+  private final Map<ObjectType, ObjectProperties> m_objectProperties = new HashMap<>();
+  private final Set<ObjectPropertyListener> m_listeners = new HashSet<>();
 
 
   public ObjectPropertyManager(PvDesktop desktop) {
