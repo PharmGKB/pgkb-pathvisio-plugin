@@ -18,11 +18,10 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.client.fluent.Request;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
+import org.pharmgkb.common.util.StreamUtils;
 
 
 /**
@@ -50,8 +49,7 @@ public class DownloadUtils {
     System.out.println("Checking " + url);
     Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
     try {
-      Request.Get(url).execute()
-          .saveContent(dataFile.toFile());
+      StreamUtils.copyUrlToFile(url, dataFile);
       return dataFile;
     } catch (UnknownHostException ex) {
       if (Files.exists(dataFile)) {
@@ -124,7 +122,7 @@ public class DownloadUtils {
     URL url = new URL("https://drive.google.com/uc?export=download&id=1qhAvUJhAEYJgqAFUSc0BLf80Bt28QH1z");
     Path versionFile = GlobalPreference.getDataDir().toPath().resolve("pgkb-pathvisio.timestamp.txt");
     try {
-      FileUtils.copyURLToFile(url, versionFile.toFile());
+      IOUtils.copy(url, versionFile.toFile());
     } catch (UnknownHostException ex) {
       throw new NetworkException("No network?  Skipping version check", ex);
     }

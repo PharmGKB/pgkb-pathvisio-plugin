@@ -22,6 +22,5 @@
   <logger name="org.apache.http.wire" level="DEBUG" />
   -->
   <logger name="org.biopax" level="WARN" />
-  <logger name="org.elasticsearch" level="WARN" />
 
 </configuration>

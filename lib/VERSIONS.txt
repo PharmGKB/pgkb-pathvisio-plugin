@@ -1,25 +1,30 @@
-felix.jar                         Apache Felix 4.6.0 (must match version in PathVisio)
-                                  from http://felix.apache.org/
-org.apache.felix.configadmin.jar  1.8.14
+asm.jar                                      ASM 9.6 (used by SPI Fly)
+asm-analysis.jar
+asm-commons.jar
+asm-tree.jar
+asm-util.jar
 
 
-httpcore-osgi.jar                 Apache HttpCore 4.4.14
-httpclient-osgi.jar               Apache HttpClient 4.5.13
-httpasyncclient-osgi.jar          Apache HttpAsynchClient 4.1.4
-                                  NOTE: These are OSGI packages; If you update these
-                                  you must update corresponding packages in pgkb-core
+felix.jar                                    Apache Felix 4.6.0 (must match the version in PathVisio)
+                                             from http://felix.apache.org/
+org.apache.felix.configadmin.jar             1.8.14
+                                             
+                                             
+                                             
+jgoodies-forms.jar                           JGoodies Forms 1.10.0
+jgoodies-common.jar                          JGoodies Common 1.9.0
+                                             from http://www.jgoodies.com/
+                                             
+                                             
+jide-oss.jar                                 JIDE Common Layer 3.6.15
+                                             from https://github.com/jidesoft/jide-oss/
 
 
-jgoodies-forms.jar                JGoodies Forms 1.10.0
-jgoodies-common.jar               JGoodies Common 1.9.0
-                                  from http://www.jgoodies.com/
+org.apache.aries.spifly.dynamic.bundle.jar   SPI Fly 1.3.7
+                                             Needed because: https://stackoverflow.com/a/43787507/1063501
 
 
-jide-oss.jar                      JIDE Common Layer 3.6.15
-                                  from https://github.com/jidesoft/jide-oss/
-
-
-org.pathvisio.desktop.jar         PathVisio 3.3.0
-org.pathvisio.gui.jar             from http://www.pathvisio.org/
-org.pathvisio.launcher.jar
-org.pathvisio.pluginmanager.jar
+org.pathvisio.desktop.jar                    PathVisio 3.3.0
+org.pathvisio.gui.jar                        from http://www.pathvisio.org/
+org.pathvisio.launcher.jar                   
+org.pathvisio.pluginmanager.jar              
