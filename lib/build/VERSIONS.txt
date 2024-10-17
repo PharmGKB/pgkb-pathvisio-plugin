@@ -1,5 +1,5 @@
-appbundler.jar            AppBundler 1c645a073674 [local build on 5/12/15]
-                          from https://bitbucket.org/infinitekind/appbundler
+appbundler.jar            AppBundler d2677e4 [local build on 10/17/24]
+                          from https://github.com/TheInfiniteKind/appbundler
 
 bnd.jar                   aQute Bundle Tool 3.5.0
                           via Maven [biz.aQute.bnd/biz.aQute.bnd]
