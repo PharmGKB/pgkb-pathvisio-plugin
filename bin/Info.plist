@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleExecutable</key>
-    <string>universalJavaApplicationStub</string>
+    <string>JavaApplicationStub</string>
     <key>CFBundleIconFile</key>
     <string>@PV_APP_ICON@</string>
     <key>CFBundleIdentifier</key>
