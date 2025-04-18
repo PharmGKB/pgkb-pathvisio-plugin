@@ -32,6 +32,7 @@ Import-Package:  \
 !org.openjena.riot,\
 !sun.*,\
 javax.annotation;bundle-symbolic-name="org.jsr-305";resolution:=optional,\
+org.jspecify.annotations;resolution:=optional,\
 org.pathvisio.core.*,\
 org.pathvisio.desktop,\
 org.pathvisio.gui,\
