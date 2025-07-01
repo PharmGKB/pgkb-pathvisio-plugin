@@ -34,7 +34,7 @@ public class DownloadUtils {
 
 
   public static void downloadAndUnpackDataFile() throws PgkbPluginException {
-    String url = "https://api.pharmgkb.org/v1/download/file/data/pathvisio.zip?ref=pathvisio";
+    String url = "https://api.clinpgx.org/v1/download/file/data/pathvisio.zip?ref=pathvisio";
     Path downloadedFile = downloadFromUrl(url, "pathvisio.zip");
     unzipFile(downloadedFile);
   }
