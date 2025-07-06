@@ -6,7 +6,7 @@ import org.pathvisio.desktop.plugin.Plugin;
 
 
 /**
- * This is the OSGI {@link BundleActivator} for the PharmGKB PathVisio plugin.
+ * This is the OSGI {@link BundleActivator} for the ClinPGx PathVisio plugin.
  *
  * @author Mark Woon
  */

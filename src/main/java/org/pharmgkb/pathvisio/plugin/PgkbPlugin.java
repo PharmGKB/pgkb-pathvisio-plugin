@@ -66,7 +66,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /**
- * Entry point for the PharmGKB PathVisio plugin.
+ * Entry point for the ClinPGx PathVisio plugin.
  *
  * @author Mark Woon
  * @author Rebecca Tang
@@ -415,7 +415,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
     Logger.log.setDest("STDOUT");
     Logger.log.setLogLevel(false, false, true, true, true, true);
     System.out.println("Initializing properties");
-    // hide static properties and only show ones that pertain to PharmGKB
+    // hide static properties and only show ones that pertain to ClinPGx
     for (Property prop : StaticProperty.values()) {
       PropertyDisplayManager.setVisible(prop, false);
     }
