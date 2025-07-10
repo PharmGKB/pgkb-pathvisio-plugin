@@ -24,7 +24,7 @@ import javax.swing.table.TableRowSorter;
 import com.jgoodies.forms.builder.FormBuilder;
 import com.jgoodies.forms.factories.Paddings;
 import com.jgoodies.forms.layout.FormLayout;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.gui.dialogs.OkCancelDialog;
 import org.pharmgkb.pathvisio.plugin.DictionaryProperty;
 

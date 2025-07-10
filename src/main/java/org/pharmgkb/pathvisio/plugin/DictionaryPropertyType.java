@@ -13,7 +13,7 @@ import java.util.TreeMap;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.core.model.PropertyType;
 
 /**

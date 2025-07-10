@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.swing.table.AbstractTableModel;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.core.util.Utils;
 import org.pharmgkb.pathvisio.DataConstants;
 

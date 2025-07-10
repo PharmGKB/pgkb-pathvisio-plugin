@@ -2,7 +2,7 @@ package org.pharmgkb.pathvisio.plugin;
 
 import java.awt.event.MouseEvent;
 import javax.swing.JDialog;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.core.gui.SwingMouseEvent;
 import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.Pathway;

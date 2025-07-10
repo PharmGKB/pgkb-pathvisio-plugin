@@ -13,7 +13,7 @@ import javax.swing.table.TableCellRenderer;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.core.model.PropertyType;
 import org.pathvisio.core.util.Utils;
 import org.pathvisio.gui.handler.TypeHandler;

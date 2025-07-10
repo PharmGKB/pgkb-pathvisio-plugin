@@ -30,7 +30,7 @@ import com.jidesoft.icons.IconsFactory;
 import com.jidesoft.swing.JideButton;
 import com.jidesoft.swing.JideLabel;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.debug.Logger;
