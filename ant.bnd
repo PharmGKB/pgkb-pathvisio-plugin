@@ -27,7 +27,6 @@ Import-Package:  \
 !com.sun.*,\
 !jena.test,\
 !org.apache.batik.dom.*,\
-!org.checkerframework.checker.nullness.qual,\
 !org.jvnet.*,\
 !org.openjena.riot,\
 !sun.*,\
