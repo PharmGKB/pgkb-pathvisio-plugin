@@ -21,7 +21,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="PGKB IO PV" />
+    <orderEntry type="module" module-name="PGKB Core PV" />
     <orderEntry type="library" name="JGoodies" level="project" />
     <orderEntry type="library" name="JIDE Common Layer" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Felix" level="project" />
