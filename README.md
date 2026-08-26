@@ -3,6 +3,17 @@
 This contains everything needed to build the PGKB PathVisio plugin and create the PGKB PathVisio distribution.
 
 
+## Standalone build
+
+This module is fully self-contained: `build.xml` here needs nothing from the rest of PharmGKB
+(no `PHARMGKB` env var, no root `build.xml`, no `passwords.properties`). Running
+`cd pgkb-pathvisio-plugin && ant dist` works on its own. The root `build.xml`'s `pathvisio`/
+`pathvisio-mac`/`pathvisio-mac-bundle` targets are thin delegators to this file, kept only so
+PharmGKB's existing build commands keep working; this module is a planned candidate for extraction
+into its own repo (`PharmGKB/pgkb-pathvisio-plugin`) — see
+`docs/superpowers/specs/2026-08-26-1105-split-pgkb-pathvisio-plugin-design.md`.
+
+
 ## Building
 
 Run from the repository root (not from this directory): `ant pathvisio`
@@ -14,6 +25,11 @@ Note that we're rewriting the classpath in `pathvisio.jar`'s manifest file.  We 
 * changing the location it expects the libraries to be in
 * removing libraries PathVisio needs but we don't (i.e. unused functionality)
 * adding libraries we need
+
+Update-checks inside the running plugin now query
+`https://api.github.com/repos/PharmGKB/pgkb-pathvisio-plugin/releases/latest` (see
+`DownloadUtils`) — this only returns real data once that repo exists and has at least one
+published release (Part 2 of the extraction project).
 
 
 ### Mac
