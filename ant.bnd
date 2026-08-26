@@ -46,10 +46,10 @@ org/pharmgkb                     = ../build/tmp/pathvisio/classes/org/pharmgkb,\
 @../pgkb-core/lib/httpcore.jar,\
 @../pgkb-core/lib/jaxb-runtime.jar,\
 @../pgkb-core/lib/sentry.jar,\
-@../pgkb-core-pv/lib/jena-core.jar,\
-@../pgkb-core-pv/lib/jena-iri.jar,\
-@../pgkb-core-pv/lib/collections-generic.jar,\
-@../pgkb-core-pv/lib/paxtools-core.jar,\
+@../pgkb-pathvisio-plugin/lib/jena-core.jar,\
+@../pgkb-pathvisio-plugin/lib/jena-iri.jar,\
+@../pgkb-pathvisio-plugin/lib/collections-generic.jar,\
+@../pgkb-pathvisio-plugin/lib/paxtools-core.jar,\
 @../pgkb-pathvisio-plugin/lib/jide-oss.jar,\
 @../pgkb-pathvisio-plugin/lib/jgoodies-common.jar,\
 @../pgkb-pathvisio-plugin/lib/jgoodies-forms.jar

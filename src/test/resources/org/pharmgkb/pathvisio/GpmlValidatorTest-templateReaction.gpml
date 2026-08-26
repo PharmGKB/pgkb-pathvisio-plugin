@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Test TemplateReaction" Version="20160714" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="707.5" BoardHeight="392.0" />
+  <DataNode TextLabel="A2M" GraphId="a46b8" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA24357" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="423.0" CenterY="279.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="bacampicillin" GraphId="a6df4" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA164745461" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="629.0" CenterY="216.0" Width="97.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="calcidiol" GraphId="a8f8f" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA164745614" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="234.0" CenterY="197.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="acetanilide" GraphId="b3ba7" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA448016" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="578.0" CenterY="146.0" Width="82.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="A2M DNA" GraphId="c57e6" Type="Rna">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.organism" Value="Homo sapiens" />
+    <Attribute Key="pgkb.organismId" Value="9606" />
+    <Attribute Key="pgkb.type" Value="DNA Entity" />
+    <Graphics CenterX="382.0" CenterY="128.0" Width="80.0" Height="20.0" ZOrder="32768" FillColor="abcdf9" FontSize="10" Valign="Middle" ShapeType="RoundedRectangle" Color="247e10" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="A1BG" GraphId="da2c7" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA24356" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="475.0" CenterY="352.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="ae7c2">
+    <BiopaxRef>aa7</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Template Reaction" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="96a504">
+      <Point X="423.0" Y="289.0" GraphRef="a46b8" RelX="0.0" RelY="1.0" />
+      <Point X="475.0" Y="342.0" GraphRef="da2c7" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="be111">
+    <BiopaxRef>aa7</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Activation" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="ff8206">
+      <Point X="537.0" Y="146.0" GraphRef="b3ba7" RelX="-1.0" RelY="0.0" />
+      <Point X="398.4" Y="190.4" GraphRef="c76d9" RelX="0.0" RelY="0.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="d0e2d">
+    <BiopaxRef>aa7</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Catalysis" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="666666">
+      <Point X="274.0" Y="197.0" GraphRef="a8f8f" RelX="1.0" RelY="0.0" />
+      <Point X="410.08839779005524" Y="227.7458563535912" GraphRef="b1e2b" RelX="0.0" RelY="0.0" ArrowHead="mim-catalysis" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="e3e42">
+    <BiopaxRef>aa7</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Template Reaction" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="96a504">
+      <Point X="382.0" Y="138.0" GraphRef="c57e6" RelX="0.0" RelY="1.0" />
+      <Point X="423.0" Y="269.0" GraphRef="a46b8" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+      <Anchor Position="0.4" Shape="None" GraphId="c76d9" />
+      <Anchor Position="0.6850828729281769" Shape="None" GraphId="b1e2b" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="e7e92">
+    <BiopaxRef>aa7</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Inhibition" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="c60622">
+      <Point X="580.5" Y="216.0" GraphRef="a6df4" RelX="-1.0" RelY="0.0" />
+      <Point X="410.08839779005524" Y="227.7458563535912" GraphRef="b1e2b" RelX="0.0" RelY="0.0" ArrowHead="TBar" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="fa4fe">
+    <BiopaxRef>aa7</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Conversion" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="0d24ed">
+      <Point X="274.0" Y="197.0" GraphRef="a8f8f" RelX="1.0" RelY="0.0" />
+      <Point X="398.4" Y="190.4" GraphRef="c76d9" RelX="0.0" RelY="0.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="aa7">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1234</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:YEAR>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

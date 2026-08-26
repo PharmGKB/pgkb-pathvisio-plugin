@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,9 +20,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
-import org.pharmgkb.common.util.StreamUtils;
 
 
 /**
@@ -49,7 +54,7 @@ public class DownloadUtils {
     System.out.println("Checking " + url);
     Path dataFile = GlobalPreference.getDataDir().toPath().resolve(fileName);
     try {
-      StreamUtils.copyUrlToFile(url, dataFile);
+      copyUrlToFile(url, dataFile);
       return dataFile;
     } catch (UnknownHostException ex) {
       if (Files.exists(dataFile)) {
@@ -62,6 +67,38 @@ public class DownloadUtils {
       throw new PgkbPluginException("Error processing '" + url + "'", ex);
     }
   }
+
+  /**
+   * Copies contents of a {@code url} to a {@code file}.  If {@code file} already exists, it will be overwritten.
+   * <p>
+   * Use this instead of {@link IOUtils#copy(URL, File)} when you need to follow redirects.
+   */
+  private static void copyUrlToFile(String url, Path file) throws IOException {
+
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      try (CloseableHttpClient httpClient = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy()).build()) {
+        HttpGet httpget = new HttpGet(url);
+        try (CloseableHttpResponse response = httpClient.execute(httpget)) {
+          // save to file even if there's an error, so we can see what the error is
+          try (InputStream in = response.getEntity().getContent();
+               OutputStream out = Files.newOutputStream(file)) {
+            IOUtils.copy(in, out);
+          }
+          if (response.getStatusLine().getStatusCode() != 200) {
+            throw new IOException("Error downloading " + url + ": " + response.getStatusLine());
+          }
+        }
+      }
+    } else {
+      URL ftpUrl = new URL(url);
+      URLConnection conn = ftpUrl.openConnection();
+      try (InputStream in = conn.getInputStream();
+           OutputStream out = Files.newOutputStream(file)) {
+        IOUtils.copy(in, out);
+      }
+    }
+  }
+
 
   private static void unzipFile(Path downloadedFile) throws PgkbPluginException {
     System.out.println("Unpacking " + downloadedFile);

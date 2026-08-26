@@ -28,3 +28,28 @@ org.pathvisio.desktop.jar                    PathVisio 3.3.0
 org.pathvisio.gui.jar                        from http://www.pathvisio.org/
 org.pathvisio.launcher.jar                   
 org.pathvisio.pluginmanager.jar              
+
+
+collections-generic.jar   Collections Generic 4.01 (used by paxtools)
+                          from http://sourceforge.net/project/showfiles.php?group_id=139125
+
+
+jena-arq.jar              Apache Jena 2.11 (used by paxtools)
+jena-core.jar             from http://jena.apache.org/download/
+jena-iri.jar              IRI 1.0
+
+
+jdom.jar                  JDOM 1.1.1 (used by PathVisio)
+                          from http://www.jdom.org
+
+
+org.pathvisio.core.jar    PathVisio 3.3.0
+                          from http://www.pathvisio.org/
+
+
+paxtools-core.jar         PaxTools 5 [commit ac8ceee0b5a0a8439cf3ee2c05da6a9529909898]
+                          https://github.com/BioPAX/Paxtools
+
+
+org.bridgedb.bio.jar      BridgeDb 2.2.0
+org.bridgedb.jar          from http://www.bridgedb.org/

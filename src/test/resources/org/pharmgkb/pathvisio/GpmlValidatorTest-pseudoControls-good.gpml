@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Good Pseudo-Controls Pathway" Version="20160720" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="539.5" BoardHeight="374.0" />
+  <DataNode TextLabel="dopamine" GraphId="b45fc" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA99072549017010" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="442.0" CenterY="334.0" Width="135.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="Test Pathway" GraphId="eb43f" Type="Pathway">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.pgkbId" Value="PA99725492043015" />
+    <Attribute Key="pgkb.type" Value="Pathway" />
+    <Graphics CenterX="375.0" CenterY="244.5" Width="255.0" Height="37.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Pentagon" Color="fc8510" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="caffeine" GraphId="edfef" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA9907254901709" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="280.0" CenterY="140.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="b1335">
+    <BiopaxRef>f39</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Comes From" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineStyle="Broken" LineThickness="1.5" Color="efc206">
+      <Point X="375.0" Y="263.0" GraphRef="eb43f" RelX="0.0" RelY="1.0" />
+      <Point X="442.0" Y="324.0" GraphRef="b45fc" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="b9618">
+    <BiopaxRef>f39</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Leads To" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineStyle="Broken" LineThickness="1.5" Color="96a504">
+      <Point X="280.0" Y="150.0" GraphRef="edfef" RelX="0.0" RelY="1.0" />
+      <Point X="375.0" Y="226.0" GraphRef="eb43f" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="f39">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1234</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:YEAR>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

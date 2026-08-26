@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+
+<project name="PGKB PathVisio Plugin Builder" basedir=".">
+  <description>
+    Builds the pgkb-pathvisio-plugin OSGi bundle and the PGKB PathVisio distribution.
+    Always invoked from the root build.xml via &lt;ant dir="pgkb-pathvisio-plugin" .../&gt; -
+    it relies on properties (dir.*, pgkb.*, build.*) already loaded by the root project and
+    is not meant to be run standalone.
+  </description>
+
+  <property name="pv.classes" value="${dir.build.pv}/classes" />
+
+  <path id="pvPlugin.classpath">
+    <fileset dir="${dir.core.lib}" includes="*.jar" />
+    <fileset dir="${dir.pvPlugin.lib}" includes="*.jar" />
+  </path>
+
+  <target name="config" description="Sets up the PathVisio build classes dir and timestamp">
+    <mkdir dir="${pv.classes}/org/pharmgkb/pathvisio/plugin" />
+    <echo message="${build.timestamp.gmt}" encoding="UTF-8"
+        file="${pv.classes}/org/pharmgkb/pathvisio/plugin/timestamp.txt" />
+  </target>
+
+  <target name="compile" depends="config" description="Compiles pgkb-pathvisio-plugin">
+    <mkdir dir="${pv.classes}" />
+
+    <echo message="Compiling pgkb-pathvisio-plugin" />
+    <javac srcdir="${dir.pvPlugin.src}" destdir="${pv.classes}"
+        release="8"
+        classpathref="pvPlugin.classpath"
+        includeantruntime="false"
+        debug="${build.debug}"
+        debuglevel="${build.debuglevel}"
+        optimize="${build.optimize}"
+        deprecation="${build.deprecation}"
+        encoding="UTF-8"
+        fork="true" />
+    <!-- copy resources to the same location as .class files -->
+    <copy todir="${pv.classes}">
+      <fileset dir="${dir.pvPlugin.res}" />
+    </copy>
+  </target>
+
+  <target name="compile-test" depends="compile" description="Compiles pgkb-pathvisio-plugin tests">
+    <property name="pv.testClasses" value="${dir.build.pv}/test-classes" />
+    <mkdir dir="${pv.testClasses}" />
+
+    <javac srcdir="${dir.pvPlugin.test.src}" destdir="${pv.testClasses}"
+        release="8"
+        includeantruntime="false"
+        debug="${build.debug}"
+        debuglevel="${build.debuglevel}"
+        optimize="${build.optimize}"
+        deprecation="${build.deprecation}"
+        encoding="UTF-8"
+        fork="true">
+      <compilerarg line="-parameters" />
+      <classpath>
+        <path refid="pvPlugin.classpath" />
+        <fileset dir="${dir.core.lib}/test" includes="*.jar" />
+        <fileset dir="${dir.lib.build}">
+          <include name="apiguardian-api.jar" />
+          <include name="junit-platform-*.jar" />
+          <include name="opentest4j.jar" />
+        </fileset>
+        <pathelement location="${pv.classes}" />
+        <pathelement location="${pv.testClasses}" />
+      </classpath>
+    </javac>
+    <copy todir="${pv.testClasses}">
+      <fileset dir="${dir.pvPlugin.test.res}" />
+    </copy>
+  </target>
+
+  <target name="test" depends="compile-test" description="Runs pgkb-pathvisio-plugin tests">
+    <property name="pvTestReportDir" value="${dir.build.pv}/test-reports" />
+    <mkdir dir="${pvTestReportDir}" />
+    <junitlauncher haltonfailure="true" printsummary="on">
+      <classpath>
+        <pathelement location="${pv.classes}" />
+        <pathelement location="${pv.testClasses}" />
+        <path refid="pvPlugin.classpath" />
+        <fileset dir="${dir.core.lib}/test" includes="*.jar" />
+        <fileset dir="${dir.lib.build}">
+          <include name="apiguardian-api.jar" />
+          <include name="junit-platform-*.jar" />
+          <include name="opentest4j.jar" />
+        </fileset>
+      </classpath>
+      <testclasses outputdir="${pvTestReportDir}">
+        <fork includeJUnitPlatformLibraries="true" includeAntRuntimeLibraries="true" />
+        <fileset dir="${pv.testClasses}">
+          <include name="org/pharmgkb/pathvisio/**/*Test*.class" />
+        </fileset>
+        <listener type="legacy-xml" sendSysErr="false" sendSysOut="false" />
+      </testclasses>
+    </junitlauncher>
+  </target>
+
+  <target name="jar" depends="compile" description="Creates ${pgkb.pvPlugin.jar}">
+    <mkdir dir="${dir.dist}" />
+    <echo message="Building PGKB PathVisio jar file" />
+    <taskdef resource="aQute/bnd/ant/taskdef.properties"
+        classpath="${dir.pvPlugin.lib}/build/bnd.jar" />
+    <bnd output="${dir.build.pv}/${pgkb.pvPlugin.jar}"
+        classpath="${pv.classes}"
+        eclipse="false"
+        failok="false"
+        exceptions="true"
+        files="${dir.pvPlugin}/ant.bnd" />
+  </target>
+
+  <target name="dist" depends="jar" description="Builds the PGKB PathVisio distribution">
+    <echo>Building PathVisio plugin</echo>
+
+    <copy file="${pv.classes}/org/pharmgkb/pathvisio/plugin/timestamp.txt"
+        tofile="${dir.dist}/pgkb-pathvisio.timestamp.txt" />
+
+    <unzip src="${dir.pvPlugin.lib}/build/pathvisio.jar" dest="${dir.build.pv}/jar" />
+    <!-- add plugin and OSGI-aware jar files -->
+    <copy todir="${dir.build.pv}/jar">
+      <fileset file="${dir.build.pv}/${pgkb.pvPlugin.jar}" />
+      <fileset dir="${dir.core.lib}">
+        <!-- guava -->
+        <include name="guava.jar" />
+        <include name="failureaccess.jar" />
+        <!-- GSON -->
+        <include name="gson.jar" />
+        <!-- Commons Libraries -->
+        <include name="commons-beanutils.jar" />
+        <include name="commons-codec.jar" />
+        <include name="commons-collections.jar" />
+        <include name="commons-email.jar" />
+        <include name="commons-io.jar" />
+        <include name="commons-lang3.jar" />
+        <include name="commons-text.jar" />
+        <include name="joda-time.jar" />
+        <!-- HttpComponents -->
+        <include name="httpclient.jar" />
+        <include name="httpcore.jar" />
+        <!-- SLF4J, Logback and Log4J -->
+        <include name="slf4j-api.jar" />
+        <include name="jcl-over-slf4j.jar" />
+        <include name="jul-to-slf4j.jar" />
+        <include name="log4j-over-slf4j.jar" />
+        <include name="logback-classic.jar" />
+        <include name="logback-core.jar" />
+        <include name="log4j-api.jar" />
+        <include name="log4j-to-slf4j.jar" />
+        <!-- Misc -->
+        <include name="javax.mail.jar" />
+        <include name="jakarta.xml.bind-api.jar" />
+        <include name="jspecify.jar" />
+        <include name="stax2-api.jar" />
+      </fileset>
+      <fileset dir="${dir.pvPlugin.lib}">
+        <!-- formerly pgkb-core-pv/lib -->
+        <include name="collections-generic.jar" />
+        <include name="jdom.jar" />
+        <include name="jena-arq.jar" />
+        <include name="jena-core.jar" />
+        <include name="jena-iri.jar" />
+        <include name="org.bridgedb.bio.jar" />
+        <include name="org.bridgedb.jar" />
+        <include name="org.pathvisio.core.jar" />
+        <include name="paxtools-core.jar" />
+        <!-- OSGi support -->
+        <include name="asm.jar" />
+        <include name="asm-*.jar" />
+        <include name="org.apache.aries.spifly.dynamic.bundle.jar" />
+        <include name="org.apache.felix.configadmin.jar" />
+      </fileset>
+    </copy>
+
+    <!-- create final pathvisio.jar -->
+    <property name="pv.name" value="PGKB PathVisio" />
+    <jar destfile="${dir.build.pv}/pathvisio.jar" basedir="${dir.build.pv}/jar">
+      <manifest>
+        <attribute name="Main-Class" value="org.pathvisio.launcher.PathVisioMain" />
+        <attribute name="Permissions" value="all-permissions" />
+        <attribute name="Codebase" value="www.pathvisio.org" />
+        <attribute name="Application-Name" value="${pv.name}" />
+      </manifest>
+    </jar>
+
+    <echo>Building PGKB PathVisio distribution for Windows</echo>
+
+    <zip destfile="${dir.dist}/pgkb-pathvisio.zip">
+      <zipfileset prefix="pgkb-pathvisio" file="${dir.build.pv}/pathvisio.jar" />
+      <zipfileset prefix="pgkb-pathvisio" dir="${dir.pvPlugin}/bin" filemode="755">
+        <include name="pathvisio.bat" />
+        <include name="pathvisio.sh" />
+      </zipfileset>
+    </zip>
+  </target>
+
+</project>

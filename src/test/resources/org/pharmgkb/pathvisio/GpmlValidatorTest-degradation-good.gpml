@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Degradation Test" Version="20160806" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="380.0" BoardHeight="298.0" />
+  <DataNode TextLabel="Genes" GraphId="da4bf" Type="Collection">
+    <Attribute Key="pgkb.allMembersRequired" Value="false" />
+    <Attribute Key="pgkb.cell" Value="acinar cell" />
+    <Attribute Key="pgkb.cellularLocation" Value="Intracellular" />
+    <Attribute Key="pgkb.memberGenes" Value="PA990725490101::ABCB1&#x9;PA990725490102::NUDT15-AS1&#x9;PA990725490103::CYP2C9&#x9;PA990725490104::CYP2D6" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene Collection" />
+    <Graphics CenterX="287.0" CenterY="148.0" Width="90.0" Height="25.0" ZOrder="32768" FillColor="abcdf9" FontSize="12" Valign="Middle" ShapeType="Oval" LineStyle="Broken" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="e7fd7">
+    <BiopaxRef>bf0</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Degradation" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="27e505">
+      <Point X="287.0" Y="160.5" GraphRef="da4bf" RelX="0.0" RelY="1.0" />
+      <Point X="350.0" Y="268.0" ArrowHead="mim-cleavage" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="bf0">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12345</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A new granulation method for compressed tablets [proceedings].</bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string">J Pharm Pharmacol</bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1976</bp:YEAR>
+      <bp:AUTHORS rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rubinstein MH</bp:AUTHORS>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

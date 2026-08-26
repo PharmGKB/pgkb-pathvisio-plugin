@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Good Comment Pathway" Version="20160830" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="623.0" BoardHeight="372.5" />
+  <DataNode TextLabel="Drug Complex" GraphId="c2c4b" Type="Complex">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.drugComplexComponents" Value="PA164754915::abarelix&#x9;PA448538::barbital" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.type" Value="Drug Complex" />
+    <Graphics CenterX="154.0" CenterY="113.0" Width="108.0" Height="25.0" ZOrder="32768" FillColor="c59ecb" FontSize="12" Valign="Middle" LineStyle="Broken" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="abarelix" GraphId="c2f82" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA164754915" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="148.0" CenterY="311.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="barbital" GraphId="d405e" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA448538" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="290.0" CenterY="311.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="a61f3">
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Additional Node" />
+    <Graphics ZOrder="12288" LineThickness="1.0" Color="643264">
+      <Point X="151.6" Y="194.7" GraphRef="a93e5" RelX="0.0" RelY="0.0" />
+      <Point X="290.0" Y="298.5" GraphRef="d405e" RelX="0.0" RelY="-1.0" ArrowHead="mim-stimulation" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="d492f">
+    <Comment>[CL:CL:0000226]</Comment>
+    <BiopaxRef>e27</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Biochemical Reaction" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5">
+      <Point X="154.0" Y="125.5" GraphRef="c2c4b" RelX="0.0" RelY="1.0" />
+      <Point X="148.0" Y="298.5" GraphRef="c2f82" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+      <Anchor Position="0.4" Shape="None" GraphId="a93e5" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="e27">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12345</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:YEAR>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

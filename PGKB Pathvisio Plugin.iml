@@ -10,10 +10,18 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="PGKB Core PV" />
+    <orderEntry type="library" exported="" name="PaxTools" level="project" />
+    <orderEntry type="library" exported="" name="Jena" level="project" />
+    <orderEntry type="library" exported="" name="JDOM" level="project" />
+    <orderEntry type="library" exported="" name="BridgeDb" level="project" />
+    <orderEntry type="library" exported="" name="Collections-generic" level="project" />
+    <orderEntry type="library" exported="" name="PathVisio Core" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="Logback" level="project" />
     <orderEntry type="library" name="JGoodies" level="project" />
     <orderEntry type="library" name="JIDE Common Layer" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Felix" level="project" />

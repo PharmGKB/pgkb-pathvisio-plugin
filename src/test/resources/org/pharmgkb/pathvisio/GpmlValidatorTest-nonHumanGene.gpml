@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Non-human Gene Test" Version="20160630" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="768.0" BoardHeight="167.0" />
+  <DataNode TextLabel="NHG1" GraphId="c4a21" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.geneSymbol" Value="" />
+    <Attribute Key="pgkb.geneXref" Value="http://mus.musculus.org/1" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.organism" Value="mus musculus" />
+    <Attribute Key="pgkb.organismId" Value="1234" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Non-human Gene" />
+    <Graphics CenterX="198.0" CenterY="121.0" Width="80.0" Height="20.0" ZOrder="32768" FillColor="ffafaf" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="NHG4" GraphId="c6f20" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.geneSymbol" Value="NHG4" />
+    <Attribute Key="pgkb.geneXref" Value="ftp://foo.bar/baz" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.organism" Value="" />
+    <Attribute Key="pgkb.organismId" Value="1234" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Non-human Gene" />
+    <Graphics CenterX="698.0" CenterY="95.0" Width="80.0" Height="20.0" ZOrder="32768" FillColor="ffafaf" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="NHG3" GraphId="cbd71" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.geneSymbol" Value="NHG3" />
+    <Attribute Key="pgkb.geneXref" Value="" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.organism" Value="mus musculus" />
+    <Attribute Key="pgkb.organismId" Value="ABC1" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Non-human Gene" />
+    <Graphics CenterX="541.0" CenterY="127.0" Width="80.0" Height="20.0" ZOrder="32768" FillColor="ffafaf" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="NHG2" GraphId="cfb24" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.geneSymbol" Value="NHG2" />
+    <Attribute Key="pgkb.geneXref" Value="http://mus.musculus.org/2" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.organism" Value="mus musculus" />
+    <Attribute Key="pgkb.organismId" Value="" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Non-human Gene" />
+    <Graphics CenterX="364.0" CenterY="99.0" Width="80.0" Height="20.0" ZOrder="32768" FillColor="ffafaf" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="cfb9d">
+    <BiopaxRef>f4c</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Conversion" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="0d24ed">
+      <Point X="238.0" Y="121.0" GraphRef="c4a21" RelX="1.0" RelY="0.0" />
+      <Point X="324.0" Y="99.0" GraphRef="cfb24" RelX="-1.0" RelY="0.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="dbb26">
+    <BiopaxRef>f4c</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Conversion" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="32769" LineThickness="1.5" Color="0d24ed">
+      <Point X="404.0" Y="99.0" GraphRef="cfb24" RelX="1.0" RelY="0.0" />
+      <Point X="501.0" Y="127.0" GraphRef="cbd71" RelX="-1.0" RelY="0.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="bfaee">
+    <BiopaxRef>f4c</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Conversion" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="32770" LineThickness="1.5" Color="0d24ed">
+      <Point X="581.0" Y="127.0" GraphRef="cbd71" RelX="1.0" RelY="0.0" />
+      <Point X="658.0" Y="95.0" GraphRef="c6f20" RelX="-1.0" RelY="0.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="f4c">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12345</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A new granulation method for compressed tablets [proceedings].</bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string">J Pharm Pharmacol</bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1976</bp:YEAR>
+      <bp:AUTHORS rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rubinstein MH</bp:AUTHORS>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

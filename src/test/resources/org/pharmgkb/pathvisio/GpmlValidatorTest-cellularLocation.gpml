@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Cellular Location Test" Version="20160720" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="953.0" BoardHeight="569.0" />
+  <DataNode TextLabel="Liver cell" GraphId="b6a02">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="" />
+    <Attribute Key="pgkb.type" Value="Cell" />
+    <Graphics CenterX="580.5" CenterY="302.0" Width="685.0" Height="474.0" ZOrder="-6" FillColor="ececec" FontSize="10" Valign="Middle" ShapeType="RoundedRectangle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="Nucleus" GraphId="aeebb">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="" />
+    <Attribute Key="pgkb.type" Value="Nucleus" />
+    <Graphics CenterX="591.0" CenterY="419.5" Width="544.0" Height="139.0" ZOrder="12287" FillColor="d1d1d1" FontSize="10" Valign="Middle" ShapeType="Oval" Color="ff0000" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="CA1" GraphId="e4baf" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="hepatocyte" />
+    <Attribute Key="pgkb.cellularLocation" Value="Intracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA25984" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="450.0" CenterY="271.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="B2M" GraphId="f79dc" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="hepatocyte" />
+    <Attribute Key="pgkb.cellularLocation" Value="Intracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA25207" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="699.0" CenterY="415.0" Width="80.0" Height="20.0" ZOrder="32769" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="A1BG" GraphId="dab27" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="hepatocyte" />
+    <Attribute Key="pgkb.cellularLocation" Value="Nucleus" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA24356" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="477.0" CenterY="415.0" Width="80.0" Height="20.0" ZOrder="32772" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="B2M" GraphId="c7155" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="hepatocyte" />
+    <Attribute Key="pgkb.cellularLocation" Value="Intracellular" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA25207" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="775.0" CenterY="243.0" Width="80.0" Height="20.0" ZOrder="32778" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="ddebb">
+    <BiopaxRef>afa</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Transport" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="c905c9">
+      <Point X="699.0" Y="405.0" GraphRef="f79dc" RelX="0.0" RelY="-1.0" />
+      <Point X="775.0" Y="253.0" GraphRef="c7155" RelX="0.0" RelY="1.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="a5a9a">
+    <BiopaxRef>afa</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Transport" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="32776" LineThickness="1.5" Color="c905c9">
+      <Point X="477.0" Y="405.0" GraphRef="dab27" RelX="0.0" RelY="-1.0" />
+      <Point X="450.0" Y="281.0" GraphRef="e4baf" RelX="0.0" RelY="1.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="afa">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1234</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></bp:YEAR>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Modification Test" Version="20150821" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="679.0" BoardHeight="385.0" />
+  <DataNode TextLabel="A1BG" GraphId="a22ed" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="Phosphorylation" />
+    <Attribute Key="pgkb.modification.position" Value="Unknown:434;Tyt:44;Ddd" />
+    <Attribute Key="pgkb.pgkbId" Value="PA24356" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="269.0" CenterY="250.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="doxorubicin" GraphId="a99e8" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="Hydroxylation" />
+    <Attribute Key="pgkb.modification.position" Value="12345" />
+    <Attribute Key="pgkb.pgkbId" Value="PA449412" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="373.0" CenterY="141.0" Width="82.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="CAD" GraphId="aae50" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="Ubiquitination" />
+    <Attribute Key="pgkb.modification.position" Value="Unknown;Ser:485" />
+    <Attribute Key="pgkb.pgkbId" Value="PA26023" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="609.0" CenterY="278.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="B2M" GraphId="b87b6" Type="GeneProduct">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="Hydroxylation" />
+    <Attribute Key="pgkb.modification.position" Value="Tyr:30" />
+    <Attribute Key="pgkb.pgkbId" Value="PA25207" />
+    <Attribute Key="pgkb.role" Value="NA" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene" />
+    <Graphics CenterX="566.0" CenterY="191.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" ShapeType="Oval" Color="107af9" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="doxorubicinol" GraphId="d2878" Type="Small Molecule">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.modification" Value="Ubiquitination" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.pgkbId" Value="PA165291922" />
+    <Attribute Key="pgkb.type" Value="Drug" />
+    <Graphics CenterX="495.0" CenterY="345.0" Width="97.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" Color="772c7f" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="b6609">
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Inhibition" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="c60622">
+      <Point X="569.0" Y="278.0" GraphRef="aae50" RelX="-1.0" RelY="0.0" />
+      <Point X="421.8" Y="224.60000000000002" GraphRef="b5268" RelX="0.0" RelY="0.0" ArrowHead="TBar" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="cbe8c">
+    <BiopaxRef>b43</BiopaxRef>
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Biochemical Reaction" />
+    <Attribute Key="pgkb.isReversible" Value="false" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5">
+      <Point X="373.0" Y="151.0" GraphRef="a99e8" RelX="0.0" RelY="1.0" />
+      <Point X="495.0" Y="335.0" GraphRef="d2878" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+      <Anchor Position="0.4" Shape="None" GraphId="b5268" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="de6eb">
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Activation" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="ff8206">
+      <Point X="309.0" Y="250.0" GraphRef="a22ed" RelX="1.0" RelY="0.0" />
+      <Point X="421.8" Y="224.60000000000002" GraphRef="b5268" RelX="0.0" RelY="0.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="f0860">
+    <Attribute Key="pgkb.biopaxInteractionType" Value="Inhibition" />
+    <Attribute Key="pgkb.lineStrength" Value="Normal" />
+    <Attribute Key="pgkb.reactionName" Value="" />
+    <Graphics ZOrder="12288" LineThickness="1.5" Color="c60622">
+      <Point X="566.0" Y="201.0" GraphRef="b87b6" RelX="0.0" RelY="1.0" />
+      <Point X="421.8" Y="224.60000000000002" GraphRef="b5268" RelX="0.0" RelY="0.0" ArrowHead="TBar" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax>
+    <bp:PublicationXref xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:id="b43">
+      <bp:ID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12345</bp:ID>
+      <bp:DB rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PubMed</bp:DB>
+      <bp:TITLE rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A new granulation method for compressed tablets [proceedings].</bp:TITLE>
+      <bp:SOURCE rdf:datatype="http://www.w3.org/2001/XMLSchema#string">J Pharm Pharmacol</bp:SOURCE>
+      <bp:YEAR rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1976</bp:YEAR>
+      <bp:AUTHORS rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rubinstein MH</bp:AUTHORS>
+    </bp:PublicationXref>
+  </Biopax>
+</Pathway>
+

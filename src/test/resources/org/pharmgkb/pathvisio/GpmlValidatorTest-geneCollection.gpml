@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Gene Collection Test" Version="20150821" Organism="Homo sapiens">
+  <Attribute Key="pgkb.coe" Value="" />
+  <Attribute Key="pgkb.pgkbId" Value="" />
+  <Attribute Key="pgkb.subId" Value="" />
+  <Graphics BoardWidth="686.0" BoardHeight="602.0" />
+  <DataNode TextLabel="Empty Collection" GraphId="b9dbb" Type="Collection">
+    <Attribute Key="pgkb.allMembersRequired" Value="false" />
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="Extracellular" />
+    <Attribute Key="pgkb.memberGenes" Value="" />
+    <Attribute Key="pgkb.modification" Value="" />
+    <Attribute Key="pgkb.modification.position" Value="" />
+    <Attribute Key="pgkb.state" Value="NA" />
+    <Attribute Key="pgkb.type" Value="Gene Collection" />
+    <Graphics CenterX="287.0" CenterY="148.0" Width="120.0" Height="20.0" ZOrder="32768" FillColor="abcdf9" FontSize="10" Valign="Middle" ShapeType="Oval" LineStyle="Broken" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="Liver Cell" GraphId="bdf06">
+    <Attribute Key="pgkb.cell" Value="" />
+    <Attribute Key="pgkb.cellularLocation" Value="" />
+    <Attribute Key="pgkb.type" Value="Cell" />
+    <Graphics CenterX="431.0" CenterY="404.0" Width="450.0" Height="336.0" ZOrder="32768" FillColor="ececec" FontSize="10" Valign="Middle" ShapeType="RoundedRectangle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+</Pathway>
+
