@@ -1,0 +1,97 @@
+name: Build & Release PGKB PathVisio
+
+on:
+  workflow_dispatch: {}
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build and Release
+    # we are using the -large variant because we need the x86 platform so that we can use the Temurin JDK
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+
+      - name: Get ant URL
+        id: ant
+        run: |
+          base_filename=`wget -qO - https://downloads.apache.org/ant/binaries/ | grep -oE 'href="apache-ant-1.1[0-9].[0-9]+-bin.tar.gz"' | sed 's/"//g' | cut -c6- | sort | tail -1`
+          base_dir=`basename ${base_filename} "-bin.tar.gz"`
+          echo "base_filename=${base_filename}" >> $GITHUB_OUTPUT
+          echo "base_dir=${base_dir}" >> $GITHUB_OUTPUT
+
+      - name: Cache ant
+        id: cache-ant
+        uses: actions/cache@v4
+        with:
+          path: ant
+          key: ${{ steps.ant.outputs.base_dir }}
+
+      - name: Download ant
+        if: steps.cache-ant.outputs.cache-hit != 'true'
+        run: |
+          wget -q https://www.apache.org/dist/ant/binaries/${{ steps.ant.outputs.base_filename }}
+          tar -xf ${{ steps.ant.outputs.base_filename }}
+          mv ${{ steps.ant.outputs.base_dir }} ant
+          rm -f ${{ steps.ant.outputs.base_filename }}
+
+      - name: Add ant to PATH
+        run: echo "${{ github.workspace }}/ant/bin" >> $GITHUB_PATH
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install github-release
+        run: go install github.com/github-release/github-release@latest
+
+      - name: Get version
+        run: |
+          version=$(git describe --abbrev=0 --tags)
+          echo "PGKB_VERSION=${version}" >> $GITHUB_ENV
+
+      - run: echo VERSION=${{env.PGKB_VERSION}}
+
+      # only this step requires Java 1.8
+      - name: Compile and package PathVisio
+        run: ant config dist
+
+      # Mac app bundling can use a newer JDK
+      - name: Set up JDK 17 for bundling
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Package PathVisio for Mac
+        run: ant pathvisio-mac-bundle
+
+      - name: Upload PathVisio
+        run: |
+          github-release upload --security-token ${{ secrets.GITHUB_TOKEN }} \
+             --user PharmGKB \
+             --repo pgkb-pathvisio-plugin \
+             --tag ${{env.PGKB_VERSION}} \
+             --name "pgkb-pathvisio.zip" \
+             --file build/dist/pgkb-pathvisio.zip
+
+      - name: Upload PathVisio (mac)
+        run: |
+          github-release upload --security-token ${{ secrets.GITHUB_TOKEN }} \
+          --user PharmGKB \
+          --repo pgkb-pathvisio-plugin \
+          --tag ${{env.PGKB_VERSION}} \
+          --name "pgkb-pathvisio.app.full.zip" \
+          --file build/dist/pgkb-pathvisio.app.full.zip
