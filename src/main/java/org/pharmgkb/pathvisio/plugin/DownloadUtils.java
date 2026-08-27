@@ -137,8 +137,17 @@ public class DownloadUtils {
   }
 
 
-  public static boolean hasNewVersion() throws IOException {
-    String latestTag = fetchLatestReleaseTag();
+  public static boolean hasNewVersion() throws IOException, NetworkException {
+    return hasNewVersion(GITHUB_LATEST_RELEASE_URL);
+  }
+
+  static boolean hasNewVersion(String releaseUrl) throws IOException, NetworkException {
+    String latestTag;
+    try {
+      latestTag = fetchLatestReleaseTag(releaseUrl);
+    } catch (UnknownHostException ex) {
+      throw new NetworkException("No network? Skipping version check.");
+    }
     if (latestTag == null) {
       // no release published yet (e.g. before this repo's first release) - nothing to compare against
       return false;
@@ -170,9 +179,9 @@ public class DownloadUtils {
   /**
    * Fetches the latest release's tag name from GitHub, or {@code null} if no release has been published yet.
    */
-  private static @Nullable String fetchLatestReleaseTag() throws IOException {
+  private static @Nullable String fetchLatestReleaseTag(String url) throws IOException {
     try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-      HttpGet httpGet = new HttpGet(GITHUB_LATEST_RELEASE_URL);
+      HttpGet httpGet = new HttpGet(url);
       httpGet.setHeader("Accept", "application/vnd.github+json");
       try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
         int status = response.getStatusLine().getStatusCode();
