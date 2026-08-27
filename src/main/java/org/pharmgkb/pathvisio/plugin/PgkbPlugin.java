@@ -787,7 +787,7 @@ public class PgkbPlugin implements Plugin, ObjectPropertyListener, Engine.Applic
         new PopupDialogBuilder(m_desktop).info()
             .title("Time To Upgrade!")
             .htmlMessage("<p>There is a new version of PathVisio available." +
-                "<p><a href=\"https://github.com/PharmGKB/PharmGKB/releases\">Please update as soon as possible.</a>")
+                "<p><a href=\"https://github.com/PharmGKB/pgkb-pathvisio-plugin/releases\">Please update as soon as possible.</a>")
             .show();
       }
     } catch (Exception ex) {

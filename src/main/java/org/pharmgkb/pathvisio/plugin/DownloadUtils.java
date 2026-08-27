@@ -10,21 +10,22 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.jspecify.annotations.Nullable;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.preferences.GlobalPreference;
 
@@ -35,7 +36,8 @@ import org.pathvisio.core.preferences.GlobalPreference;
  * @author Mark Woon
  */
 public class DownloadUtils {
-  private static final DateTimeFormatter sf_timestampFormatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss zzz");
+  private static final String GITHUB_LATEST_RELEASE_URL =
+      "https://api.github.com/repos/PharmGKB/pgkb-pathvisio-plugin/releases/latest";
 
 
   public static void downloadAndUnpackDataFile() throws PgkbPluginException {
@@ -135,39 +137,58 @@ public class DownloadUtils {
   }
 
 
-  public static boolean hasNewVersion() throws IOException, NetworkException {
-    return getLatestVersion().isAfter(getThisVersion());
+  public static boolean hasNewVersion() throws IOException {
+    String latestTag = fetchLatestReleaseTag();
+    if (latestTag == null) {
+      // no release published yet (e.g. before this repo's first release) - nothing to compare against
+      return false;
+    }
+    return isNewVersion(latestTag, getThisVersion());
+  }
+
+  /**
+   * Compares the latest published release tag to this build's own embedded version.
+   */
+  static boolean isNewVersion(String latestTag, String currentVersion) {
+    return !latestTag.equals(currentVersion);
   }
 
 
-  private static Instant getThisVersion() throws IOException {
+  private static String getThisVersion() throws IOException {
 
-    InputStream in = PgkbPlugin.class.getResourceAsStream("/org/pharmgkb/pathvisio/plugin/timestamp.txt");
+    InputStream in = PgkbPlugin.class.getResourceAsStream("/org/pharmgkb/pathvisio/plugin/version.txt");
     if (in == null) {
-      throw new IOException("Cannot find timestamp.txt");
+      throw new IOException("Cannot find version.txt");
     }
     try (Reader reader = new InputStreamReader(in);
-         StringWriter curVersionWriter = new StringWriter()) {
-      IOUtils.copy(reader, curVersionWriter);
-      return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
+         StringWriter versionWriter = new StringWriter()) {
+      IOUtils.copy(reader, versionWriter);
+      return versionWriter.toString().trim();
     }
   }
 
-  private static Instant getLatestVersion() throws IOException, NetworkException {
-
-    // download timestamp
-    URL url = new URL("https://drive.google.com/uc?export=download&id=1qhAvUJhAEYJgqAFUSc0BLf80Bt28QH1z");
-    Path versionFile = GlobalPreference.getDataDir().toPath().resolve("pgkb-pathvisio.timestamp.txt");
-    try {
-      IOUtils.copy(url, versionFile.toFile());
-    } catch (UnknownHostException ex) {
-      throw new NetworkException("No network?  Skipping version check", ex);
-    }
-    // read and parse
-    try (Reader reader = Files.newBufferedReader(versionFile);
-         StringWriter curVersionWriter = new StringWriter()) {
-      IOUtils.copy(reader, curVersionWriter);
-      return ZonedDateTime.parse(curVersionWriter.toString(), sf_timestampFormatter).toInstant();
+  /**
+   * Fetches the latest release's tag name from GitHub, or {@code null} if no release has been published yet.
+   */
+  private static @Nullable String fetchLatestReleaseTag() throws IOException {
+    try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+      HttpGet httpGet = new HttpGet(GITHUB_LATEST_RELEASE_URL);
+      httpGet.setHeader("Accept", "application/vnd.github+json");
+      try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+        int status = response.getStatusLine().getStatusCode();
+        if (status == 404) {
+          return null;
+        }
+        if (status != 200) {
+          throw new IOException("Error fetching latest release: " + response.getStatusLine());
+        }
+        String body = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
+        JsonObject release = JsonParser.parseString(body).getAsJsonObject();
+        if (!release.has("tag_name")) {
+          throw new IOException("Malformed release response: missing 'tag_name'");
+        }
+        return release.get("tag_name").getAsString();
+      }
     }
   }
 }

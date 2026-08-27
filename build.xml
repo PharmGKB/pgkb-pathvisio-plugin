@@ -45,6 +45,8 @@
     <mkdir dir="${pv.classes}/org/pharmgkb/pathvisio/plugin" />
     <echo message="${build.timestamp.gmt}" encoding="UTF-8"
         file="${pv.classes}/org/pharmgkb/pathvisio/plugin/timestamp.txt" />
+    <echo message="${build.release}" encoding="UTF-8"
+        file="${pv.classes}/org/pharmgkb/pathvisio/plugin/version.txt" />
   </target>
 
   <target name="compile" depends="config" description="Compiles pgkb-pathvisio-plugin">
