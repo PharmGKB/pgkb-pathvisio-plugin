@@ -41,11 +41,11 @@ Include-Resource: \
 logback.xml                      = src/main/resources/logback.xml,\
 pgkb-pathvisio-plugin.properties = src/main/resources/pgkb-pathvisio-plugin.properties,\
 pgkb-pathvisio.icns              = src/main/resources/pgkb-pathvisio.icns,\
-org/pharmgkb                     = ../build/tmp/pathvisio/classes/org/pharmgkb,\
-@../pgkb-core/lib/httpclient.jar,\
-@../pgkb-core/lib/httpcore.jar,\
-@../pgkb-core/lib/jaxb-runtime.jar,\
-@../pgkb-core/lib/sentry.jar,\
+org/pharmgkb                     = ${pv.classes}/org/pharmgkb,\
+@../pgkb-pathvisio-plugin/lib/httpclient.jar,\
+@../pgkb-pathvisio-plugin/lib/httpcore.jar,\
+@../pgkb-pathvisio-plugin/lib/jaxb-runtime.jar,\
+@../pgkb-pathvisio-plugin/lib/sentry.jar,\
 @../pgkb-pathvisio-plugin/lib/jena-core.jar,\
 @../pgkb-pathvisio-plugin/lib/jena-iri.jar,\
 @../pgkb-pathvisio-plugin/lib/collections-generic.jar,\

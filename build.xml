@@ -3,10 +3,37 @@
 <project name="PGKB PathVisio Plugin Builder" basedir=".">
   <description>
     Builds the pgkb-pathvisio-plugin OSGi bundle and the PGKB PathVisio distribution.
-    Always invoked from the root build.xml via &lt;ant dir="pgkb-pathvisio-plugin" .../&gt; -
-    it relies on properties (dir.*, pgkb.*, build.*) already loaded by the root project and
-    is not meant to be run standalone.
+    Fully self-contained - can be run standalone (`cd pgkb-pathvisio-plugin &amp;&amp; ant dist`)
+    or via the root build.xml's thin delegating targets (&lt;ant dir="pgkb-pathvisio-plugin" .../&gt;).
   </description>
+
+  <property name="build.debug" value="true" />
+  <property name="build.debuglevel" value="source,lines,vars" />
+  <property name="build.optimize" value="off" />
+  <property name="build.deprecation" value="off" />
+
+  <tstamp>
+    <format property="build.timestamp.gmt" pattern="EEE, d MMM yyyy HH:mm:ss zzz" timezone="GMT" />
+    <format property="build.yearMonthDay" pattern="yyyy-MM-dd" />
+    <format property="build.year" pattern="yyyy" />
+  </tstamp>
+  <exec executable="cmd" outputproperty="build.release" osfamily="windows">
+    <arg value="/c" />
+    <arg value="git describe --tags" />
+  </exec>
+  <exec executable="git" outputproperty="build.release" osfamily="unix">
+    <arg line="describe --tags" />
+  </exec>
+
+  <property name="dir.pvPlugin" value="${basedir}" />
+  <property name="dir.pvPlugin.lib" value="${dir.pvPlugin}/lib" />
+  <property name="dir.pvPlugin.src" value="${dir.pvPlugin}/src/main/java" />
+  <property name="dir.pvPlugin.res" value="${dir.pvPlugin}/src/main/resources" />
+  <property name="dir.pvPlugin.test.src" value="${dir.pvPlugin}/src/test/java" />
+  <property name="dir.pvPlugin.test.res" value="${dir.pvPlugin}/src/test/resources" />
+  <property name="dir.build.pv" value="${basedir}/build" />
+  <property name="dir.dist" value="${dir.build.pv}/dist" />
+  <property name="pgkb.pvPlugin.jar" value="pgkb-pv-plugin.jar" />
 
   <property name="pv.classes" value="${dir.build.pv}/classes" />
 
@@ -179,6 +206,85 @@
         <include name="pathvisio.sh" />
       </zipfileset>
     </zip>
+  </target>
+
+  <!-- this target only works on macOS; meant for local use -->
+  <target name="pathvisio-mac" depends="dist, pathvisio-mac-bundle"
+      description="Build full PGKB PathVisio app for Mac; must be run on macOS">
+  </target>
+
+  <!-- this target only works on macOS; meant for use in CI -->
+  <target name="pathvisio-mac-bundle"
+      description="Bundle full PGKB PathVisio app for Mac; must be run on macOS">
+    <echo>Bundling full Mac app</echo>
+
+    <taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask"
+        classpath="${dir.pvPlugin.lib}/build/appbundler.jar" />
+
+    <property name="pv.name" value="PGKB PathVisio" />
+    <property name="pv.executableName" value="JavaApplicationStub" />
+    <property name="pv.iconName" value="pgkb-pathvisio.icns" />
+    <property name="pv.appDir" value="${dir.build.pv}/${pv.name}.app" />
+
+    <bundleapp outputdirectory="${dir.build.pv}"
+        jvmrequired="1.8"
+        name="${pv.name}"
+        displayname="${pv.name}"
+        executableName="${pv.executableName}"
+        icon="${dir.pvPlugin.res}/${pv.iconName}"
+        identifier="org.pathvisio.launcher.PathVisioMain"
+        shortVersion="${build.yearMonthDay}"
+        version="${build.release}"
+        mainclassname="org/pathvisio/launcher/PathVisioMain"
+        copyright="${build.year} PharmGKB"
+        applicationCategory="public.app-category.developer-tools"
+        >
+      <runtime dir="${env.JAVA_HOME}" />
+      <classpath file="${dir.build.pv}/pathvisio.jar" />
+
+      <!-- uncomment to enable remote debugging -->
+      <!--
+      <option value="-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005" />
+      -->
+      <!-- OS X specific options -->
+      <option value="-Dapple.laf.useScreenMenuBar=true"/>
+      <option value="-Dcom.apple.macos.use-file-dialog-packages=true"/>
+      <option value="-Dcom.apple.macos.useScreenMenuBar=true"/>
+      <option value="-Dcom.apple.mrj.application.apple.menu.about.name=${pv.name}"/>
+      <option value="-Dcom.apple.smallTabs=true"/>
+      <option value="-Dfile.encoding=UTF-8"/>
+      <!-- Workaround as com.apple.mrj.application.apple.menu.about.name property may no longer work -->
+      <option value="-Xdock:name=${pv.name}"/>
+      <!-- bundleapp's icon parameter above will get the file to the right place,
+           and this will make it show up in the dock (this is a workaround for a JavaAppLauncher bug)
+      -->
+      <option value="-Xdock:icon=$APP_ROOT/Contents/Resources/${pv.iconName}"/>
+
+      <option value="-Xmx1024M" name="Xmx"/>
+
+      <!-- register the application as an editor for .gpml files -->
+      <bundledocument extensions="gpml"
+          icon="$APP_ROOT/Contents/Resources/${pv.iconName}"
+          name="GPML"
+          role="editor">
+      </bundledocument>
+    </bundleapp>
+
+    <exec executable="${dir.pvPlugin}/bin/strip_jvmruntime.sh">
+      <arg value="${pv.appDir}" />
+    </exec>
+    <copy todir="${pv.appDir}/Contents/MacOS" overwrite="true">
+      <file file="${dir.pvPlugin}/bin/JavaApplicationStub" />
+    </copy>
+
+    <zip destfile="${dir.dist}/pgkb-pathvisio.app.full.zip">
+      <zipfileset prefix="${pv.name}.app" dir="${pv.appDir}">
+        <exclude name="Contents/MacOS/${pv.executableName}" />
+      </zipfileset>
+      <zipfileset prefix="${pv.name}.app/Contents/MacOS" file="${pv.appDir}/Contents/MacOS/${pv.executableName}"
+          filemode="755" />
+    </zip>
+    <delete dir="${pv.appDir}" />
   </target>
 
 </project>

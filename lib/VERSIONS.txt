@@ -104,3 +104,10 @@ junit-jupiter-api.jar                junit-jupiter 5.12.2
 junit-jupiter-engine.jar             from https://junit.org/junit5/
 hamcrest.jar                         Hamcrest 3.0 (used by JUnit)
                                       from http://hamcrest.org/
+
+
+jaxb-runtime.jar                     JAXB 2.3.1 (used by Hibernate)
+                                      via Maven (https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api)
+
+
+sentry.jar                           Sentry 7.6.0

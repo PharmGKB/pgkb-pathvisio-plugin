@@ -38,14 +38,14 @@ org.pathvisio.gui,\
 *
 
 Include-Resource: \
-logback.xml                      = ../build/tmp/pathvisio/classes/logback.xml,\
-pgkb-pathvisio-plugin.properties = ../build/tmp/pathvisio/classes/pgkb-pathvisio-plugin.properties,\
-pgkb-pathvisio.icns              = ../build/tmp/pathvisio/classes/pgkb-pathvisio.icns,\
-org/pharmgkb                     = ../build/tmp/pathvisio/classes/org/pharmgkb,\
-@../pgkb-core/lib/httpclient.jar,\
-@../pgkb-core/lib/httpcore.jar,\
-@../pgkb-core/lib/jaxb-runtime.jar,\
-@../pgkb-core/lib/sentry.jar,\
+logback.xml                      = ${pv.classes}/logback.xml,\
+pgkb-pathvisio-plugin.properties = ${pv.classes}/pgkb-pathvisio-plugin.properties,\
+pgkb-pathvisio.icns              = ${pv.classes}/pgkb-pathvisio.icns,\
+org/pharmgkb                     = ${pv.classes}/org/pharmgkb,\
+@../pgkb-pathvisio-plugin/lib/httpclient.jar,\
+@../pgkb-pathvisio-plugin/lib/httpcore.jar,\
+@../pgkb-pathvisio-plugin/lib/jaxb-runtime.jar,\
+@../pgkb-pathvisio-plugin/lib/sentry.jar,\
 @../pgkb-pathvisio-plugin/lib/jena-core.jar,\
 @../pgkb-pathvisio-plugin/lib/jena-iri.jar,\
 @../pgkb-pathvisio-plugin/lib/collections-generic.jar,\
