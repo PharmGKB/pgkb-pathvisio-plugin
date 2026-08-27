@@ -42,14 +42,12 @@ logback.xml                      = ${pv.classes}/logback.xml,\
 pgkb-pathvisio-plugin.properties = ${pv.classes}/pgkb-pathvisio-plugin.properties,\
 pgkb-pathvisio.icns              = ${pv.classes}/pgkb-pathvisio.icns,\
 org/pharmgkb                     = ${pv.classes}/org/pharmgkb,\
-@../pgkb-pathvisio-plugin/lib/httpclient.jar,\
-@../pgkb-pathvisio-plugin/lib/httpcore.jar,\
-@../pgkb-pathvisio-plugin/lib/jaxb-runtime.jar,\
-@../pgkb-pathvisio-plugin/lib/sentry.jar,\
-@../pgkb-pathvisio-plugin/lib/jena-core.jar,\
-@../pgkb-pathvisio-plugin/lib/jena-iri.jar,\
-@../pgkb-pathvisio-plugin/lib/collections-generic.jar,\
-@../pgkb-pathvisio-plugin/lib/paxtools-core.jar,\
-@../pgkb-pathvisio-plugin/lib/jide-oss.jar,\
-@../pgkb-pathvisio-plugin/lib/jgoodies-common.jar,\
-@../pgkb-pathvisio-plugin/lib/jgoodies-forms.jar
+@lib/httpclient.jar,\
+@lib/httpcore.jar,\
+@lib/jena-core.jar,\
+@lib/jena-iri.jar,\
+@lib/collections-generic.jar,\
+@lib/paxtools-core.jar,\
+@lib/jide-oss.jar,\
+@lib/jgoodies-common.jar,\
+@lib/jgoodies-forms.jar
