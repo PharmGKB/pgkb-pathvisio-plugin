@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="PathVisio Core">
+    <ANNOTATIONS>
+      <root url="file://$PROJECT_DIR$/.idea/annotations" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.pathvisio.core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

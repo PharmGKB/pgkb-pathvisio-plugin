@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PaxTools">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/paxtools-core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

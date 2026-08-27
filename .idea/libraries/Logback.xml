@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Logback">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/logback-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/logback-classic.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="http://logback.qos.ch/apidocs/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

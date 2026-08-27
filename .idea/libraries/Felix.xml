@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Felix">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/felix.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.apache.felix.configadmin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JIDE Common Layer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jide-oss.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

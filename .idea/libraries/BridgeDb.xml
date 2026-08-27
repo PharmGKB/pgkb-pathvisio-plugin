@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="BridgeDb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.bridgedb.bio.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.bridgedb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

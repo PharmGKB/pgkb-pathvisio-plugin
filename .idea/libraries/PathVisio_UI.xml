@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="PathVisio UI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.pathvisio.desktop.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.pathvisio.gui.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.pathvisio.pluginmanager.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.pathvisio.launcher.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
