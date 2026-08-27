@@ -12,6 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -35,5 +36,18 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Guava" level="project" />
+    <orderEntry type="library" name="commons-beanutils" level="project" />
+    <orderEntry type="library" name="jspecify" level="project" />
+    <orderEntry type="library" name="commons-lang3" level="project" />
+    <orderEntry type="library" name="commons-text" level="project" />
+    <orderEntry type="library" name="commons-codec" level="project" />
+    <orderEntry type="library" name="commons-collections" level="project" />
+    <orderEntry type="library" name="commons-email" level="project" />
+    <orderEntry type="library" name="commons-io" level="project" />
+    <orderEntry type="library" name="gson" level="project" />
+    <orderEntry type="library" name="httpclient" level="project" />
+    <orderEntry type="library" name="log4j-api" level="project" />
+    <orderEntry type="library" name="slf4j-api" level="project" />
   </component>
 </module>
