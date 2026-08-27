@@ -19,13 +19,20 @@
     <format property="build.yearMonthDay" pattern="yyyy-MM-dd" />
     <format property="build.year" pattern="yyyy" />
   </tstamp>
-  <exec executable="cmd" outputproperty="build.release" osfamily="windows">
+  <exec executable="cmd" outputproperty="build.release" resultproperty="build.release.exit" osfamily="windows">
     <arg value="/c" />
     <arg value="git describe --tags" />
   </exec>
-  <exec executable="git" outputproperty="build.release" osfamily="unix">
+  <exec executable="git" outputproperty="build.release" resultproperty="build.release.exit" osfamily="unix">
     <arg line="describe --tags" />
   </exec>
+  <fail message="'git describe --tags' failed (exit ${build.release.exit}) - build.release is unusable. Ensure this is a git checkout with at least one tag reachable.">
+    <condition>
+      <not>
+        <equals arg1="${build.release.exit}" arg2="0" />
+      </not>
+    </condition>
+  </fail>
 
   <property name="dir.pvPlugin" value="${basedir}" />
   <property name="dir.pvPlugin.lib" value="${dir.pvPlugin}/lib" />
