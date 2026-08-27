@@ -54,8 +54,8 @@ jobs:
       - name: Add ant to PATH
         run: echo "${{ github.workspace }}/ant/bin" >> $GITHUB_PATH
 
-      - name: Build and test
-        run: ant test
+      - name: Build, test, and package
+        run: ant test dist
 
       - name: Upload test results on failure
         uses: actions/upload-artifact@v5

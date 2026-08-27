@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     name: Build and Release
-    # we are using the -large variant because we need the x86 platform so that we can use the Temurin JDK
     runs-on: macOS-latest
 
     steps:
