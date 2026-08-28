@@ -28,3 +28,10 @@ Things to bear in mind:
 * the app's executable is stored in `/Contents/MacOS/` and must have execute permissions
 * PathVisio is registered as the editor for `.gpml` files and while double clicking on those files will open PathVisio,
   it will not load the file because it does not implement `com.apple.eawt.OpenFilesHandler`.
+
+
+### Notes
+
+The libraries this plugin depends on are in `lib/`.
+Some have had their manifests modified to satisfy OSGI requirements.
+See `lib/VERSIONS.txt` and `osgi.md` for details.

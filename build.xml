@@ -141,6 +141,8 @@
     <copy file="${pv.classes}/org/pharmgkb/pathvisio/plugin/timestamp.txt"
         tofile="${dir.dist}/pgkb-pathvisio.timestamp.txt" />
 
+    <!-- Recreate staging so the distribution always uses the committed JARs. -->
+    <delete dir="${dir.build.pv}/jar" />
     <unzip src="${dir.pvPlugin.lib}/build/pathvisio.jar" dest="${dir.build.pv}/jar" />
     <!-- add plugin and OSGI-aware jar files -->
     <copy todir="${dir.build.pv}/jar">

@@ -26,6 +26,9 @@ org.apache.aries.spifly.dynamic.bundle.jar   SPI Fly 1.3.7
 
 org.pathvisio.desktop.jar                    PathVisio 3.3.0
 org.pathvisio.gui.jar                        from http://www.pathvisio.org/
+                                             Embedded org.pathvisio.xerces.jar manifest repaired
+                                             for Apache Felix 4: removed sun.io imports from
+                                             lib/build/pathvisio.jar.
 
 
 collections-generic.jar                      Collections Generic 4.01 (used by paxtools)
@@ -53,19 +56,37 @@ org.bridgedb.bio.jar                         BridgeDb 2.2.0
 org.bridgedb.jar                             from http://www.bridgedb.org/
 
 guava.jar                                    Guava 33.6.0-jre
+                                             Manifest repaired for Apache Felix 4: removed the
+                                             optional sun.misc import.
 failureaccess.jar                            1.0.3 (via Maven [https://mvnrepository.com/artifact/com.google.guava/failureaccess])
 
 
 gson.jar                                     GSON 2.14.0 (used directly by DownloadUtils to parse GitHub API responses)
+                                             Manifest repaired for Apache Felix 4: removed the
+                                             optional sun.misc import.
 
 
 commons-beanutils.jar                        Commons BeanUtils 1.11.0
+                                             Manifest repaired for Apache Felix 4: removed java.*
+                                             imports and the Include-Resource build instruction.
 commons-codec.jar                            Commons Codec 1.22.0 (used by HttpClient)
+                                             Manifest repaired for Apache Felix 4: removed java.*
+                                             imports and the Include-Resource build instruction.
 commons-collections.jar                      Commons Collections 3.2.2 (used by commons-beanutils)
+                                             Manifest repaired for Apache Felix 4: removed the
+                                             Include-Resource build instruction.
 commons-email.jar                            Commons Email 1.6.0
+                                             Manifest repaired for Apache Felix 4: removed the
+                                             Include-Resource build instruction.
 commons-io.jar                               Commons IO 2.22.0
+                                             Manifest repaired for Apache Felix 4: removed java.* and
+                                             sun.* imports and the Include-Resource build instruction.
 commons-lang3.jar                            Commons Lang 3.20.0
+                                             Manifest repaired for Apache Felix 4: removed java.*
+                                             imports and the Include-Resource build instruction.
 commons-text.jar                             Commons Text 1.15.0
+                                             Manifest repaired for Apache Felix 4: removed java.*
+                                             imports and the Include-Resource build instruction.
 
 
 joda-time.jar                                Joda-Time 2.14.0
@@ -83,11 +104,20 @@ log4j-api.jar                                Log4J 2.24.3
 log4j-to-slf4j.jar                           from https://logging.apache.org/log4j/2.x/
 logback-core.jar                             Logback 1.3.15
 logback-classic.jar                          from http://logback.qos.ch/
+                                             Manifest repaired for Apache Felix 4: removed the
+                                             optional sun.reflect import.
 
 
 javax.mail.jar                               Java Mail 1.6.2 (used by commons-email, Logback)
+                                             Manifest repaired for Apache Felix 4: removed the
+                                             optional sun.security.util import.
 jakarta.xml.bind-api.jar                     Jakarta XML Bind API 3.0.1
+                                             Manifest repaired for Apache Felix 4: removed no JVM
+                                             imports; marked the absent jakarta.activation package
+                                             import optional.
 jspecify.jar                                 JSpecify 1.0.0
+                                             Manifest repaired for Apache Felix 4: removed java.*
+                                             imports.
 stax2-api.jar                                Stax 2 API 4.2.1
 
 

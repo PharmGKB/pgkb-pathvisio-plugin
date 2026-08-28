@@ -30,6 +30,7 @@ Import-Package:  \
 !org.jvnet.*,\
 !org.openjena.riot,\
 !sun.*,\
+!java.*,\
 javax.annotation;bundle-symbolic-name="org.jsr-305";resolution:=optional,\
 org.jspecify.annotations;resolution:=optional,\
 org.pathvisio.core.*,\
@@ -37,7 +38,7 @@ org.pathvisio.desktop,\
 org.pathvisio.gui,\
 *
 
-Include-Resource: \
+-includeresource: \
 logback.xml                      = ${pv.classes}/logback.xml,\
 pgkb-pathvisio-plugin.properties = ${pv.classes}/pgkb-pathvisio-plugin.properties,\
 pgkb-pathvisio.icns              = ${pv.classes}/pgkb-pathvisio.icns,\
