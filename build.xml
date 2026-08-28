@@ -219,6 +219,11 @@
     </zip>
   </target>
 
+  <target name="unpack-dist" depends="dist"
+      description="Unpacks the PGKB PathVisio distribution into the build directory">
+    <unzip src="${dir.dist}/pgkb-pathvisio.zip" dest="${dir.build.pv}" overwrite="true" />
+  </target>
+
   <!-- this target only works on macOS; meant for local use -->
   <target name="pathvisio-mac" depends="dist, pathvisio-mac-bundle"
       description="Build full PGKB PathVisio app for Mac; must be run on macOS">
