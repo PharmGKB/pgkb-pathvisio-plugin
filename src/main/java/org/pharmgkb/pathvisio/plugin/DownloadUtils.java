@@ -159,6 +159,11 @@ public class DownloadUtils {
    * Compares the latest published release tag to this build's own embedded version.
    */
   static boolean isNewVersion(String latestTag, String currentVersion) {
+    int idx = currentVersion.indexOf("-");
+    if (idx != -1) {
+      // remove dev version suffix
+      currentVersion = currentVersion.substring(0, idx);
+    }
     return !latestTag.equals(currentVersion);
   }
 
